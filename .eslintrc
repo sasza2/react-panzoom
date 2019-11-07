@@ -1,0 +1,17 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
+  "globals": {
+    "clearInterval": false,
+    "console": false,
+    "setInterval": false
+  },
+  "settings": {
+    "react": {
+      "version": "latest"
+    }
+  },
+  "parser": "babel-eslint"
+}
