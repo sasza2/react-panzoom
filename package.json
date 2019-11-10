@@ -31,5 +31,8 @@
   "peerDependencies": {
     "prop-types": "^15.0.0",
     "react": ">=16.8.6"
+  },
+  "dependencies": {
+    "lodash": "^4.17.15"
   }
 }
