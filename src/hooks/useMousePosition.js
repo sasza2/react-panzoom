@@ -11,15 +11,16 @@ const useMousePosition = (ref) => {
   }
 
   useEffect(() => {
-    if (!ref.current) return
-    ref.current.addEventListener('mousemove', move)
+    let node = ref.current
+    if (!node) return
+    node.addEventListener('mousemove', move)
+
     return () => {
-      ref.current.removeEventListener('mousemove', move)
+      node.removeEventListener('mousemove', move)
     }
-  }, [])
+  }, [ref])
 
   return position
-
 }
 
 export default useMousePosition
