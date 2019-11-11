@@ -1,23 +1,29 @@
 import { useEffect } from 'react'
+import throttle from 'lodash/throttle'
 
 import { usePanZoom } from '../context'
 
 const useZoom = (ref) => {
-  const { zoom } = usePanZoom()
-
-  const move = (e) => {
-    console.log(e)
-  }
+  const { setZoom, zoom } = usePanZoom()
 
   useEffect(() => {
+    const wheel = throttle((e) => {
+      if (e.deltaY < 0) setZoom(zoom + 0.1)
+      else setZoom(zoom - 0.1)
+    }, 300)
+
     let node = ref.current
-    if (!node) return
-    node.addEventListener('mousemove', move)
+    if (!node) return () => {
+      wheel.cancel()
+    }
+
+    node.addEventListener('wheel', wheel)
 
     return () => {
-      node.removeEventListener('mousemove', move)
+      wheel.cancel()
+      node.removeEventListener('wheel', wheel)
     }
-  }, [ref])
+  }, [ref, setZoom, zoom])  
 
   return zoom
 }

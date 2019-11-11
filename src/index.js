@@ -6,10 +6,15 @@ import useZoom from './hooks/useZoom'
 
 const PanZoom = ({ children }) => {
   const wrapperRef = useRef()
-  useZoom(wrapperRef)
+  const zoom = useZoom(wrapperRef)
+
+  const style = {
+    'transform': `scale(${zoom})`,
+    'transform-origin': '0 0',
+  }
 
   return (
-    <div ref={wrapperRef}>
+    <div ref={wrapperRef} style={style}>
       {children}
     </div>
   )
