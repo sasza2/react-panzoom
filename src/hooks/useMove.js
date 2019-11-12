@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
 
+import { usePanZoom } from '../context'
+
 const useMove = (ref) => {
   const [moving, setMoving] = useState(null)
-  const [position, setPosition] = useState({})
+  const { position, setPosition } = usePanZoom()
   
   useEffect(() => {
     const mousedown = (e) => {
