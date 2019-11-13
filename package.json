@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "dist/main.js",
+  "entry": {
+    "main": "src/PanZoom"
+  },
   "scripts": {
     "build": "webpack --mode=production",
     "lint": "eslint src --fix",
