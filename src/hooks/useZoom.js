@@ -13,15 +13,13 @@ const useZoom = (ref) => {
     }, 300)
 
     let node = ref.current
-    if (!node) return () => {
-      wheel.cancel()
-    }
+    if (!node) return wheel.cancel
 
-    node.addEventListener('wheel', wheel)
+    node.parentNode.addEventListener('wheel', wheel)
 
     return () => {
       wheel.cancel()
-      node.removeEventListener('wheel', wheel)
+      node.parentNode.removeEventListener('wheel', wheel)
     }
   }, [ref, setZoom, zoom])  
 
