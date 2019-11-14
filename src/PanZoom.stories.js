@@ -30,3 +30,11 @@ export const rectangles = () => (
 )
 
 export const text = () => <PanZoom>abc</PanZoom>
+
+export const textRectangle = () => (
+  <PanZoom>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 200, height: 200 }}>
+      <span>abc</span>
+    </div>
+  </PanZoom>
+)

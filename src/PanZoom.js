@@ -18,7 +18,7 @@ const PanZoom = ({ children }) => {
 
   const childStyle = {
     transform: transform({ position, zoom }),
-    transformOrigin: '0 0',
+    transformOrigin: `${position.x} ${position.y}`,
   }
 
   return (
