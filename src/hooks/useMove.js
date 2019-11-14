@@ -8,10 +8,10 @@ const useMove = (ref) => {
   
   useEffect(() => {
     const mousedown = (e) => {
-      const rect = ref.current.getBoundingClientRect()
+      const rect = ref.current.parentNode.getBoundingClientRect()
       setMoving({
-        x: e.clientX - rect.x,
-        y: e.clientY - rect.y,
+        x: e.clientX - rect.x - (position.x || 0),
+        y: e.clientY - rect.y - (position.y || 0),
       })
     }
 
@@ -27,7 +27,7 @@ const useMove = (ref) => {
       node.removeEventListener('mousemove', mousedown)
       node.removeEventListener('mousemove', mouseup)
     }
-  }, [ref])
+  }, [position, ref])
 
   useEffect(() => {
     let node = ref.current
