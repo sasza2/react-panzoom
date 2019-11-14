@@ -2,12 +2,13 @@ import React, { useRef } from 'react'
 import PropTypes from 'prop-types'
 
 import PanZoomContext from './context'
+import { transform } from './helpers/produceStyle'
 import useMove from './hooks/useMove'
 import useZoom from './hooks/useZoom'
 
 const PanZoom = ({ children }) => {
   const childRef = useRef()
-  const pos = useMove(childRef)
+  const position = useMove(childRef)
   const zoom = useZoom(childRef)  
 
   const wrapperStyle = {
@@ -16,7 +17,7 @@ const PanZoom = ({ children }) => {
   }
 
   const childStyle = {
-    transform: `translate(${pos.x}px, ${pos.y}px) scale(${zoom})`,
+    transform: transform({ position, zoom }),
     transformOrigin: '0 0',
   }
 

@@ -4,9 +4,7 @@
     "plugin:react/recommended"
   ],
   "globals": {
-    "clearInterval": false,
-    "console": false,
-    "setInterval": false
+    "window": "false"
   },
   "settings": {
     "react": {
