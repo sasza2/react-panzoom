@@ -29,8 +29,6 @@ const useMove = (ref) => {
     let node = ref.current
     if (!node) return
 
-    console.log('...')
-
     node.parentNode.addEventListener('mousedown', mousedown)
     window.addEventListener('mouseup', mouseup)
 
