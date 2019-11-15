@@ -6,9 +6,13 @@ import PanZoomContext from './PanZoomContext'
 const PanZoomProvider = ({ children }) => {
   const [zoom, setZoom] = useState(1.0)
   const [position, setPosition] = useState({})
+  const [origin, setOrigin] = useState({
+    x: 0,
+    y: 0,
+  })
 
   return (
-    <PanZoomContext.Provider value={{ zoom, setZoom, position, setPosition }}>
+    <PanZoomContext.Provider value={{ zoom, setZoom, position, setPosition, origin, setOrigin }}>
       {children}
     </PanZoomContext.Provider>
   )
