@@ -15,15 +15,20 @@ export const rectangles = () => (
           width: 100,
           height: 100,
           backgroundColor: 'red'
-        }} />
+        }}>
+          111
+        </div>
         <div style={{ 
           position: 'absolute',
           left: 210,
           top: 260,
           width: 40,
           height: 170,
-          backgroundColor: 'blue'
-        }} />
+          backgroundColor: 'blue',
+          color: '#fff',
+        }}>
+          222
+        </div>
       </div>
     </PanZoom>
   </div>

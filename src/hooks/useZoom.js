@@ -1,25 +1,27 @@
 import { useEffect } from 'react'
 import throttle from 'lodash/throttle'
 
+import { transform } from '../helpers/produceStyle'
 import { usePanZoom } from '../context'
 
 const useZoom = (ref) => {
-  const { position, setPosition, setZoom, zoom } = usePanZoom()
+  const { positionRef, zoomRef } = usePanZoom()
 
   useEffect(() => {
     const wheel = throttle((e) => {
-      var xoff = (e.clientX - (position.x || 0)) / zoom
-      var yoff = (e.clientY - (position.y || 0)) / zoom
+      var xoff = (e.clientX - positionRef.current.x) / zoomRef.current
+      var yoff = (e.clientY - positionRef.current.y) / zoomRef.current
 
-      const nextZoom = (e.deltaY < 0) ? zoom + 0.05 : zoom - 0.05
+      const nextZoom = (e.deltaY < 0) ? zoomRef.current + 0.05 : zoomRef.current - 0.05
+      zoomRef.current = nextZoom
 
-      setZoom(nextZoom)
-
-      setPosition({
+      positionRef.current = {
         x: e.clientX - xoff * nextZoom,
         y: e.clientY - yoff * nextZoom,
-      })
-    }, 100)
+      }
+
+      ref.current.style.transform = transform({ position: positionRef.current, zoom: nextZoom })
+    }, 25)
 
     let node = ref.current
     if (!node) return wheel.cancel
@@ -30,9 +32,9 @@ const useZoom = (ref) => {
       wheel.cancel()
       node.parentNode.removeEventListener('wheel', wheel)
     }
-  }, [position, ref, setPosition, setZoom, zoom])  
+  }, [ref])  
 
-  return zoom
+  return zoomRef.current
 }
 
 export default useZoom

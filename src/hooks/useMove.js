@@ -1,30 +1,23 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { transform } from '../helpers/produceStyle'
 import { usePanZoom } from '../context'
 
 const useMove = (ref) => {
-  const nextPosition = useRef()
   const [moving, setMoving] = useState(null)
-  const { position, setPosition, zoom } = usePanZoom()
+  const { positionRef, zoomRef } = usePanZoom()
   
   // Handle mousedown + mouseup
   useEffect(() => {
     const mousedown = (e) => {
       const rect = ref.current.parentNode.getBoundingClientRect()
       setMoving({
-        x: e.clientX - rect.x - (position.x || 0),
-        y: e.clientY - rect.y - (position.y || 0),
+        x: e.clientX - rect.x - (positionRef.current.x || 0),
+        y: e.clientY - rect.y - (positionRef.current.y || 0),
       })
     }
 
-    const mouseup = () => {
-      setMoving(null)
-      setPosition({
-        x: nextPosition.current.x,
-        y: nextPosition.current.y,
-      })
-    }
+    const mouseup = () => setMoving(null)
 
     let node = ref.current
     if (!node) return
@@ -36,7 +29,7 @@ const useMove = (ref) => {
       node.parentNode.removeEventListener('mousedown', mousedown)
       window.removeEventListener('mouseup', mouseup)
     }
-  }, [position, ref, zoom])
+  }, [ref])
 
   // Handle mousemove
   useEffect(() => {
@@ -45,11 +38,11 @@ const useMove = (ref) => {
 
     const move = (e) => {
       const rect = ref.current.parentNode.getBoundingClientRect()
-      nextPosition.current = {
+      positionRef.current = {
         x: e.clientX - rect.x - moving.x,
         y: e.clientY - rect.y - moving.y,
       }
-      ref.current.style.transform = transform({ position: nextPosition.current, zoom })
+      ref.current.style.transform = transform({ position: positionRef.current, zoom: zoomRef.current })
     }
 
     node.parentNode.addEventListener('mousemove', move)
@@ -57,9 +50,9 @@ const useMove = (ref) => {
     return () => {
       node.parentNode.removeEventListener('mousemove', move)
     }
-  }, [ref, moving, zoom])
+  }, [ref, moving])
 
-  return position
+  return positionRef.current
 }
 
 export default useMove
