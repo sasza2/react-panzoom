@@ -5,6 +5,23 @@ import PanZoomContext from './context'
 import useMove from './hooks/useMove'
 import useZoom from './hooks/useZoom'
 
+/*
+  TODO props:
+  - zoomSpeed,
+  - disable,
+  - disableZoom,
+  - disableMove,
+  - ref (setZoom, setPosition, reset),
+  - minZoom,
+  - maxZoom,
+  - boundaryVertical,
+  - boundaryHorizontal,
+  - preventSelection,
+  - onChange,
+  - onZoomChange,
+  - onPositionChange,
+  - className,
+*/
 const PanZoom = ({ children }) => {
   const childRef = useRef()
 
