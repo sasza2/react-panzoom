@@ -12,12 +12,12 @@ const PanZoom = ({ children }) => {
   useZoom(childRef)
 
   const wrapperStyle = {
-    display: 'inline-block',
     overflow: 'hidden',
   }
 
   const childStyle = {
     transformOrigin: '0 0',
+    pointerEvents: 'none',
   }
 
   return (
