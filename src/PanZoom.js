@@ -7,12 +7,12 @@ import useZoom from './hooks/useZoom'
 
 /*
   TODO props:
+  - zoomMin,
+  - zoomMax,
   - disable,
   - disableZoom,
   - disableMove,
   - ref (setZoom, setPosition, reset),
-  - minZoom,
-  - maxZoom,
   - boundaryVertical,
   - boundaryHorizontal,
   - preventSelection,
