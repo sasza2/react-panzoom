@@ -4,8 +4,10 @@ import throttle from 'lodash/throttle'
 import { transform } from '../helpers/produceStyle'
 import { usePanZoom } from '../context'
 
+const ZOOM_SPEED_BASE = 25 // ms
+
 const useZoom = (ref) => {
-  const { positionRef, zoomRef } = usePanZoom()
+  const { positionRef, zoomRef, zoomSpeed } = usePanZoom()
 
   useEffect(() => {
     const wheel = throttle((e) => {
@@ -21,7 +23,7 @@ const useZoom = (ref) => {
       }
 
       ref.current.style.transform = transform({ position: positionRef.current, zoom: nextZoom })
-    }, 25)
+    }, ZOOM_SPEED_BASE / zoomSpeed)
 
     let node = ref.current
     if (!node) return wheel.cancel
