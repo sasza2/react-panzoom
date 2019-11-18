@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import PanZoomContext from './PanZoomContext'
 
-const PanZoomProvider = ({ children, zoomSpeed, zoomStep }) => {
+const PanZoomProvider = ({ children, zoomMin, zoomSpeed, zoomStep }) => {
   const zoomRef = useRef()
   const positionRef = useRef()
 
@@ -14,6 +14,7 @@ const PanZoomProvider = ({ children, zoomSpeed, zoomStep }) => {
     <PanZoomContext.Provider
       value={{
         positionRef,
+        zoomMin,
         zoomRef,
         zoomSpeed,
         zoomStep,
@@ -25,11 +26,13 @@ const PanZoomProvider = ({ children, zoomSpeed, zoomStep }) => {
 
 PanZoomProvider.propTypes = {
   children: PropTypes.node.isRequired,
+  zoomMin: PropTypes.number,
   zoomSpeed: PropTypes.number,
   zoomStep: PropTypes.number,
 }
 
 PanZoomProvider.defaultProps = {
+  zoomMin: 0.1,
   zoomSpeed: 1,
   zoomStep: 0.05,
 }
