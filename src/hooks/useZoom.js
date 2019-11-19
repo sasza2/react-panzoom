@@ -7,7 +7,7 @@ import { usePanZoom } from '../context'
 const ZOOM_SPEED_BASE = 25 // ms
 
 const useZoom = (ref) => {
-  const { positionRef, zoomMin, zoomRef, zoomSpeed, zoomStep } = usePanZoom()
+  const { positionRef, zoomMax, zoomMin, zoomRef, zoomSpeed, zoomStep } = usePanZoom()
 
   useEffect(() => {
     const wheel = throttle((e) => {
@@ -15,9 +15,13 @@ const useZoom = (ref) => {
       var yoff = (e.clientY - positionRef.current.y) / zoomRef.current
 
       const nextZoom = (() => {
-        if(e.deltaY < 0) return zoomRef.current + zoomStep
-        if (zoomMin && zoomRef.current <= zoomMin) return zoomMin
-        return zoomRef.current - zoomStep
+        if(e.deltaY < 0){
+          if (zoomMax && zoomRef.current >= zoomMax) return zoomMax
+          return zoomRef.current + zoomStep
+        } else {
+          if (zoomMin && zoomRef.current <= zoomMin) return zoomMin
+          return zoomRef.current - zoomStep
+        }
       })()
       zoomRef.current = nextZoom
 

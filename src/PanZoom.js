@@ -19,6 +19,7 @@ import useZoom from './hooks/useZoom'
   - onZoomChange,
   - onPositionChange,
   - className,
+  - <Moveable />
 */
 const PanZoom = ({ children }) => {
   const childRef = useRef()
@@ -49,7 +50,7 @@ PanZoom.propTypes = {
 }
 
 const PanZoomWithContext = (props) => (
-  <PanZoomContext>
+  <PanZoomContext {...props}>
     <PanZoom {...props} />
   </PanZoomContext>
 )
