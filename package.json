@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "dist/main.js",
-  "entry": {
-    "main": "src/PanZoom"
-  },
   "scripts": {
     "build": "webpack --mode=production",
     "lint": "eslint src --fix",
@@ -31,7 +28,9 @@
     "eslint": "^6.5.1",
     "eslint-plugin-react": "^7.16.0",
     "prop-types": "^15.0.0",
-    "react": "16.8.6"
+    "react": "16.8.6",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
   },
   "peerDependencies": {
     "prop-types": "^15.0.0",
