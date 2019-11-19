@@ -5,7 +5,7 @@ import { usePanZoom } from '../context'
 
 const useMove = (ref) => {
   const [moving, setMoving] = useState(null)
-  const { disabled, disabledMove, positionRef, zoomRef } = usePanZoom()
+  const { disabled, disabledMove, onPositionChange, positionRef, zoomRef } = usePanZoom()
   
   // Handle mousedown + mouseup
   useEffect(() => {
@@ -45,6 +45,7 @@ const useMove = (ref) => {
         y: e.clientY - rect.y - moving.y,
       }
       ref.current.style.transform = transform({ position: positionRef.current, zoom: zoomRef.current })
+      if (onPositionChange) onPositionChange({ position: { ...positionRef.current } })
     }
 
     node.parentNode.addEventListener('mousemove', move)
@@ -52,7 +53,7 @@ const useMove = (ref) => {
     return () => {
       node.parentNode.removeEventListener('mousemove', move)
     }
-  }, [ref, moving])
+  }, [ref, moving, onPositionChange])
 
   return positionRef.current
 }

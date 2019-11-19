@@ -12,8 +12,6 @@ import useZoom from './hooks/useZoom'
   - boundaryHorizontal,
   - preventSelection,
   - onChange,
-  - onZoomChange,
-  - onPositionChange,
   - <Moveable />
 */
 const PanZoom = ({ children, className }) => {
