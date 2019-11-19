@@ -7,9 +7,19 @@ import { usePanZoom } from '../context'
 const ZOOM_SPEED_BASE = 25 // ms
 
 const useZoom = (ref) => {
-  const { positionRef, zoomMax, zoomMin, zoomRef, zoomSpeed, zoomStep } = usePanZoom()
+  const { 
+    disabled,
+    positionRef,
+    zoomMax,
+    zoomMin,
+    zoomRef,
+    zoomSpeed,
+    zoomStep
+  } = usePanZoom()
 
   useEffect(() => {
+    if (disabled) return
+
     const wheel = throttle((e) => {
       var xoff = (e.clientX - positionRef.current.x) / zoomRef.current
       var yoff = (e.clientY - positionRef.current.y) / zoomRef.current
@@ -42,7 +52,7 @@ const useZoom = (ref) => {
       wheel.cancel()
       node.parentNode.removeEventListener('wheel', wheel)
     }
-  }, [ref, zoomSpeed, zoomStep])
+  }, [disabled, ref, zoomSpeed, zoomStep])
 
   return zoomRef.current
 }
