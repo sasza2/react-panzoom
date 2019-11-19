@@ -9,6 +9,7 @@ const ZOOM_SPEED_BASE = 25 // ms
 const useZoom = (ref) => {
   const { 
     disabled,
+    disabledZoom,
     positionRef,
     zoomMax,
     zoomMin,
@@ -18,7 +19,7 @@ const useZoom = (ref) => {
   } = usePanZoom()
 
   useEffect(() => {
-    if (disabled) return
+    if (disabled || disabledZoom) return
 
     const wheel = throttle((e) => {
       var xoff = (e.clientX - positionRef.current.x) / zoomRef.current
@@ -52,7 +53,7 @@ const useZoom = (ref) => {
       wheel.cancel()
       node.parentNode.removeEventListener('wheel', wheel)
     }
-  }, [disabled, ref, zoomSpeed, zoomStep])
+  }, [disabled, disabledZoom, ref, zoomSpeed, zoomStep])
 
   return zoomRef.current
 }
