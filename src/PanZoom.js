@@ -14,10 +14,9 @@ import useZoom from './hooks/useZoom'
   - onChange,
   - onZoomChange,
   - onPositionChange,
-  - className,
   - <Moveable />
 */
-const PanZoom = ({ children }) => {
+const PanZoom = ({ children, className }) => {
   const childRef = useRef()
 
   useMove(childRef)
@@ -33,8 +32,8 @@ const PanZoom = ({ children }) => {
   }
 
   return (
-    <div style={wrapperStyle}>
-      <div ref={childRef} style={childStyle}>
+    <div className={className} style={wrapperStyle}>
+      <div className={className && `${className}__in`} ref={childRef} style={childStyle}>
         {children}
       </div>
     </div>
@@ -42,7 +41,12 @@ const PanZoom = ({ children }) => {
 }
 
 PanZoom.propTypes = {
+  className: PropTypes.string,
   children: PropTypes.node.isRequired,
+}
+
+PanZoom.defaultProps = {
+  className: null,
 }
 
 const PanZoomWithContext = (props) => (
