@@ -11,6 +11,7 @@ const useZoom = (ref) => {
     disabled,
     disabledZoom,
     positionRef,
+    onZoomChange,
     zoomMax,
     zoomMin,
     zoomRef,
@@ -42,6 +43,7 @@ const useZoom = (ref) => {
       }
 
       ref.current.style.transform = transform({ position: positionRef.current, zoom: nextZoom })
+      if (onZoomChange) onZoomChange({ zoom: nextZoom, position: { ...positionRef.current } })
     }, ZOOM_SPEED_BASE / zoomSpeed)
 
     let node = ref.current
@@ -53,7 +55,7 @@ const useZoom = (ref) => {
       wheel.cancel()
       node.parentNode.removeEventListener('wheel', wheel)
     }
-  }, [disabled, disabledZoom, ref, zoomSpeed, zoomStep])
+  }, [disabled, disabledZoom, onZoomChange, ref, zoomSpeed, zoomStep])
 
   return zoomRef.current
 }
