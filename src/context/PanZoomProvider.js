@@ -6,6 +6,7 @@ import PanZoomContext from './PanZoomContext'
 const PanZoomProvider = ({
   children,
   disabled,
+  disabledMove,
   disabledZoom,
   zoomMax,
   zoomMin,
@@ -22,6 +23,7 @@ const PanZoomProvider = ({
     <PanZoomContext.Provider
       value={{
         disabled,
+        disabledMove,
         disabledZoom,
         positionRef,
         zoomMax,
@@ -38,6 +40,7 @@ const PanZoomProvider = ({
 PanZoomProvider.propTypes = {
   children: PropTypes.node.isRequired,
   disabled: PropTypes.bool,
+  disabledMove: PropTypes.bool,
   disabledZoom: PropTypes.bool,
   zoomMax: PropTypes.number,
   zoomMin: PropTypes.number,
@@ -47,6 +50,7 @@ PanZoomProvider.propTypes = {
 
 PanZoomProvider.defaultProps = {
   disabled: false,
+  disabledMove: false,
   disabledZoom: false,
   zoomMin: 0.1,
   zoomSpeed: 1,
