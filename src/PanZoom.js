@@ -8,8 +8,6 @@ import useZoom from './hooks/useZoom'
 /*
   TODO props:
   - ref (setZoom, setPosition, reset),
-  - boundaryVertical,
-  - boundaryHorizontal,
   - preventSelection,
   - onChange,
   - <Moveable />

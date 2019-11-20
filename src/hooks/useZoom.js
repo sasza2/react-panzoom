@@ -2,12 +2,15 @@ import { useEffect } from 'react'
 import throttle from 'lodash/throttle'
 
 import { transform } from '../helpers/produceStyle'
+import { produceBounding } from '../helpers/produceBounding'
 import { usePanZoom } from '../context'
 
 const ZOOM_SPEED_BASE = 25 // ms
 
 const useZoom = (ref) => {
-  const { 
+  const {
+    boundaryHorizontal,
+    boundaryVertical,
     disabled,
     disabledZoom,
     positionRef,
@@ -23,6 +26,8 @@ const useZoom = (ref) => {
     if (disabled || disabledZoom) return
 
     const wheel = throttle((e) => {
+      const rect = ref.current.parentNode.getBoundingClientRect()
+
       var xoff = (e.clientX - positionRef.current.x) / zoomRef.current
       var yoff = (e.clientY - positionRef.current.y) / zoomRef.current
 
@@ -37,11 +42,16 @@ const useZoom = (ref) => {
       })()
       zoomRef.current = nextZoom
 
-      positionRef.current = {
+      const nextPosition = produceBounding({
+        boundaryHorizontal,
+        boundaryVertical,
         x: e.clientX - xoff * nextZoom,
         y: e.clientY - yoff * nextZoom,
-      }
+        rect,
+        zoom: nextZoom,
+      })
 
+      positionRef.current = nextPosition
       ref.current.style.transform = transform({ position: positionRef.current, zoom: nextZoom })
       if (onZoomChange) onZoomChange({ zoom: nextZoom, position: { ...positionRef.current } })
     }, ZOOM_SPEED_BASE / zoomSpeed)
@@ -55,7 +65,7 @@ const useZoom = (ref) => {
       wheel.cancel()
       node.parentNode.removeEventListener('wheel', wheel)
     }
-  }, [disabled, disabledZoom, onZoomChange, ref, zoomSpeed, zoomStep])
+  }, [boundaryHorizontal, boundaryVertical, disabled, disabledZoom, onZoomChange, ref, zoomSpeed, zoomStep])
 
   return zoomRef.current
 }

@@ -7,6 +7,7 @@ import { usePanZoom } from '../context'
 const useMove = (ref) => {
   const [moving, setMoving] = useState(null)
   const {
+    boundaryHorizontal,
     boundaryVertical,
     disabled,
     disabledMove,
@@ -49,6 +50,7 @@ const useMove = (ref) => {
     const move = (e) => {
       const rect = ref.current.parentNode.getBoundingClientRect()
       const nextPosition = produceBounding({
+        boundaryHorizontal,
         boundaryVertical,
         x: e.clientX - rect.x - moving.x,
         y: e.clientY - rect.y - moving.y,
@@ -66,7 +68,7 @@ const useMove = (ref) => {
     return () => {
       node.parentNode.removeEventListener('mousemove', move)
     }
-  }, [boundaryVertical, ref, moving, onPositionChange])
+  }, [boundaryHorizontal, boundaryVertical, ref, moving, onPositionChange])
 
   return positionRef.current
 }

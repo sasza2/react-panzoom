@@ -48,9 +48,11 @@ export const text = () => (
 )
 
 export const imageSVG = () => (
-  <PanZoom boundaryVertical={0.5}>
-    <svg height="210" width="500">
-      <polygon points="200,10 250,190 160,210" style={{ fill: 'lime', stroke: 'purple', strokeWidth: 1 }} />
-    </svg> 
+  <PanZoom boundaryHorizontal={0.5} boundaryVertical={0.5}>
+    <div style={{ border: '1px solid red'}}>
+      <svg height="210" width="500">
+        <polygon points="200,10 250,190 160,210" style={{ fill: 'lime', stroke: 'purple', strokeWidth: 1 }} />
+      </svg> 
+    </div>
   </PanZoom>
 )
