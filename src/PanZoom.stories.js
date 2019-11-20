@@ -48,7 +48,7 @@ export const text = () => (
 )
 
 export const imageSVG = () => (
-  <PanZoom onPositionChange={console.log}>
+  <PanZoom boundaryVertical={0.5}>
     <svg height="210" width="500">
       <polygon points="200,10 250,190 160,210" style={{ fill: 'lime', stroke: 'purple', strokeWidth: 1 }} />
     </svg> 

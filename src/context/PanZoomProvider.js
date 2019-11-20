@@ -5,15 +5,7 @@ import PanZoomContext from './PanZoomContext'
 
 const PanZoomProvider = ({
   children,
-  disabled,
-  disabledMove,
-  disabledZoom,
-  onPositionChange,
-  onZoomChange,
-  zoomMax,
-  zoomMin,
-  zoomSpeed,
-  zoomStep
+  ...props
 }) => {
   const zoomRef = useRef()
   const positionRef = useRef()
@@ -24,17 +16,9 @@ const PanZoomProvider = ({
   return (
     <PanZoomContext.Provider
       value={{
-        disabled,
-        disabledMove,
-        disabledZoom,
-        onPositionChange,
-        onZoomChange,
         positionRef,
-        zoomMax,
-        zoomMin,
         zoomRef,
-        zoomSpeed,
-        zoomStep,
+        ...props
       }}>
       {children}
     </PanZoomContext.Provider>
@@ -42,6 +26,7 @@ const PanZoomProvider = ({
 }
 
 PanZoomProvider.propTypes = {
+  boundaryVertical: PropTypes.number,
   children: PropTypes.node.isRequired,
   disabled: PropTypes.bool,
   disabledMove: PropTypes.bool,

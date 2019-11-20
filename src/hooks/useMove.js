@@ -1,11 +1,19 @@
 import { useEffect, useState } from 'react'
 
 import { transform } from '../helpers/produceStyle'
+import { produceBounding } from '../helpers/produceBounding'
 import { usePanZoom } from '../context'
 
 const useMove = (ref) => {
   const [moving, setMoving] = useState(null)
-  const { disabled, disabledMove, onPositionChange, positionRef, zoomRef } = usePanZoom()
+  const {
+    boundaryVertical,
+    disabled,
+    disabledMove,
+    onPositionChange,
+    positionRef,
+    zoomRef
+  } = usePanZoom()
   
   // Handle mousedown + mouseup
   useEffect(() => {
@@ -40,10 +48,15 @@ const useMove = (ref) => {
 
     const move = (e) => {
       const rect = ref.current.parentNode.getBoundingClientRect()
-      positionRef.current = {
+      const nextPosition = produceBounding({
+        boundaryVertical,
         x: e.clientX - rect.x - moving.x,
         y: e.clientY - rect.y - moving.y,
-      }
+        rect,
+        zoom: zoomRef.current,
+      })
+
+      positionRef.current = nextPosition
       ref.current.style.transform = transform({ position: positionRef.current, zoom: zoomRef.current })
       if (onPositionChange) onPositionChange({ position: { ...positionRef.current } })
     }
@@ -53,7 +66,7 @@ const useMove = (ref) => {
     return () => {
       node.parentNode.removeEventListener('mousemove', move)
     }
-  }, [ref, moving, onPositionChange])
+  }, [boundaryVertical, ref, moving, onPositionChange])
 
   return positionRef.current
 }
