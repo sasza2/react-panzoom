@@ -67,7 +67,7 @@ const useZoom = (ref) => {
     }
   }, [boundaryHorizontal, boundaryVertical, disabled, disabledZoom, onZoomChange, ref, zoomSpeed, zoomStep])
 
-  return zoomRef.current
+  return zoomRef
 }
 
 export default useZoom

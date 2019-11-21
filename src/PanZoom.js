@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { forwardRef, useRef } from 'react'
 import PropTypes from 'prop-types'
 
 import PanZoomContext from './context'
@@ -45,10 +45,10 @@ PanZoom.defaultProps = {
   className: null,
 }
 
-const PanZoomWithContext = (props) => (
+const PanZoomWithContext = (props, ref) => (
   <PanZoomContext {...props}>
-    <PanZoom {...props} />
+    <PanZoom forwardRef={ref} {...props} />
   </PanZoomContext>
 )
 
-export default PanZoomWithContext
+export default forwardRef(PanZoomWithContext)
