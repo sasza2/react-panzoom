@@ -70,7 +70,7 @@ const useMove = (ref) => {
     }
   }, [boundaryHorizontal, boundaryVertical, ref, moving, onPositionChange])
 
-  return positionRef.current
+  return positionRef
 }
 
 export default useMove
