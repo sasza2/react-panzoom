@@ -19,7 +19,7 @@ const PanZoom = ({ children, className, forwardRef }) => {
   const positionRef = useMove(childRef)
   const zoomRef = useZoom(childRef)
 
-  api({ forwardRef, positionRef, zoomRef })
+  api({ forwardRef, positionRef, ref: childRef, zoomRef })
 
   const wrapperStyle = {
     overflow: 'hidden',

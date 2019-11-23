@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useLayoutEffect } from 'react'
 
 import PanZoom from './PanZoom'
 
@@ -50,6 +50,26 @@ export const text = () => (
 export const imageSVG = () => {
   const ref = React.createRef();
   console.log(ref)
+  return (
+  <PanZoom ref={ref} boundaryHorizontal={0.5} boundaryVertical={0.5}>
+    <div style={{ border: '1px solid red'}}>
+      <svg height="210" width="500">
+        <polygon points="200,10 250,190 160,210" style={{ fill: 'lime', stroke: 'purple', strokeWidth: 1 }} />
+      </svg> 
+    </div>
+  </PanZoom>
+  )
+}
+
+export const imageSVG2 = () => {
+  const ref = React.createRef();
+  useLayoutEffect(() => {
+    const timer = setInterval(() => {
+      console.log('hej')
+      ref.current.move(20, 20)
+    }, 500)
+    return () => clearInterval(timer)
+  }, [])
   return (
   <PanZoom ref={ref} boundaryHorizontal={0.5} boundaryVertical={0.5}>
     <div style={{ border: '1px solid red'}}>
