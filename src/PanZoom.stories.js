@@ -70,7 +70,7 @@ export const imageSVG2 = () => {
   const ref = React.createRef();
   useLayoutEffect(() => {
     const timer = setInterval(() => {
-      ref.current.move(20, 20);
+      ref.current.setPosition(120, 20);
     }, 500);
     return () => clearInterval(timer);
   }, []);

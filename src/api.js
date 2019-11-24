@@ -2,9 +2,9 @@ import positionClone from './helpers/positionClone';
 import transform from './helpers/produceStyle';
 
 const move = ({
-  apiRef, positionRef, zoomRef,
+  childRef, positionRef, zoomRef,
 }) => (x, y) => {
-  const api = apiRef;
+  const ref = childRef;
   const position = positionRef;
 
   if (position.current) {
@@ -16,12 +16,19 @@ const move = ({
     position.current = { x, y };
   }
 
-  api.current.style.transform = transform({ position: positionRef.current, zoom: zoomRef.current });
+  ref.current.style.transform = transform({ position: positionRef.current, zoom: zoomRef.current });
 
   return positionClone(positionRef.current);
 };
 
 const getPosition = ({ positionRef }) => positionClone(positionRef.current);
+
+const setPosition = ({ childRef, positionRef, zoomRef }) => (x, y) => {
+  const ref = childRef;
+  const position = positionRef;
+  position.current = { x, y };
+  ref.current.style.transform = transform({ position: positionRef.current, zoom: zoomRef.current });
+};
 
 const api = ({
   apiRef, childRef, positionRef, zoomRef,
@@ -37,6 +44,7 @@ const api = ({
       zoomRef,
     }),
     getPosition: getPosition({ positionRef }),
+    setPosition: setPosition({ childRef, positionRef, zoomRef }),
   };
 };
 
