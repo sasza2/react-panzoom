@@ -1,3 +1,3 @@
-const positionClone = (positionRef) => ({ ...positionRef.current })
+const positionClone = (positionRef) => ({ ...positionRef.current });
 
-export default positionClone
+export default positionClone;

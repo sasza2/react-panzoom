@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 
-import { transform } from '../helpers/produceStyle'
-import { produceBounding } from '../helpers/produceBounding'
-import { usePanZoom } from '../context'
+import transform from '../helpers/produceStyle';
+import produceBounding from '../helpers/produceBounding';
+import { usePanZoom } from '../context';
 
-const useMove = (ref) => {
-  const [moving, setMoving] = useState(null)
+const useMove = (ref, loading) => {
+  const panZoomRef = ref.current;
+  const [moving, setMoving] = useState(null);
   const {
     boundaryHorizontal,
     boundaryVertical,
@@ -13,42 +14,43 @@ const useMove = (ref) => {
     disabledMove,
     onPositionChange,
     positionRef,
-    zoomRef
-  } = usePanZoom()
-  
+    zoomRef,
+  } = usePanZoom();
+
   // Handle mousedown + mouseup
   useEffect(() => {
-    if (disabled || disabledMove) return
+    if (loading || disabled || disabledMove) return undefined;
 
     const mousedown = (e) => {
-      const rect = ref.current.parentNode.getBoundingClientRect()
+      const rect = ref.current.parentNode.getBoundingClientRect();
       setMoving({
         x: e.clientX - rect.x - (positionRef.current.x || 0),
         y: e.clientY - rect.y - (positionRef.current.y || 0),
-      })
-    }
+      });
+    };
 
-    const mouseup = () => setMoving(null)
+    const mouseup = () => setMoving(null);
 
-    let node = ref.current
-    if (!node) return
+    const node = ref.current;
+    if (!node) return undefined;
 
-    node.parentNode.addEventListener('mousedown', mousedown)
-    window.addEventListener('mouseup', mouseup)
+    node.parentNode.addEventListener('mousedown', mousedown);
+    window.addEventListener('mouseup', mouseup);
 
     return () => {
-      node.parentNode.removeEventListener('mousedown', mousedown)
-      window.removeEventListener('mouseup', mouseup)
-    }
-  }, [disabled, disabledMove, ref])
+      node.parentNode.removeEventListener('mousedown', mousedown);
+      window.removeEventListener('mouseup', mouseup);
+    };
+  }, [disabled, disabledMove, loading]);
 
   // Handle mousemove
   useEffect(() => {
-    let node = ref.current
-    if (!node || !moving) return
+    if (loading || !moving) return undefined;
+
+    const node = ref.current;
 
     const move = (e) => {
-      const rect = ref.current.parentNode.getBoundingClientRect()
+      const rect = ref.current.parentNode.getBoundingClientRect();
       const nextPosition = produceBounding({
         boundaryHorizontal,
         boundaryVertical,
@@ -56,21 +58,24 @@ const useMove = (ref) => {
         y: e.clientY - rect.y - moving.y,
         rect,
         zoom: zoomRef.current,
-      })
+      });
 
-      positionRef.current = nextPosition
-      ref.current.style.transform = transform({ position: positionRef.current, zoom: zoomRef.current })
-      if (onPositionChange) onPositionChange({ position: { ...positionRef.current } })
-    }
+      positionRef.current = nextPosition;
+      panZoomRef.style.transform = transform({
+        position: positionRef.current,
+        zoom: zoomRef.current,
+      });
+      if (onPositionChange) onPositionChange({ position: { ...positionRef.current } });
+    };
 
-    node.parentNode.addEventListener('mousemove', move)
+    node.parentNode.addEventListener('mousemove', move);
 
     return () => {
-      node.parentNode.removeEventListener('mousemove', move)
-    }
-  }, [boundaryHorizontal, boundaryVertical, ref, moving, onPositionChange])
+      node.parentNode.removeEventListener('mousemove', move);
+    };
+  }, [boundaryHorizontal, boundaryVertical, loading, moving, onPositionChange]);
 
-  return positionRef
-}
+  return positionRef;
+};
 
-export default useMove
+export default useMove;

@@ -1,13 +1,14 @@
-import { useEffect } from 'react'
-import throttle from 'lodash/throttle'
+import { useEffect } from 'react';
+import throttle from 'lodash/throttle';
 
-import { transform } from '../helpers/produceStyle'
-import { produceBounding } from '../helpers/produceBounding'
-import { usePanZoom } from '../context'
+import transform from '../helpers/produceStyle';
+import produceBounding from '../helpers/produceBounding';
+import { usePanZoom } from '../context';
 
-const ZOOM_SPEED_BASE = 25 // ms
+const ZOOM_SPEED_BASE = 25; // ms
 
-const useZoom = (ref) => {
+const useZoom = (ref, loading) => {
+  const panZoomRef = ref.current;
   const {
     boundaryHorizontal,
     boundaryVertical,
@@ -19,28 +20,39 @@ const useZoom = (ref) => {
     zoomMin,
     zoomRef,
     zoomSpeed,
-    zoomStep
-  } = usePanZoom()
+    zoomStep,
+  } = usePanZoom();
+
+  const dependencies = [
+    boundaryHorizontal,
+    boundaryVertical,
+    disabled,
+    disabledZoom,
+    loading,
+    onZoomChange,
+    ref,
+    zoomSpeed,
+    zoomStep,
+  ];
 
   useEffect(() => {
-    if (disabled || disabledZoom) return
+    if (loading || disabled || disabledZoom) return undefined;
 
     const wheel = throttle((e) => {
-      const rect = ref.current.parentNode.getBoundingClientRect()
+      const rect = panZoomRef.parentNode.getBoundingClientRect();
 
-      var xoff = (e.clientX - positionRef.current.x) / zoomRef.current
-      var yoff = (e.clientY - positionRef.current.y) / zoomRef.current
+      const xoff = (e.clientX - positionRef.current.x) / zoomRef.current;
+      const yoff = (e.clientY - positionRef.current.y) / zoomRef.current;
 
       const nextZoom = (() => {
-        if(e.deltaY < 0){
-          if (zoomMax && zoomRef.current >= zoomMax) return zoomMax
-          return zoomRef.current + zoomStep
-        } else {
-          if (zoomMin && zoomRef.current <= zoomMin) return zoomMin
-          return zoomRef.current - zoomStep
+        if (e.deltaY < 0) {
+          if (zoomMax && zoomRef.current >= zoomMax) return zoomMax;
+          return zoomRef.current + zoomStep;
         }
-      })()
-      zoomRef.current = nextZoom
+        if (zoomMin && zoomRef.current <= zoomMin) return zoomMin;
+        return zoomRef.current - zoomStep;
+      })();
+      zoomRef.current = nextZoom;
 
       const nextPosition = produceBounding({
         boundaryHorizontal,
@@ -49,25 +61,24 @@ const useZoom = (ref) => {
         y: e.clientY - yoff * nextZoom,
         rect,
         zoom: nextZoom,
-      })
+      });
 
-      positionRef.current = nextPosition
-      ref.current.style.transform = transform({ position: positionRef.current, zoom: nextZoom })
-      if (onZoomChange) onZoomChange({ zoom: nextZoom, position: { ...positionRef.current } })
-    }, ZOOM_SPEED_BASE / zoomSpeed)
+      positionRef.current = nextPosition;
+      panZoomRef.style.transform = transform({ position: positionRef.current, zoom: nextZoom });
+      if (onZoomChange) onZoomChange({ zoom: nextZoom, position: { ...positionRef.current } });
+    }, ZOOM_SPEED_BASE / zoomSpeed);
 
-    let node = ref.current
-    if (!node) return wheel.cancel
+    if (!panZoomRef) return wheel.cancel;
 
-    node.parentNode.addEventListener('wheel', wheel)
+    panZoomRef.parentNode.addEventListener('wheel', wheel);
 
     return () => {
-      wheel.cancel()
-      node.parentNode.removeEventListener('wheel', wheel)
-    }
-  }, [boundaryHorizontal, boundaryVertical, disabled, disabledZoom, onZoomChange, ref, zoomSpeed, zoomStep])
+      wheel.cancel();
+      panZoomRef.parentNode.removeEventListener('wheel', wheel);
+    };
+  }, dependencies);
 
-  return zoomRef
-}
+  return zoomRef;
+};
 
-export default useZoom
+export default useZoom;

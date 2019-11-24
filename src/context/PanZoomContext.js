@@ -1,5 +1,5 @@
-import { createContext } from 'react'
+import { createContext } from 'react';
 
-const PanZoomContext = createContext({})
+const PanZoomContext = createContext({});
 
-export default PanZoomContext
+export default PanZoomContext;

@@ -1,28 +1,43 @@
-import positionClone from './helpers/positionClone'
-import { transform } from './helpers/produceStyle'
+import positionClone from './helpers/positionClone';
+import transform from './helpers/produceStyle';
 
-const move = ({ positionRef, ref, zoomRef }) => (x, y) => {
-  if (positionRef.current) {
-    positionRef.current = {
+const move = ({
+  apiRef, positionRef, zoomRef,
+}) => (x, y) => {
+  const api = apiRef;
+  const position = positionRef;
+
+  if (position.current) {
+    position.current = {
       x: positionRef.current.x + x,
       y: positionRef.current.y + y,
-    }    
+    };
   } else {
-    positionRef.current = { x, y }
+    position.current = { x, y };
   }
 
-  ref.current.style.transform = transform({ position: positionRef.current, zoom: zoomRef.current })
+  api.current.style.transform = transform({ position: positionRef.current, zoom: zoomRef.current });
 
-  return positionClone(positionRef.current)
-}
+  return positionClone(positionRef.current);
+};
 
-const api = ({ forwardRef, positionRef, ref, zoomRef }) => {
-  if (!forwardRef) return
+const getPosition = ({ positionRef }) => positionClone(positionRef.current);
 
-  forwardRef.current = {
-    move: move({ positionRef, ref, zoomRef }),
+const api = ({
+  apiRef, childRef, positionRef, zoomRef,
+}) => {
+  if (!apiRef) return;
 
-  }  
-}
+  const apiExternal = apiRef;
+  apiExternal.current = {
+    move: move({
+      apiRef,
+      childRef,
+      positionRef,
+      zoomRef,
+    }),
+    getPosition: getPosition({ positionRef }),
+  };
+};
 
-export default api
+export default api;

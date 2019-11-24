@@ -1,8 +1,14 @@
 {
-  "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended"
+  "extends": "airbnb",
+  "plugins": [
+    "react",
+    "jsx-a11y",
+    "import"
   ],
+  "rules": {
+    "react/jsx-props-no-spreading": 0,
+    "react/jsx-filename-extension": 0
+  },
   "globals": {
     "console": "false",
     "window": "false"

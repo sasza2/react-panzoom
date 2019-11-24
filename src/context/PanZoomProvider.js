@@ -1,29 +1,30 @@
-import React, { useRef } from 'react'
-import PropTypes from 'prop-types'
+import React, { useRef } from 'react';
+import PropTypes from 'prop-types';
 
-import PanZoomContext from './PanZoomContext'
+import PanZoomContext from './PanZoomContext';
 
 const PanZoomProvider = ({
   children,
   ...props
 }) => {
-  const zoomRef = useRef()
-  const positionRef = useRef()
+  const zoomRef = useRef();
+  const positionRef = useRef();
 
-  if (!zoomRef.current) zoomRef.current = 1
-  if (!positionRef.current) positionRef.current = { x: 0, y: 0 }
+  if (!zoomRef.current) zoomRef.current = 1;
+  if (!positionRef.current) positionRef.current = { x: 0, y: 0 };
 
   return (
     <PanZoomContext.Provider
       value={{
         positionRef,
         zoomRef,
-        ...props
-      }}>
+        ...props,
+      }}
+    >
       {children}
     </PanZoomContext.Provider>
-  )
-}
+  );
+};
 
 PanZoomProvider.propTypes = {
   boundaryVertical: PropTypes.number,
@@ -37,15 +38,19 @@ PanZoomProvider.propTypes = {
   zoomMin: PropTypes.number,
   zoomSpeed: PropTypes.number,
   zoomStep: PropTypes.number,
-}
+};
 
 PanZoomProvider.defaultProps = {
+  boundaryVertical: null,
   disabled: false,
   disabledMove: false,
   disabledZoom: false,
+  onPositionChange: null,
+  onZoomChange: null,
+  zoomMax: null,
   zoomMin: 0.1,
   zoomSpeed: 1,
   zoomStep: 0.05,
-}
+};
 
-export default PanZoomProvider
+export default PanZoomProvider;

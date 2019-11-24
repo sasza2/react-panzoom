@@ -1,7 +1,7 @@
-import { useContext } from 'react'
+import { useContext } from 'react';
 
-import PanZoomContext from './PanZoomContext'
+import PanZoomContext from './PanZoomContext';
 
-const useUrlSync = () => useContext(PanZoomContext)
+const useUrlSync = () => useContext(PanZoomContext);
 
-export default useUrlSync
+export default useUrlSync;
