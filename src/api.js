@@ -39,6 +39,14 @@ const setZoom = ({ childRef, positionRef, zoomRef }) => (value) => {
   ref.current.style.transform = transform({ position: positionRef.current, zoom: zoomRef.current });
 };
 
+const zoomIn = ({ childRef, positionRef, zoomRef }) => (value) => {
+  setZoom({ childRef, positionRef, zoomRef })(getZoom({ zoomRef })() + value);
+};
+
+const zoomOut = ({ childRef, positionRef, zoomRef }) => (value) => {
+  setZoom({ childRef, positionRef, zoomRef })(getZoom({ zoomRef })() - value);
+};
+
 const reset = ({ childRef, positionRef, zoomRef }) => () => {
   const ref = childRef;
   const zoom = zoomRef;
@@ -67,6 +75,8 @@ const api = ({
     setPosition: setPosition({ childRef, positionRef, zoomRef }),
     getZoom: getZoom({ zoomRef }),
     setZoom: setZoom({ childRef, positionRef, zoomRef }),
+    zoomIn: zoomIn({ childRef, positionRef, zoomRef }),
+    zoomOut: zoomOut({ childRef, positionRef, zoomRef }),
     reset: reset({ childRef, positionRef, zoomRef }),
   };
 };

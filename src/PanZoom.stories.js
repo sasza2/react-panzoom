@@ -84,3 +84,24 @@ export const imageSVG2 = () => {
     </PanZoom>
   );
 };
+
+export const textWithRef = () => {
+  const panZoomRef = React.createRef();
+  return (
+    <div>
+      <button type="button" onClick={() => panZoomRef.current.zoomIn(0.2)}>+</button>
+      <button type="button" onClick={() => panZoomRef.current.zoomOut(0.2)}>-</button>
+      <button type="button" onClick={() => panZoomRef.current.reset()}>reset</button>
+      <button type="button" onClick={() => panZoomRef.current.move(-20, 0)}>&lt;-</button>
+      <button type="button" onClick={() => panZoomRef.current.move(20, 0)}>-&gt;</button>
+      <PanZoom ref={panZoomRef}>
+        <div style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'center', width: 200, height: 200,
+        }}
+        >
+          <span>abc</span>
+        </div>
+      </PanZoom>
+    </div>
+  );
+};

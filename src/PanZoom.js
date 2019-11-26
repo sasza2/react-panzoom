@@ -8,7 +8,6 @@ import api from './api';
 
 /*
   TODO props:
-  - ref (setZoom, setPosition, reset),
   - preventSelection,
   - onChange,
   - <Moveable />
