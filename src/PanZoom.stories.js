@@ -43,7 +43,7 @@ export const rectangles = () => (
 );
 
 export const text = () => (
-  <PanZoom>
+  <PanZoom disableUserSelect>
     <div style={{
       display: 'flex', alignItems: 'center', justifyContent: 'center', width: 200, height: 200,
     }}
