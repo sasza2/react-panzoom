@@ -14,7 +14,6 @@ const CLASS_NAME = 'react-panzoom';
 
 /*
   TODO props:
-  - onChange,
   - <Moveable />
 */
 const PanZoom = ({

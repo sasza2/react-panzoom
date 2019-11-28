@@ -12,6 +12,7 @@ const useMove = (ref, loading) => {
     boundaryVertical,
     disabled,
     disabledMove,
+    onChange,
     onPositionChange,
     positionRef,
     zoomRef,
@@ -65,6 +66,7 @@ const useMove = (ref, loading) => {
         position: positionRef.current,
         zoom: zoomRef.current,
       });
+      if (onChange) onChange({ position: { ...positionRef.current }, zoom: zoomRef.current });
       if (onPositionChange) onPositionChange({ position: { ...positionRef.current } });
     };
 
@@ -73,7 +75,7 @@ const useMove = (ref, loading) => {
     return () => {
       node.parentNode.removeEventListener('mousemove', move);
     };
-  }, [boundaryHorizontal, boundaryVertical, loading, moving, onPositionChange]);
+  }, [boundaryHorizontal, boundaryVertical, loading, moving, onChange, onPositionChange]);
 
   return positionRef;
 };

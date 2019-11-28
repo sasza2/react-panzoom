@@ -15,6 +15,7 @@ const useZoom = (ref, loading) => {
     disabled,
     disabledZoom,
     positionRef,
+    onChange,
     onZoomChange,
     zoomMax,
     zoomMin,
@@ -29,6 +30,7 @@ const useZoom = (ref, loading) => {
     disabled,
     disabledZoom,
     loading,
+    onChange,
     onZoomChange,
     ref,
     zoomSpeed,
@@ -65,6 +67,8 @@ const useZoom = (ref, loading) => {
 
       positionRef.current = nextPosition;
       panZoomRef.style.transform = transform({ position: positionRef.current, zoom: nextZoom });
+
+      if (onChange) onChange({ position: { ...positionRef.current }, zoom: nextZoom });
       if (onZoomChange) onZoomChange({ zoom: nextZoom, position: { ...positionRef.current } });
     }, ZOOM_SPEED_BASE / zoomSpeed);
 
