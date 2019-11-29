@@ -43,45 +43,42 @@ export const rectangles = () => (
 );
 
 export const text = () => (
-  <PanZoom disableUserSelect>
-    <div style={{
-      display: 'flex', alignItems: 'center', justifyContent: 'center', width: 200, height: 200,
-    }}
-    >
-      <span>abc</span>
-    </div>
-  </PanZoom>
+  <div style={{ height: 200 }}>
+    <PanZoom disableUserSelect>
+      abcdef
+    </PanZoom>
+  </div>
 );
 
 export const imageSVG = () => {
   const ref = React.createRef();
   return (
-    <PanZoom ref={ref} boundaryHorizontal={0.5} boundaryVertical={0.5}>
-      <div style={{ border: '1px solid red' }}>
+    <div style={{ border: '1px solid red' }}>
+      <PanZoom ref={ref} boundaryHorizontal={0.5} boundaryVertical={0.5}>
         <svg height="210" width="500">
           <polygon points="200,10 250,190 160,210" style={{ fill: 'lime', stroke: 'purple', strokeWidth: 1 }} />
         </svg>
-      </div>
-    </PanZoom>
+      </PanZoom>
+    </div>
   );
 };
 
-export const imageSVG2 = () => {
+export const imageSVGAnimation = () => {
   const ref = React.createRef();
   useLayoutEffect(() => {
     const timer = setInterval(() => {
-      ref.current.setPosition(120, 20);
+      ref.current.setPosition(120, parseInt(Math.random() * 240 - 120, 10));
     }, 500);
     return () => clearInterval(timer);
   }, []);
   return (
-    <PanZoom ref={ref} boundaryHorizontal={0.5} boundaryVertical={0.5}>
-      <div style={{ border: '1px solid red' }}>
+    <div style={{ border: '1px solid red' }}>
+      <PanZoom ref={ref} boundaryHorizontal={0.5} boundaryVertical={0.5}>
         <svg height="210" width="500">
           <polygon points="200,10 250,190 160,210" style={{ fill: 'lime', stroke: 'purple', strokeWidth: 1 }} />
         </svg>
-      </div>
-    </PanZoom>
+      </PanZoom>
+    </div>
   );
 };
 

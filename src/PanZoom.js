@@ -14,7 +14,7 @@ const CLASS_NAME = 'react-panzoom';
 
 /*
   TODO props:
-  - <Moveable />
+  - boundary
 */
 const PanZoom = ({
   apiRef, children, className, disableUserSelect,
@@ -52,7 +52,7 @@ const PanZoom = ({
 
   return (
     <div className={classNameMemo}>
-      <div className={classNameChildMemo} ref={createRef}>
+      <div draggable={false} className={classNameChildMemo} ref={createRef}>
         {children}
       </div>
     </div>

@@ -43,8 +43,8 @@ const useZoom = (ref, loading) => {
     const wheel = throttle((e) => {
       const rect = panZoomRef.parentNode.getBoundingClientRect();
 
-      const xoff = (e.clientX - positionRef.current.x) / zoomRef.current;
-      const yoff = (e.clientY - positionRef.current.y) / zoomRef.current;
+      const xoff = (e.clientX - rect.x - positionRef.current.x) / zoomRef.current;
+      const yoff = (e.clientY - rect.y - positionRef.current.y) / zoomRef.current;
 
       const nextZoom = (() => {
         if (e.deltaY < 0) {
@@ -59,8 +59,8 @@ const useZoom = (ref, loading) => {
       const nextPosition = produceBounding({
         boundaryHorizontal,
         boundaryVertical,
-        x: e.clientX - xoff * nextZoom,
-        y: e.clientY - yoff * nextZoom,
+        x: e.clientX - rect.x - xoff * nextZoom,
+        y: e.clientY - rect.y - yoff * nextZoom,
         rect,
         zoom: nextZoom,
       });
@@ -74,11 +74,16 @@ const useZoom = (ref, loading) => {
 
     if (!panZoomRef) return wheel.cancel;
 
-    panZoomRef.parentNode.addEventListener('wheel', wheel);
+    const onWheel = (e) => {
+      e.preventDefault();
+      wheel(e);
+    };
+
+    panZoomRef.parentNode.addEventListener('wheel', onWheel);
 
     return () => {
       wheel.cancel();
-      panZoomRef.parentNode.removeEventListener('wheel', wheel);
+      panZoomRef.parentNode.removeEventListener('wheel', onWheel);
     };
   }, dependencies);
 
