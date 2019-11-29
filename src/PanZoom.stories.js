@@ -50,18 +50,15 @@ export const text = () => (
   </div>
 );
 
-export const imageSVG = () => {
-  const ref = React.createRef();
-  return (
-    <div style={{ border: '1px solid red' }}>
-      <PanZoom ref={ref} boundaryHorizontal={0.5} boundaryVertical={0.5}>
-        <svg height="210" width="500">
-          <polygon points="200,10 250,190 160,210" style={{ fill: 'lime', stroke: 'purple', strokeWidth: 1 }} />
-        </svg>
-      </PanZoom>
-    </div>
-  );
-};
+export const imageSVG = () => (
+  <div style={{ border: '1px solid red' }}>
+    <PanZoom>
+      <svg height="210" width="500">
+        <polygon points="200,10 250,190 160,210" style={{ fill: 'lime', stroke: 'purple', strokeWidth: 1 }} />
+      </svg>
+    </PanZoom>
+  </div>
+);
 
 export const imageSVGAnimation = () => {
   const ref = React.createRef();
@@ -73,7 +70,7 @@ export const imageSVGAnimation = () => {
   }, []);
   return (
     <div style={{ border: '1px solid red' }}>
-      <PanZoom ref={ref} boundaryHorizontal={0.5} boundaryVertical={0.5}>
+      <PanZoom ref={ref}>
         <svg height="210" width="500">
           <polygon points="200,10 250,190 160,210" style={{ fill: 'lime', stroke: 'purple', strokeWidth: 1 }} />
         </svg>
@@ -82,7 +79,7 @@ export const imageSVGAnimation = () => {
   );
 };
 
-export const textWithRef = () => {
+export const API = () => {
   const panZoomRef = React.createRef();
   return (
     <div>
@@ -97,6 +94,30 @@ export const textWithRef = () => {
         }}
         >
           <span>abc</span>
+        </div>
+      </PanZoom>
+    </div>
+  );
+};
+
+export const boxBounding = () => {
+  const panZoomRef = React.createRef();
+  const innerRef = React.createRef();
+
+  const onChange = ({ position, zoom }) => {
+    innerRef.current.innerHTML = `${parseInt(position.x, 10)}:${parseInt(position.y, 10)} (${zoom.toFixed(2)}x)`;
+  };
+
+  return (
+    <div style={{ height: '100vh' }}>
+      <PanZoom
+        boundary={{ left: -50, top: -75 }}
+        disableUserSelect
+        onChange={onChange}
+        ref={panZoomRef}
+      >
+        <div ref={innerRef} style={{ width: 100, height: 150, backgroundColor: 'orange' }}>
+          move me
         </div>
       </PanZoom>
     </div>
