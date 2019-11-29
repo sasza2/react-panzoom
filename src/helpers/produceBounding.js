@@ -1,32 +1,27 @@
 const maxParamValue = ({
-  boundary, rect, value, type, zoom,
+  min, max, value,
 }) => {
-  const max = rect[type] * boundary * zoom;
-  if (value > 0 && value > max) return max;
-  if (value < 0 && value < -max) return -max;
+  if (min && value < min) return min;
+  if (max && value > max) return max;
   return value;
 };
 
 const produceBounding = ({
-  boundaryHorizontal, boundaryVertical, x, y, rect, zoom,
+  boundary, x, y, zoom,
 }) => {
   const nextPosition = { x, y };
-  if (boundaryVertical) {
+  if (boundary.top || boundary.bottom) {
     nextPosition.y = maxParamValue({
-      boundary: boundaryVertical,
-      rect,
+      min: boundary.top * zoom,
+      max: boundary.bottom * zoom,
       value: y,
-      type: 'height',
-      zoom,
     });
   }
-  if (boundaryHorizontal) {
+  if (boundary.left || boundary.right) {
     nextPosition.x = maxParamValue({
-      boundary: boundaryHorizontal,
-      rect,
+      min: boundary.left * zoom,
+      max: boundary.right * zoom,
       value: x,
-      type: 'width',
-      zoom,
     });
   }
 

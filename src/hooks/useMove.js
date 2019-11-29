@@ -8,8 +8,7 @@ const useMove = (ref, loading) => {
   const panZoomRef = ref.current;
   const [moving, setMoving] = useState(null);
   const {
-    boundaryHorizontal,
-    boundaryVertical,
+    boundary,
     disabled,
     disabledMove,
     onChange,
@@ -53,11 +52,9 @@ const useMove = (ref, loading) => {
     const move = (e) => {
       const rect = ref.current.parentNode.getBoundingClientRect();
       const nextPosition = produceBounding({
-        boundaryHorizontal,
-        boundaryVertical,
+        boundary,
         x: e.clientX - rect.x - moving.x,
         y: e.clientY - rect.y - moving.y,
-        rect,
         zoom: zoomRef.current,
       });
 
@@ -75,7 +72,7 @@ const useMove = (ref, loading) => {
     return () => {
       node.parentNode.removeEventListener('mousemove', move);
     };
-  }, [boundaryHorizontal, boundaryVertical, loading, moving, onChange, onPositionChange]);
+  }, [boundary, loading, moving, onChange, onPositionChange]);
 
   return positionRef;
 };

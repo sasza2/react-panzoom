@@ -10,8 +10,7 @@ const ZOOM_SPEED_BASE = 25; // ms
 const useZoom = (ref, loading) => {
   const panZoomRef = ref.current;
   const {
-    boundaryHorizontal,
-    boundaryVertical,
+    boundary,
     disabled,
     disabledZoom,
     positionRef,
@@ -25,8 +24,7 @@ const useZoom = (ref, loading) => {
   } = usePanZoom();
 
   const dependencies = [
-    boundaryHorizontal,
-    boundaryVertical,
+    boundary,
     disabled,
     disabledZoom,
     loading,
@@ -57,11 +55,9 @@ const useZoom = (ref, loading) => {
       zoomRef.current = nextZoom;
 
       const nextPosition = produceBounding({
-        boundaryHorizontal,
-        boundaryVertical,
+        boundary,
         x: e.clientX - rect.x - xoff * nextZoom,
         y: e.clientY - rect.y - yoff * nextZoom,
-        rect,
         zoom: nextZoom,
       });
 
