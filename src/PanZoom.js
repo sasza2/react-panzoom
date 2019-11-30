@@ -12,10 +12,7 @@ import './PanZoom.css';
 
 const CLASS_NAME = 'react-panzoom';
 
-/*
-  TODO props:
-  - boundary
-*/
+// TODO: Tests
 const PanZoom = ({
   apiRef, children, className, disableUserSelect,
 }) => {
