@@ -1,6 +1,6 @@
 import positionClone from './positionClone';
 
-test('positionClone', () => {
+test('helpers/positionClone', () => {
   const positionRef = {
     current: { x: 50, y: 100 },
   };
