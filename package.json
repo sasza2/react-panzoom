@@ -6,7 +6,8 @@
   "scripts": {
     "build": "webpack --mode=production",
     "lint": "eslint src --fix",
-    "storybook": "start-storybook"
+    "storybook": "start-storybook",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -31,6 +32,7 @@
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.16.0",
+    "jest": "^24.9.0",
     "prop-types": "^15.0.0",
     "react": "16.8.6",
     "webpack": "^4.41.2",

@@ -11,6 +11,8 @@
   },
   "globals": {
     "console": "false",
+    "expect": "false",
+    "test": "false",
     "window": "false"
   },
   "settings": {
