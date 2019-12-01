@@ -1,6 +1,8 @@
 import { createRef } from 'react';
 
-import { getZoom, setZoom, zoomIn } from './zoom';
+import {
+  getZoom, setZoom, zoomIn, zoomOut,
+} from './zoom';
 
 test('api/zoom/get', () => {
   const zoomRef = createRef();
@@ -55,4 +57,26 @@ test('api/zoom/in', () => {
   expect(childRef.current.style.transform).toBe('translate(20px, 40px) scale(1.5)');
   expect(positionRef.current).toStrictEqual({ x: 20, y: 40 });
   expect(zoomRef.current).toBe(1.5);
+});
+
+test('api/zoom/out', () => {
+  const childRef = createRef();
+  childRef.current = { style: {} };
+
+  const positionRef = createRef();
+  const zoomRef = createRef();
+  zoomRef.current = 1.5;
+
+  positionRef.current = { x: 20, y: 40 };
+  zoomOut({ childRef, positionRef, zoomRef })(0.2);
+
+  expect(childRef.current.style.transform).toBe('translate(20px, 40px) scale(1.3)');
+  expect(positionRef.current).toStrictEqual({ x: 20, y: 40 });
+  expect(zoomRef.current).toBe(1.3);
+
+  zoomOut({ childRef, positionRef, zoomRef })(0.3);
+
+  expect(childRef.current.style.transform).toBe('translate(20px, 40px) scale(1)');
+  expect(positionRef.current).toStrictEqual({ x: 20, y: 40 });
+  expect(zoomRef.current).toBe(1);
 });
