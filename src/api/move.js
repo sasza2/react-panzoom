@@ -18,7 +18,7 @@ const move = ({
 
   ref.current.style.transform = transform({ position: positionRef.current, zoom: zoomRef.current });
 
-  return positionClone(positionRef.current);
+  return positionClone(positionRef);
 };
 
 export default move;
