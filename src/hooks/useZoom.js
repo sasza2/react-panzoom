@@ -41,8 +41,8 @@ const useZoom = (ref, loading) => {
     const wheel = throttle((e) => {
       const rect = panZoomRef.parentNode.getBoundingClientRect();
 
-      const xoff = (e.clientX - rect.x - positionRef.current.x) / zoomRef.current;
-      const yoff = (e.clientY - rect.y - positionRef.current.y) / zoomRef.current;
+      const xoff = (e.clientX - rect.left - positionRef.current.x) / zoomRef.current;
+      const yoff = (e.clientY - rect.top - positionRef.current.y) / zoomRef.current;
 
       const nextZoom = (() => {
         if (e.deltaY < 0) {
@@ -56,8 +56,8 @@ const useZoom = (ref, loading) => {
 
       const nextPosition = produceBounding({
         boundary,
-        x: e.clientX - rect.x - xoff * nextZoom,
-        y: e.clientY - rect.y - yoff * nextZoom,
+        x: e.clientX - rect.left - xoff * nextZoom,
+        y: e.clientY - rect.top - yoff * nextZoom,
         zoom: nextZoom,
       });
 

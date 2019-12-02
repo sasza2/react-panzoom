@@ -24,8 +24,8 @@ const useMove = (ref, loading) => {
     const mousedown = (e) => {
       const rect = ref.current.parentNode.getBoundingClientRect();
       setMoving({
-        x: e.clientX - rect.x - (positionRef.current.x || 0),
-        y: e.clientY - rect.y - (positionRef.current.y || 0),
+        x: e.clientX - rect.left - (positionRef.current.x || 0),
+        y: e.clientY - rect.top - (positionRef.current.y || 0),
       });
     };
 
@@ -53,8 +53,8 @@ const useMove = (ref, loading) => {
       const rect = ref.current.parentNode.getBoundingClientRect();
       const nextPosition = produceBounding({
         boundary,
-        x: e.clientX - rect.x - moving.x,
-        y: e.clientY - rect.y - moving.y,
+        x: e.clientX - rect.left - moving.x,
+        y: e.clientY - rect.top - moving.y,
         zoom: zoomRef.current,
       });
 

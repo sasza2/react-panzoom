@@ -24,6 +24,8 @@
     "@babel/preset-env": "^7.6.3",
     "@babel/preset-react": "^7.6.3",
     "@storybook/react": "^5.2.6",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
     "babel-eslint": "^10.0.3",
     "babel-loader": "^8.0.6",
     "css-loader": "^3.2.0",
@@ -33,14 +35,15 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.16.0",
     "jest": "^24.9.0",
+    "jest-transform-css": "^2.0.0",
     "prop-types": "^15.0.0",
-    "react": "16.8.6",
+    "react": "16.9.0",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10"
   },
   "peerDependencies": {
     "prop-types": "^15.0.0",
-    "react": ">=16.8.6"
+    "react": ">=16.9.0"
   },
   "dependencies": {
     "lodash": "^4.17.15"
