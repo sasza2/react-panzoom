@@ -4,7 +4,7 @@ import { render, fireEvent } from '@testing-library/react';
 
 import PanZoom from './PanZoom';
 
-test('PanZoom', () => {
+test('PanZoom move', () => {
   const { container } = render(
     <PanZoom>
       <div>abc</div>
@@ -16,4 +16,16 @@ test('PanZoom', () => {
   fireEvent.mouseUp(container.firstChild);
 
   expect(container.firstChild.firstChild.style.transform).toBe('translate(145px, 250px) scale(1)');
+});
+
+test('PanZoom zoom', () => {
+  const { container } = render(
+    <PanZoom>
+      <div>abc</div>
+    </PanZoom>,
+  );
+
+  fireEvent.wheel(container.firstChild);
+
+  expect(container.firstChild.firstChild.style.transform).toBe('translate(0px, 0px) scale(0.95)');
 });
