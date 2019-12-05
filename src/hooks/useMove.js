@@ -47,8 +47,6 @@ const useMove = (ref, loading) => {
   useEffect(() => {
     if (loading || !moving) return undefined;
 
-    const node = ref.current;
-
     const move = (e) => {
       const rect = ref.current.parentNode.getBoundingClientRect();
       const nextPosition = produceBounding({
@@ -67,10 +65,10 @@ const useMove = (ref, loading) => {
       if (onPositionChange) onPositionChange({ position: { ...positionRef.current } });
     };
 
-    node.parentNode.addEventListener('mousemove', move);
+    window.addEventListener('mousemove', move);
 
     return () => {
-      node.parentNode.removeEventListener('mousemove', move);
+      window.removeEventListener('mousemove', move);
     };
   }, [boundary, loading, moving, onChange, onPositionChange]);
 

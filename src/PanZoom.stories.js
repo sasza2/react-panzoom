@@ -109,15 +109,28 @@ export const boxBounding = () => {
   };
 
   return (
-    <div style={{ height: '100vh' }}>
+    <div style={{ border: '1px dashed #000', width: 400, height: 400 }}>
       <PanZoom
-        boundary={{ left: -50, top: -75 }}
+        boundary={{
+          left: 0, top: 0, right: 400, bottom: 400,
+        }}
         disableUserSelect
         onChange={onChange}
         ref={panZoomRef}
       >
-        <div ref={innerRef} style={{ width: 100, height: 150, backgroundColor: 'orange' }}>
-          move me
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderRadius: '50%',
+            width: 120,
+            height: 120,
+            backgroundColor: 'orange',
+            fontSize: 14,
+          }}
+        >
+          <span ref={innerRef}>move me</span>
         </div>
       </PanZoom>
     </div>

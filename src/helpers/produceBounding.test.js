@@ -15,7 +15,7 @@ test('helpers/produceBounding horizontal', () => {
     x: 200,
     y: 60,
     rect: { width: 200, height: 100 },
-  })).toStrictEqual({ x: 100, y: 60 });
+  })).toStrictEqual({ x: 200, y: 60 });
 
   expect(produceBounding({
     boundary,
@@ -36,7 +36,7 @@ test('helpers/produceBounding horizontal', () => {
     x: 700,
     y: 20,
     rect: { width: 150, height: 60 },
-  })).toStrictEqual({ x: 150, y: 20 });
+  })).toStrictEqual({ x: 240, y: 20 });
 
   expect(produceBounding({
     boundary,
@@ -61,14 +61,14 @@ test('helpers/produceBounding vertical', () => {
     x: 200,
     y: 600,
     rect: { width: 550, height: 160 },
-  })).toStrictEqual({ x: 200, y: 140 });
+  })).toStrictEqual({ x: 200, y: 200 });
 
   expect(produceBounding({
     boundary,
     x: -150,
     y: -400,
     rect: { width: 50, height: 660 },
-  })).toStrictEqual({ x: -150, y: -200 });
+  })).toStrictEqual({ x: -150, y: -400 });
 
   expect(produceBounding({
     boundary,
@@ -112,7 +112,7 @@ test('helpers/produceBounding vertical + horizontal', () => {
     x: 200,
     y: 600,
     rect: { width: 250, height: 60 },
-  })).toStrictEqual({ x: 150, y: 240 });
+  })).toStrictEqual({ x: 200, y: 240 });
 
   expect(produceBounding({
     boundary,
@@ -133,7 +133,7 @@ test('helpers/produceBounding vertical + horizontal', () => {
     x: 700,
     y: 500,
     rect: { width: 80, height: 140 },
-  })).toStrictEqual({ x: 320, y: 160 });
+  })).toStrictEqual({ x: 260, y: 160 });
 
   expect(produceBounding({
     boundary,
