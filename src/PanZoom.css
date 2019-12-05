@@ -5,6 +5,7 @@
 }
 
 .react-panzoom__in {
+    display: inline-block;
     transform-origin: 0 0;
     pointer-events: none;
 }
