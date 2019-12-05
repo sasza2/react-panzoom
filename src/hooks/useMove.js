@@ -55,7 +55,7 @@ const useMove = (ref, loading) => {
         boundary,
         x: e.clientX - rect.left - moving.x,
         y: e.clientY - rect.top - moving.y,
-        zoom: zoomRef.current,
+        rect: ref.current.getBoundingClientRect(),
       });
 
       positionRef.current = nextPosition;
