@@ -53,6 +53,7 @@ const useMove = (ref, loading) => {
         boundary,
         x: e.clientX - rect.left - moving.x,
         y: e.clientY - rect.top - moving.y,
+        parent: rect,
         rect: ref.current.getBoundingClientRect(),
       });
 

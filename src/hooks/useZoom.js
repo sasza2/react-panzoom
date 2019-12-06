@@ -58,6 +58,7 @@ const useZoom = (ref, loading) => {
         boundary,
         x: e.clientX - rect.left - xoff * nextZoom,
         y: e.clientY - rect.top - yoff * nextZoom,
+        parent: rect,
         rect: panZoomRef.getBoundingClientRect(),
       });
 

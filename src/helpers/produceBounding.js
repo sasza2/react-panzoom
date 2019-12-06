@@ -1,45 +1,55 @@
 const positionVertical = ({
-  boundary, y, rect,
+  boundary, y, parent, rect,
 }) => {
-  let boundaryTop = boundary.top === undefined ? -Number.MAX_SAFE_INTEGER : boundary.top;
-  let boundaryBottom = boundary.bottom === undefined ? Number.MAX_SAFE_INTEGER : boundary.bottom;
-
-  const boundingHeight = rect.height - boundaryBottom - boundaryTop;
-  if (boundingHeight > 0) {
-    boundaryTop -= boundingHeight;
-    boundaryBottom += boundingHeight;
+  const diff = Math.max(rect.height - parent.height, 0); // px
+  if (boundary.top === undefined && boundary.bottom === undefined) return y;
+  if (boundary.top !== undefined && boundary.bottom === undefined) {
+    return Math.max(y, boundary.top - diff);
+  }
+  if (boundary.top === undefined && boundary.bottom !== undefined) {
+    return Math.min(y, boundary.bottom - rect.height + diff);
   }
 
-  if (y < boundaryTop) return boundaryTop;
+  const top = boundary.top - diff; // px
+  if (y < top) return top;
 
-  const max = boundaryBottom - rect.height;
-  return y > max ? max : y;
+  const bottom = boundary.bottom - rect.height + diff; // px
+  if (y > bottom) return bottom;
+
+  return y;
 };
 
 const positionHorizontal = ({
-  boundary, x, rect,
+  boundary, x, rect, parent,
 }) => {
-  let boundaryLeft = boundary.left === undefined ? -Number.MAX_SAFE_INTEGER : boundary.left;
-  let boundaryRight = boundary.right === undefined ? Number.MAX_SAFE_INTEGER : boundary.right;
-
-  const boundingHeight = rect.height - boundaryRight - boundaryLeft;
-  if (boundingHeight > 0) {
-    boundaryLeft -= boundingHeight;
-    boundaryRight += boundingHeight;
+  const diff = Math.max(rect.width - parent.width, 0); // px
+  if (boundary.left === undefined && boundary.right === undefined) return x;
+  if (boundary.left !== undefined && boundary.right === undefined) {
+    return Math.max(x, boundary.left - diff);
+  }
+  if (boundary.left === undefined && boundary.right !== undefined) {
+    return Math.min(x, boundary.right - rect.height + diff);
   }
 
-  if (x < boundaryLeft) return boundaryLeft;
+  const leftMax = boundary.left - diff; // px
+  if (x < leftMax) return leftMax;
 
-  const max = boundaryRight - rect.height;
-  return x > max ? max : x;
+  const rightMax = boundary.right - rect.height + diff; // px
+  if (x > rightMax) return rightMax;
+
+  return x;
 };
 
 const produceBounding = ({
-  boundary, x, y, rect,
+  boundary, x, y, parent, rect,
 }) => {
   const nextPosition = { x, y };
-  nextPosition.x = positionHorizontal({ boundary, x, rect });
-  nextPosition.y = positionVertical({ boundary, y, rect });
+  nextPosition.x = positionHorizontal({
+    boundary, x, parent, rect,
+  });
+  nextPosition.y = positionVertical({
+    boundary, y, parent, rect,
+  });
   return nextPosition;
 };
 
