@@ -1,7 +1,15 @@
-```// todo```
-
 # react-panzoom
 React component for pan and zoom.
+
+!["Preview"](docs/preview.gif "Example preview")
+
+```javascript
+(
+  <PanZoom>
+    {children}
+  </PanZoom>
+)
+```
 
 # Installation
 ```npm install react-panzoom```
@@ -10,7 +18,7 @@ React component for pan and zoom.
 
 | Name | | Default | Description |
 | --- | --- | --- | --- |
-| boundary | { top, right, bottom left } in px | {} | Boundary of children node in pixels |
+| boundary | { top, right, bottom left, parent } | {} | **top, right, bottom, left** - numbers in px.<br />**parent** - bool, if set to true child's wrapper width and height are added to boundary |
 | children __*__ | node  |||
 | disabled | bool | false | disabling pan and zoom |
 | disabledMove | bool | false | disabling move |
@@ -48,3 +56,13 @@ panZoomRef.current contains methods like:
 | zoomIn(zoom:**number**) | Add to current zoom, could be also negative number (it will work like zoomOut) |
 | zoomOut(zoom:**number**) | Sub from current zoom |
 | reset() | Reset to (0, 0, 0) |
+
+# Testing
+```
+npm run test
+```
+
+# Examples
+```
+npm run storybook
+```
