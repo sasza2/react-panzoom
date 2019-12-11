@@ -40,15 +40,27 @@ const positionHorizontal = ({
   return x;
 };
 
+const withParent = ({ boundary, parent }) => {
+  if (!boundary.parent) return boundary;
+
+  return {
+    top: 0 + (boundary.top || 0),
+    right: parent.width + (boundary.right || 0),
+    bottom: parent.height + (boundary.bottom || 0),
+    left: 0 + (boundary.left || 0),
+  };
+};
+
 const produceBounding = ({
   boundary, x, y, parent, rect,
 }) => {
+  const boundaryNext = withParent({ boundary, parent });
   const nextPosition = { x, y };
   nextPosition.x = positionHorizontal({
-    boundary, x, parent, rect,
+    boundary: boundaryNext, x, parent, rect,
   });
   nextPosition.y = positionVertical({
-    boundary, y, parent, rect,
+    boundary: boundaryNext, y, parent, rect,
   });
   return nextPosition;
 };

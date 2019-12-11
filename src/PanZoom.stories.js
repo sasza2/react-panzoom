@@ -112,7 +112,7 @@ export const boxBounding = () => {
     <div style={{ border: '1px dashed #000', width: 400, height: 400 }}>
       <PanZoom
         boundary={{
-          left: 0, top: 0, right: 400, bottom: 400,
+          parent: true,
         }}
         disableUserSelect
         onChange={onChange}
