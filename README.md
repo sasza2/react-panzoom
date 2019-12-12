@@ -6,7 +6,7 @@ React component for pan and zoom.
 ```javascript
 (
   <PanZoom>
-    {children}
+    {node}
   </PanZoom>
 )
 ```
@@ -39,7 +39,7 @@ const panZoomRef = createRef()
 // ...
 return (
   <PanZoom ref={panZoomRef}>
-  ...
+    ...
   </PanZoom>
 )
 ```
@@ -51,7 +51,7 @@ panZoomRef.current contains methods like:
 | move(x:**number**, y:**number**) | Add x and y in px to current offset. Returns current position {x, y} |
 | getPosition() | Returns current position {x, y} |
 | setPosition(x:**number**, y:**number**) | Set offset position of pan |
-| getPosition():**number** | Returns current zoom |
+| getZoom():**number** | Returns current zoom |
 | setZoom(zoom:**number**) | Sets zoom |
 | zoomIn(zoom:**number**) | Add to current zoom, could be also negative number (it will work like zoomOut) |
 | zoomOut(zoom:**number**) | Sub from current zoom |
