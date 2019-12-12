@@ -1,5 +1,5 @@
 {
-  "name": "react-panzoom",
+  "name": "@sasza/react-panzoom",
   "version": "1.0.0",
   "description": "React component for pan and zoom",
   "main": "dist/main.js",
