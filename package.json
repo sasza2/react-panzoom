@@ -1,8 +1,15 @@
 {
   "name": "react-panzoom",
   "version": "1.0.0",
-  "description": "",
+  "description": "React component for pan and zoom",
   "main": "dist/main.js",
+  "keyword": [
+    "react",
+    "pan",
+    "zoom",
+    "move",
+    "panzoom"
+  ],
   "scripts": {
     "build": "webpack --mode=production",
     "lint": "eslint src --fix",
