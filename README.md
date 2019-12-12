@@ -3,13 +3,8 @@ React component for pan and zoom.
 
 !["Preview"](docs/preview.gif "Example preview")
 
-```javascript
-(
-  <PanZoom>
-    {node}
-  </PanZoom>
-)
-```
+# Demo
+https://codesandbox.io/s/goofy-rgb-48tbu
 
 # Installation
 ```npm install react-panzoom```
@@ -65,4 +60,15 @@ npm run test
 # Examples
 ```
 npm run storybook
+```
+
+# Usage
+```javascript
+import PanZoom from "@sasza/react-panzoom";
+
+const App = () => (
+  <PanZoom>
+    Lorem ipsum dolor
+  </PanZoom>
+)
 ```
