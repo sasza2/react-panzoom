@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 
+import positionFromEvent from '../helpers/positionFromEvent';
 import transform from '../helpers/produceStyle';
 import produceBounding from '../helpers/produceBounding';
 import { usePanZoom } from '../context';
@@ -22,10 +23,11 @@ const useMove = (ref, loading) => {
     if (loading || disabled || disabledMove) return undefined;
 
     const mousedown = (e) => {
+      const eventPosition = positionFromEvent(e);
       const rect = ref.current.parentNode.getBoundingClientRect();
       setMoving({
-        x: e.clientX - rect.left - (positionRef.current.x || 0),
-        y: e.clientY - rect.top - (positionRef.current.y || 0),
+        x: eventPosition.clientX - rect.left - (positionRef.current.x || 0),
+        y: eventPosition.clientY - rect.top - (positionRef.current.y || 0),
       });
     };
 
@@ -35,11 +37,15 @@ const useMove = (ref, loading) => {
     if (!node) return undefined;
 
     node.parentNode.addEventListener('mousedown', mousedown);
+    node.parentNode.addEventListener('touchstart', mousedown);
     window.addEventListener('mouseup', mouseup);
+    window.addEventListener('touchend', mouseup);
 
     return () => {
       node.parentNode.removeEventListener('mousedown', mousedown);
+      node.parentNode.removeEventListener('touchstart', mousedown);
       window.removeEventListener('mouseup', mouseup);
+      window.removeEventListener('touchend', mouseup);
     };
   }, [disabled, disabledMove, loading]);
 
@@ -49,10 +55,11 @@ const useMove = (ref, loading) => {
 
     const move = (e) => {
       const rect = ref.current.parentNode.getBoundingClientRect();
+      const eventPosition = positionFromEvent(e);
       const nextPosition = produceBounding({
         boundary,
-        x: e.clientX - rect.left - moving.x,
-        y: e.clientY - rect.top - moving.y,
+        x: eventPosition.clientX - rect.left - moving.x,
+        y: eventPosition.clientY - rect.top - moving.y,
         parent: rect,
         rect: ref.current.getBoundingClientRect(),
       });
@@ -67,9 +74,11 @@ const useMove = (ref, loading) => {
     };
 
     window.addEventListener('mousemove', move);
+    window.addEventListener('touchmove', move);
 
     return () => {
       window.removeEventListener('mousemove', move);
+      window.removeEventListener('touchmove', move);
     };
   }, [boundary, loading, moving, onChange, onPositionChange]);
 
