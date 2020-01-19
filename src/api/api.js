@@ -1,3 +1,5 @@
+import { useImperativeHandle } from 'react';
+
 import move from './move';
 import { getPosition, setPosition } from './position';
 import {
@@ -14,7 +16,7 @@ const api = ({
   if (!apiRef) return;
 
   const apiExternal = apiRef;
-  apiExternal.current = {
+  useImperativeHandle(apiExternal, () => ({
     move: move({
       apiRef,
       childRef,
@@ -30,7 +32,7 @@ const api = ({
     zoomIn: zoomIn({ childRef, positionRef, zoomRef }),
     zoomOut: zoomOut({ childRef, positionRef, zoomRef }),
     reset: reset({ childRef, positionRef, zoomRef }),
-  };
+  }));
 };
 
 export default api;
