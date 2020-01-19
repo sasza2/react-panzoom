@@ -1,19 +1,18 @@
-import { createRef } from 'react';
+import React from 'react';
+import { render } from '@testing-library/react';
 
-import api from './api';
+import PanZoom from '../PanZoom';
 
 test('api', () => {
-  const apiRef = createRef();
-  const childRef = createRef();
-  const positionRef = createRef();
-  const zoomRef = createRef();
+  const panZoomRef = {
+    current: null,
+  };
 
-  api({
-    apiRef,
-    childRef,
-    positionRef,
-    zoomRef,
-  });
+  render(
+    <PanZoom ref={panZoomRef}>
+      <div>...</div>
+    </PanZoom>,
+  );
 
   const list = [
     'move',
@@ -26,5 +25,5 @@ test('api', () => {
     'reset',
   ];
 
-  expect(Object.keys(apiRef.current)).toStrictEqual(list);
+  expect(Object.keys(panZoomRef.current)).toStrictEqual(list);
 });
