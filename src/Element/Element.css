@@ -1,0 +1,7 @@
+.react-panzoom-element {
+    display: inline-block;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    pointer-events: all;
+}

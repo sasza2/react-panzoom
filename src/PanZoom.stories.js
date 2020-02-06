@@ -1,6 +1,6 @@
 import React, { useLayoutEffect } from 'react';
 
-import PanZoom from './PanZoom';
+import PanZoom, { Element } from '.';
 
 export default { title: 'PanZoom' };
 
@@ -14,17 +14,16 @@ export const rectangles = () => (
   >
     <PanZoom>
       <div style={{ width: 500, height: 400 }}>
-        <div style={{
-          position: 'absolute',
-          left: 50,
-          top: 90,
-          width: 100,
-          height: 100,
-          backgroundColor: 'red',
-        }}
-        >
-          111
-        </div>
+        <Element x={50} y={90}>
+          <div style={{
+            width: 100,
+            height: 100,
+            backgroundColor: 'red',
+          }}
+          >
+            111
+          </div>
+        </Element>
         <div style={{
           position: 'absolute',
           left: 210,

@@ -1,18 +1,24 @@
 import React, { useLayoutEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
-const Element = ({ children }) => {
+import './Element.css';
+
+const Element = ({ children, x, y }) => {
   const elementRef = useRef();
+
+  useLayoutEffect(() => {
+    elementRef.current.style.transform = `translate(${x}px, ${y}px)`;
+  }, [x, y]);
 
   const mousedown = (e) => {
     e.preventDefault();
-    console.log(e); // eslint-disable-line
+    e.stopPropagation();
   };
 
   useLayoutEffect(() => {
     elementRef.current.addEventListener('mousedown', mousedown);
     return () => {
-      elementRef.current.removeEventListener('mousedown', mousedown)
+      elementRef.current.removeEventListener('mousedown', mousedown);
     };
   }, []);
 
@@ -25,6 +31,13 @@ const Element = ({ children }) => {
 
 Element.propTypes = {
   children: PropTypes.node.isRequired,
+  x: PropTypes.number,
+  y: PropTypes.number,
+};
+
+Element.defaultProps = {
+  x: 0,
+  y: 0,
 };
 
 export default Element;
