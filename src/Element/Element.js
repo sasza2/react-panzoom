@@ -28,10 +28,14 @@ const Element = ({ children, x, y }) => {
       elementRef.current.style.transform = `translate(${translate.x}px, ${translate.y}px)`;
     };
 
+    const mouseup = () => setMoving(null);
+
     window.addEventListener('mousemove', mousemove);
+    window.addEventListener('mouseup', mouseup);
 
     return () => {
       window.removeEventListener('mousemove', mousemove);
+      window.removeEventListener('mouseup', mouseup);
     };
   }, [moving]);
 
