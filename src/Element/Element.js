@@ -3,6 +3,7 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 
+import { usePanZoom } from '../context';
 import positionFromEvent from '../helpers/positionFromEvent';
 
 import './Element.css';
@@ -10,6 +11,8 @@ import './Element.css';
 const Element = ({ children, x, y }) => {
   const [moving, setMoving] = useState(null);
   const elementRef = useRef();
+
+  const { childRef, positionRef, zoomRef } = usePanZoom();
 
   useLayoutEffect(() => {
     elementRef.current.style.transform = `translate(${x}px, ${y}px)`;
@@ -21,8 +24,8 @@ const Element = ({ children, x, y }) => {
     const mousemove = (e) => {
       const eventPosition = positionFromEvent(e);
       const translate = {
-        x: eventPosition.clientX - moving.x,
-        y: eventPosition.clientY - moving.y,
+        x: (eventPosition.clientX - positionRef.current.x) / zoomRef.current - moving.x,
+        y: (eventPosition.clientY - positionRef.current.y) / zoomRef.current - moving.y,
       };
 
       elementRef.current.style.transform = `translate(${translate.x}px, ${translate.y}px)`;
@@ -44,10 +47,12 @@ const Element = ({ children, x, y }) => {
     e.stopPropagation();
 
     const eventPosition = positionFromEvent(e);
+    const parent = childRef.current.getBoundingClientRect();
     const rect = elementRef.current.getBoundingClientRect();
+
     setMoving({
-      x: eventPosition.clientX - rect.left,
-      y: eventPosition.clientY - rect.top,
+      x: (eventPosition.clientX - rect.left + parent.width) / zoomRef.current,
+      y: (eventPosition.clientY - rect.top + parent.height) / zoomRef.current,
     });
   };
 

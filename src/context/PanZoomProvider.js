@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import PanZoomContext from './PanZoomContext';
@@ -7,8 +7,10 @@ const PanZoomProvider = ({
   children,
   ...props
 }) => {
-  const zoomRef = useRef();
+  const [loading, setLoading] = useState(true);
+  const childRef = useRef();
   const positionRef = useRef();
+  const zoomRef = useRef();
 
   if (!zoomRef.current) zoomRef.current = 1;
   if (!positionRef.current) positionRef.current = { x: 0, y: 0 };
@@ -16,7 +18,10 @@ const PanZoomProvider = ({
   return (
     <PanZoomContext.Provider
       value={{
+        childRef,
+        loading,
         positionRef,
+        setLoading,
         zoomRef,
         ...props,
       }}
