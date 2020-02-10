@@ -47,12 +47,12 @@ const Element = ({ children, x, y }) => {
     e.stopPropagation();
 
     const eventPosition = positionFromEvent(e);
-    const parent = childRef.current.getBoundingClientRect();
+    const parent = childRef.current.parentNode.getBoundingClientRect();
     const rect = elementRef.current.getBoundingClientRect();
 
     setMoving({
-      x: (eventPosition.clientX - rect.left + parent.width) / zoomRef.current,
-      y: (eventPosition.clientY - rect.top + parent.height) / zoomRef.current,
+      x: (eventPosition.clientX - rect.left + parent.left) / zoomRef.current,
+      y: (eventPosition.clientY - rect.top + parent.top) / zoomRef.current,
     });
   };
 
