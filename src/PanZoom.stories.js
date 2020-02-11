@@ -24,18 +24,17 @@ export const rectangles = () => (
             111
           </div>
         </Element>
-        <div style={{
-          position: 'absolute',
-          left: 210,
-          top: 260,
-          width: 40,
-          height: 170,
-          backgroundColor: 'blue',
-          color: '#fff',
-        }}
-        >
-          222
-        </div>
+        <Element x={210} top={260}>
+          <div style={{
+            width: 40,
+            height: 170,
+            backgroundColor: 'blue',
+            color: '#fff',
+          }}
+          >
+            222
+          </div>
+        </Element>
       </div>
     </PanZoom>
   </div>
