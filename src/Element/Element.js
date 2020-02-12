@@ -50,11 +50,15 @@ const Element = ({
     const mouseup = () => setMoving(null);
 
     window.addEventListener('mousemove', mousemove);
+    window.addEventListener('touchmove', mousemove);
     window.addEventListener('mouseup', mouseup);
+    window.addEventListener('touchend', mouseup);
 
     return () => {
       window.removeEventListener('mousemove', mousemove);
+      window.removeEventListener('touchmove', mousemove);
       window.removeEventListener('mouseup', mouseup);
+      window.removeEventListener('touchend', mouseup);
     };
   }, [moving]);
 
@@ -74,8 +78,10 @@ const Element = ({
 
   useLayoutEffect(() => {
     elementRef.current.addEventListener('mousedown', mousedown);
+    elementRef.current.addEventListener('touchstart', mousedown);
     return () => {
       elementRef.current.removeEventListener('mousedown', mousedown);
+      elementRef.current.removeEventListener('touchstart', mousedown);
     };
   }, []);
 
