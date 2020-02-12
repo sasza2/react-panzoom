@@ -2,17 +2,32 @@ import React, {
   useEffect, useLayoutEffect, useRef, useState,
 } from 'react';
 import PropTypes from 'prop-types';
+import throttle from 'lodash/throttle';
 
 import { usePanZoom } from '../context';
 import positionFromEvent from '../helpers/positionFromEvent';
 
 import './Element.css';
 
-const Element = ({ children, x, y }) => {
+const Element = ({
+  children, id, x, y,
+}) => {
+  if (!id) throw new Error("Id can't be undefined");
+
   const [moving, setMoving] = useState(null);
   const elementRef = useRef();
-
-  const { childRef, positionRef, zoomRef } = usePanZoom();
+  const {
+    childRef,
+    elementsMapRef,
+    positionRef,
+    zoomRef,
+  } = usePanZoom();
+  const moveRef = useRef(throttle((position) => {
+    elementsMapRef.current = {
+      ...elementsMapRef.current,
+      [id]: position,
+    };
+  }, 500)); // todo
 
   useLayoutEffect(() => {
     elementRef.current.style.transform = `translate(${x}px, ${y}px)`;
@@ -29,6 +44,7 @@ const Element = ({ children, x, y }) => {
       };
 
       elementRef.current.style.transform = `translate(${translate.x}px, ${translate.y}px)`;
+      moveRef.current(translate);
     };
 
     const mouseup = () => setMoving(null);
@@ -72,6 +88,7 @@ const Element = ({ children, x, y }) => {
 
 Element.propTypes = {
   children: PropTypes.node.isRequired,
+  id: PropTypes.oneOf([PropTypes.string, PropTypes.number]).isRequired,
   x: PropTypes.number,
   y: PropTypes.number,
 };

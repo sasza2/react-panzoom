@@ -9,6 +9,7 @@ const PanZoomProvider = ({
 }) => {
   const [loading, setLoading] = useState(true);
   const childRef = useRef();
+  const elementsMapRef = useRef();
   const positionRef = useRef();
   const zoomRef = useRef();
 
@@ -19,6 +20,7 @@ const PanZoomProvider = ({
     <PanZoomContext.Provider
       value={{
         childRef,
+        elementsMapRef,
         loading,
         positionRef,
         setLoading,

@@ -14,7 +14,7 @@ export const rectangles = () => (
   >
     <PanZoom>
       <div style={{ width: 500, height: 400 }}>
-        <Element x={50} y={90}>
+        <Element id="a" x={50} y={90}>
           <div style={{
             width: 100,
             height: 100,
@@ -24,7 +24,7 @@ export const rectangles = () => (
             111
           </div>
         </Element>
-        <Element x={210} top={260}>
+        <Element id="b" x={210} top={260}>
           <div style={{
             width: 40,
             height: 170,
