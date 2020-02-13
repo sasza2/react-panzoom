@@ -12,7 +12,7 @@ export const rectangles = () => (
     border: '1px solid green',
   }}
   >
-    <PanZoom>
+    <PanZoom onElementsChange={console.log}>
       <div style={{ width: 500, height: 400 }}>
         <Element id="a" x={50} y={90}>
           <div style={{
