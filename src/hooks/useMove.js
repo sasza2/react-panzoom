@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 
+import { onMouseDown, onMouseUp, onMouseMove } from '../helpers/eventListener';
 import positionFromEvent from '../helpers/positionFromEvent';
 import transform from '../helpers/produceStyle';
 import produceBounding from '../helpers/produceBounding';
@@ -39,16 +40,12 @@ const useMove = () => {
     const node = childRef.current;
     if (!node) return undefined;
 
-    node.parentNode.addEventListener('mousedown', mousedown);
-    node.parentNode.addEventListener('touchstart', mousedown);
-    window.addEventListener('mouseup', mouseup);
-    window.addEventListener('touchend', mouseup);
+    const mouseDownClear = onMouseDown(node.parentNode, mousedown);
+    const mouseUpClear = onMouseUp(mouseup);
 
     return () => {
-      node.parentNode.removeEventListener('mousedown', mousedown);
-      node.parentNode.removeEventListener('touchstart', mousedown);
-      window.removeEventListener('mouseup', mouseup);
-      window.removeEventListener('touchend', mouseup);
+      mouseDownClear();
+      mouseUpClear();
     };
   }, [disabled, disabledMove, loading]);
 
@@ -76,13 +73,8 @@ const useMove = () => {
       if (onPositionChange) onPositionChange({ position: { ...positionRef.current } });
     };
 
-    window.addEventListener('mousemove', move);
-    window.addEventListener('touchmove', move);
-
-    return () => {
-      window.removeEventListener('mousemove', move);
-      window.removeEventListener('touchmove', move);
-    };
+    const mouseMoveClear = onMouseMove(move);
+    return mouseMoveClear;
   }, [boundary, loading, moving, onChange, onPositionChange]);
 
   return positionRef;
