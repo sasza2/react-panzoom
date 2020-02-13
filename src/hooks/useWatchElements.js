@@ -5,7 +5,11 @@ import { usePanZoom } from '../context';
 const EMPTY_MAP = {};
 
 const useWatchElements = () => {
-  const { elementsChangesRef, onElementsChange } = usePanZoom();
+  const {
+    elementsChangesRef,
+    elementsInterval,
+    onElementsChange,
+  } = usePanZoom();
 
   useEffect(() => {
     if (!onElementsChange) return undefined;
@@ -15,10 +19,10 @@ const useWatchElements = () => {
 
       onElementsChange(elementsChangesRef.current);
       elementsChangesRef.current = EMPTY_MAP;
-    }, 150); // todo
+    }, elementsInterval);
 
     return () => clearInterval(timer);
-  }, [onElementsChange]);
+  }, [elementsInterval, onElementsChange]);
 };
 
 export default useWatchElements;

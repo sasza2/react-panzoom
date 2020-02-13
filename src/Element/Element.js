@@ -19,6 +19,7 @@ const Element = ({
   const elementRef = useRef();
   const {
     childRef,
+    elementsInterval,
     elementsRef,
     elementsChangesRef,
     positionRef,
@@ -30,7 +31,7 @@ const Element = ({
       ...elementsChangesRef.current,
       [id]: position,
     };
-  }, 500)); // todo
+  }, elementsInterval));
 
   useLayoutEffect(() => {
     elementsRef.current[id] = {
