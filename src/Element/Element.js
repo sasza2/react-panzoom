@@ -19,19 +19,25 @@ const Element = ({
   const elementRef = useRef();
   const {
     childRef,
-    elementsMapRef,
+    elementsRef,
+    elementsChangesRef,
     positionRef,
     zoomRef,
   } = usePanZoom();
 
   const moveRef = useRef(throttle((position) => {
-    elementsMapRef.current = {
-      ...elementsMapRef.current,
+    elementsChangesRef.current = {
+      ...elementsChangesRef.current,
       [id]: position,
     };
   }, 500)); // todo
 
-  useLayoutEffect(() => moveRef.current.clear);
+  useLayoutEffect(() => {
+    elementsRef.current[id] = {
+      node: elementRef,
+    };
+    return moveRef.current.clear;
+  }, [id]);
 
   useLayoutEffect(() => {
     elementRef.current.style.transform = `translate(${x}px, ${y}px)`;
@@ -47,6 +53,8 @@ const Element = ({
         y: (eventPosition.clientY - positionRef.current.y) / zoomRef.current - moving.y,
       };
 
+      elementsRef.current[id].position = translate;
+
       elementRef.current.style.transform = `translate(${translate.x}px, ${translate.y}px)`;
       moveRef.current(translate);
     };
@@ -60,7 +68,7 @@ const Element = ({
       mouseMoveClear();
       mouseUpClear();
     };
-  }, [moving]);
+  }, [id, moving]);
 
   const mousedown = (e) => {
     e.preventDefault();
