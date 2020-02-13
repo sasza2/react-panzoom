@@ -14,10 +14,10 @@ export const onMouseDown = (node, callback) => (
   eventListener(node, ['mousedown', 'touchstart'], callback)
 );
 
-export const onMouseUp = (node, callback) => (
-  eventListener(node, ['mouseup', 'touchend'], callback)
+export const onMouseUp = (callback) => (
+  eventListener(window, ['mouseup', 'touchend'], callback)
 );
 
-export const onMouseMove = (node, callback) => (
-  eventListener(node, ['movemouse', 'touchmove'], callback)
+export const onMouseMove = (callback) => (
+  eventListener(window, ['mousemove', 'touchmove'], callback)
 );
