@@ -10,13 +10,10 @@ const useWatchElements = () => {
   useEffect(() => {
     if (!onElementsChange) return undefined;
 
-    let prevRef = null;
     const timer = setInterval(() => {
-      if (prevRef === elementsMapRef.current) return;
+      if (elementsMapRef.current === EMPTY_MAP) return;
 
       onElementsChange(elementsMapRef.current);
-
-      prevRef = elementsMapRef.current;
       elementsMapRef.current = EMPTY_MAP;
     }, 150); // todo
 
