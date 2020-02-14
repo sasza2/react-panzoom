@@ -116,20 +116,38 @@ export const boxBounding = () => {
         onChange={onChange}
         ref={panZoomRef}
       >
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            borderRadius: '50%',
-            width: 120,
-            height: 120,
-            backgroundColor: 'orange',
-            fontSize: 14,
-          }}
-        >
-          <span ref={innerRef}>move me</span>
-        </div>
+        <Element id="orange">
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderRadius: '50%',
+              width: 120,
+              height: 120,
+              backgroundColor: 'orange',
+              fontSize: 14,
+            }}
+          >
+            <span ref={innerRef}>move me</span>
+          </div>
+        </Element>
+        <Element id="red">
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderRadius: '50%',
+              width: 60,
+              height: 60,
+              backgroundColor: 'red',
+              fontSize: 14,
+            }}
+          >
+            <span ref={innerRef}>or me</span>
+          </div>
+        </Element>
       </PanZoom>
     </div>
   );

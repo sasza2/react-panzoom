@@ -6,10 +6,12 @@ import throttle from 'lodash/throttle';
 
 import { onMouseDown, onMouseUp, onMouseMove } from '../helpers/eventListener';
 import { usePanZoom } from '../context';
+import produceElementPosition from '../helpers/produceElementPosition';
 import positionFromEvent from '../helpers/positionFromEvent';
 
 import './Element.css';
 
+// TODO: z index, memo
 const Element = ({
   children, id, x, y,
 }) => {
@@ -18,6 +20,7 @@ const Element = ({
   const [moving, setMoving] = useState(null);
   const elementRef = useRef();
   const {
+    boundary,
     childRef,
     elementsInterval,
     elementsRef,
@@ -49,10 +52,13 @@ const Element = ({
 
     const mousemove = (e) => {
       const eventPosition = positionFromEvent(e);
-      const translate = {
+      const translate = produceElementPosition({
+        element: elementRef.current,
+        container: childRef.current,
         x: (eventPosition.clientX - positionRef.current.x) / zoomRef.current - moving.x,
         y: (eventPosition.clientY - positionRef.current.y) / zoomRef.current - moving.y,
-      };
+        zoom: zoomRef.current,
+      });
 
       elementsRef.current[id].position = translate;
 
@@ -69,7 +75,7 @@ const Element = ({
       mouseMoveClear();
       mouseUpClear();
     };
-  }, [id, moving]);
+  }, [boundary, id, moving]);
 
   const mousedown = (e) => {
     e.preventDefault();

@@ -3,10 +3,13 @@
     height: 100%;
     overflow: hidden;
     touch-action: none;
+    -webkit-font-smoothing: antialiased;
 }
 
 .react-panzoom__in {
-    display: inline-block;
+    position: relative;
+    width: 100%;
+    height: 100%;
     transform-origin: 0 0;
     pointer-events: none;
 }
