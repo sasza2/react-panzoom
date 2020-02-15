@@ -1,10 +1,9 @@
-import React, {
-  forwardRef, useMemo, useRef, useState,
-} from 'react';
+import React, { forwardRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
-import PanZoomContext from './context';
+import PanZoomContext, { usePanZoom } from './context';
 import useMove from './hooks/useMove';
+import useWatchElements from './hooks/useWatchElements';
 import useZoom from './hooks/useZoom';
 import api from './api';
 
@@ -15,11 +14,12 @@ const CLASS_NAME = 'react-panzoom';
 const PanZoom = ({
   apiRef, children, className, disableUserSelect,
 }) => {
-  const [loading, setLoading] = useState(true);
-  const childRef = useRef();
+  const { childRef, elementsRef, setLoading } = usePanZoom();
 
-  const positionRef = useMove(childRef, loading);
-  const zoomRef = useZoom(childRef, loading);
+  const positionRef = useMove();
+  const zoomRef = useZoom();
+
+  useWatchElements();
 
   const classNameMemo = useMemo(() => {
     const classes = [CLASS_NAME];
@@ -42,6 +42,7 @@ const PanZoom = ({
   api({
     apiRef,
     childRef,
+    elementsRef,
     positionRef,
     zoomRef,
   });

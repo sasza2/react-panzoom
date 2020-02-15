@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import PanZoomContext from './PanZoomContext';
@@ -7,8 +7,12 @@ const PanZoomProvider = ({
   children,
   ...props
 }) => {
-  const zoomRef = useRef();
+  const [loading, setLoading] = useState(true);
+  const childRef = useRef();
+  const elementsRef = useRef({});
+  const elementsChangesRef = useRef({});
   const positionRef = useRef();
+  const zoomRef = useRef();
 
   if (!zoomRef.current) zoomRef.current = 1;
   if (!positionRef.current) positionRef.current = { x: 0, y: 0 };
@@ -16,7 +20,12 @@ const PanZoomProvider = ({
   return (
     <PanZoomContext.Provider
       value={{
+        childRef,
+        elementsRef,
+        elementsChangesRef,
+        loading,
         positionRef,
+        setLoading,
         zoomRef,
         ...props,
       }}
@@ -35,9 +44,13 @@ PanZoomProvider.propTypes = {
   }),
   children: PropTypes.node.isRequired,
   disabled: PropTypes.bool,
+  disabledElements: PropTypes.bool,
   disabledMove: PropTypes.bool,
+  disableUserSelect: PropTypes.bool,
   disabledZoom: PropTypes.bool,
+  elementsInterval: PropTypes.number,
   onChange: PropTypes.func,
+  onElementsChange: PropTypes.func,
   onPositionChange: PropTypes.func,
   onZoomChange: PropTypes.func,
   zoomMax: PropTypes.number,
@@ -49,9 +62,13 @@ PanZoomProvider.propTypes = {
 PanZoomProvider.defaultProps = {
   boundary: {},
   disabled: false,
+  disabledElements: false,
   disabledMove: false,
+  disableUserSelect: false,
   disabledZoom: false,
+  elementsInterval: 250,
   onChange: null,
+  onElementsChange: null,
   onPositionChange: null,
   onZoomChange: null,
   zoomMax: null,

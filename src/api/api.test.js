@@ -16,6 +16,7 @@ test('api', () => {
 
   const list = [
     'move',
+    'getElements',
     'getPosition',
     'setPosition',
     'getZoom',

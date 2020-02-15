@@ -7,12 +7,13 @@ import { usePanZoom } from '../context';
 
 const ZOOM_SPEED_BASE = 25; // ms
 
-const useZoom = (ref, loading) => {
-  const panZoomRef = ref.current;
+const useZoom = () => {
   const {
     boundary,
+    childRef,
     disabled,
     disabledZoom,
+    loading,
     positionRef,
     onChange,
     onZoomChange,
@@ -23,14 +24,16 @@ const useZoom = (ref, loading) => {
     zoomStep,
   } = usePanZoom();
 
+  const panZoomRef = childRef.current;
+
   const dependencies = [
     boundary,
+    childRef,
     disabled,
     disabledZoom,
     loading,
     onChange,
     onZoomChange,
-    ref,
     zoomSpeed,
     zoomStep,
   ];

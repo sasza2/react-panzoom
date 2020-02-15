@@ -1,6 +1,6 @@
 import React, { useLayoutEffect } from 'react';
 
-import PanZoom from './PanZoom';
+import PanZoom, { Element } from '..';
 
 export default { title: 'PanZoom' };
 
@@ -14,29 +14,27 @@ export const rectangles = () => (
   >
     <PanZoom>
       <div style={{ width: 500, height: 400 }}>
-        <div style={{
-          position: 'absolute',
-          left: 50,
-          top: 90,
-          width: 100,
-          height: 100,
-          backgroundColor: 'red',
-        }}
-        >
-          111
-        </div>
-        <div style={{
-          position: 'absolute',
-          left: 210,
-          top: 260,
-          width: 40,
-          height: 170,
-          backgroundColor: 'blue',
-          color: '#fff',
-        }}
-        >
-          222
-        </div>
+        <Element id="a" x={50} y={90}>
+          <div style={{
+            width: 100,
+            height: 100,
+            backgroundColor: 'red',
+          }}
+          >
+            111
+          </div>
+        </Element>
+        <Element id="b" x={210} top={260}>
+          <div style={{
+            width: 40,
+            height: 170,
+            backgroundColor: 'blue',
+            color: '#fff',
+          }}
+          >
+            222
+          </div>
+        </Element>
       </div>
     </PanZoom>
   </div>
@@ -100,24 +98,15 @@ export const API = () => {
   );
 };
 
-export const boxBounding = () => {
-  const panZoomRef = React.createRef();
-  const innerRef = React.createRef();
-
-  const onChange = ({ position, zoom }) => {
-    innerRef.current.innerHTML = `${parseInt(position.x, 10)}:${parseInt(position.y, 10)} (${zoom.toFixed(2)}x)`;
-  };
-
-  return (
-    <div style={{ border: '1px dashed #000', width: 400, height: 400 }}>
-      <PanZoom
-        boundary={{
-          parent: true,
-        }}
-        disableUserSelect
-        onChange={onChange}
-        ref={panZoomRef}
-      >
+export const boxBounding = () => (
+  <div style={{ border: '1px dashed #000', width: 400, height: 400 }}>
+    <PanZoom
+      boundary={{
+        parent: true,
+      }}
+      disableUserSelect
+    >
+      <Element id="orange">
         <div
           style={{
             display: 'flex',
@@ -130,9 +119,24 @@ export const boxBounding = () => {
             fontSize: 14,
           }}
         >
-          <span ref={innerRef}>move me</span>
+          <span>move me</span>
         </div>
-      </PanZoom>
-    </div>
-  );
-};
+      </Element>
+      <Element id="red" x={100} y={150}>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: 60,
+            height: 60,
+            backgroundColor: 'red',
+            fontSize: 14,
+          }}
+        >
+          <span>or me</span>
+        </div>
+      </Element>
+    </PanZoom>
+  </div>
+);
