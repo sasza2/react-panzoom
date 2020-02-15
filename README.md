@@ -1,5 +1,5 @@
 # react-panzoom
-React component for pan and zoom.
+React component for pan and zoom with possibility to moving elements inside.
 
 !["Preview"](docs/preview.gif "Example preview")
 
@@ -22,7 +22,7 @@ https://codesandbox.io/s/goofy-rgb-48tbu
 | disabledZoom | bool | false | disabling zoom |
 | elementsInterval | number | 250 | interval for executing `onElementsChange` |
 | onChange | func | null | event on move/zoom |
-| onElementsChange | func | null | callback executed when elements change position |
+| onElementsChange | func | null | callback invoked when elements change position |
 | onPositionChange | func | null | event on position change |
 | onZoomChange | func | null | event on zoom change |
 | zoomMax | number | null | maximum zoom |
