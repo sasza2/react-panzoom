@@ -2,8 +2,6 @@ import { useEffect } from 'react';
 
 import { usePanZoom } from '../context';
 
-const EMPTY_MAP = {};
-
 const useWatchElements = () => {
   const {
     elementsChangesRef,
@@ -15,10 +13,11 @@ const useWatchElements = () => {
     if (!onElementsChange) return undefined;
 
     const timer = setInterval(() => {
-      if (elementsChangesRef.current === EMPTY_MAP) return;
+      const noChanges = !Object.values(elementsChangesRef.current).length;
+      if (noChanges) return;
 
       onElementsChange(elementsChangesRef.current);
-      elementsChangesRef.current = EMPTY_MAP;
+      elementsChangesRef.current = {};
     }, elementsInterval);
 
     return () => clearInterval(timer);

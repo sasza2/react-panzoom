@@ -13,6 +13,8 @@ export const puzzles = () => {
 
   const onElementsChange = (elements) => {
     const { puzzle } = elements;
+    if (!puzzle) return;
+
     if (puzzle.x >= 85 && puzzle.x <= 101 && puzzle.y >= 7 && puzzle.y <= 23) {
       setConnected(true);
       timeRef.current = setTimeout(() => {

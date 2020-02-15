@@ -14,7 +14,7 @@ const CLASS_NAME = 'react-panzoom';
 const PanZoom = ({
   apiRef, children, className, disableUserSelect,
 }) => {
-  const { childRef, setLoading } = usePanZoom();
+  const { childRef, elementsRef, setLoading } = usePanZoom();
 
   const positionRef = useMove();
   const zoomRef = useZoom();
@@ -42,6 +42,7 @@ const PanZoom = ({
   api({
     apiRef,
     childRef,
+    elementsRef,
     positionRef,
     zoomRef,
   });

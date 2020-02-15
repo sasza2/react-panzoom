@@ -32,14 +32,18 @@ const Element = ({
     zoomRef,
   } = usePanZoom();
 
-  const moveRef = useRef(throttle((position) => {
-    elementsChangesRef.current = {
-      ...elementsChangesRef.current,
-      [id]: position,
-    };
-  }, elementsInterval));
+  const moveRef = useRef();
 
   useLayoutEffect(() => {
+    const moveThrottle = throttle((position) => {
+      elementsChangesRef.current = {
+        ...elementsChangesRef.current,
+        [id]: position,
+      };
+    }, elementsInterval);
+
+    moveRef.current = moveThrottle;
+
     elementRef.current.style.transform = `translate(${x}px, ${y}px)`;
     elementsRef.current[id] = {
       node: elementRef,
@@ -48,7 +52,10 @@ const Element = ({
       },
     };
 
-    return moveRef.current.cancel;
+    return () => {
+      delete elementsRef.current[id];
+      moveThrottle.cancel();
+    };
   }, [id, x, y]);
 
   useEffect(() => {
