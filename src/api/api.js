@@ -1,5 +1,6 @@
 import { useImperativeHandle } from 'react';
 
+import getElements from './elements';
 import move from './move';
 import { getPosition, setPosition } from './position';
 import {
@@ -11,7 +12,7 @@ import {
 import reset from './reset';
 
 const api = ({
-  apiRef, childRef, positionRef, zoomRef,
+  apiRef, childRef, elementsRef, positionRef, zoomRef,
 }) => {
   if (!apiRef) return;
 
@@ -25,6 +26,7 @@ const api = ({
       setZoom,
       zoomRef,
     }),
+    getElements: getElements({ elementsRef }),
     getPosition: getPosition({ positionRef }),
     setPosition: setPosition({ childRef, positionRef, zoomRef }),
     getZoom: getZoom({ zoomRef }),
