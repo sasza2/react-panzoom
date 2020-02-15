@@ -15,6 +15,7 @@ https://codesandbox.io/s/goofy-rgb-48tbu
 | --- | --- | --- | --- |
 | boundary | { top, right, bottom left, parent } | {} | **top, right, bottom, left** - numbers in px.<br />**parent** - bool, if set to true child's wrapper width and height are added to boundary |
 | children __*__ | node  |||
+| disableUserSelect | bool | false | prevent css select as text etc |
 | disabled | bool | false | disabling pan and zoom |
 | disabledElements | bool | false | disabling moving elements |
 | disabledMove | bool | false | disabling move |

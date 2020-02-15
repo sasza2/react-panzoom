@@ -116,7 +116,7 @@ const Element = ({
 
 Element.propTypes = {
   children: PropTypes.node.isRequired,
-  id: PropTypes.oneOf([PropTypes.string, PropTypes.number]).isRequired,
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   x: PropTypes.number,
   y: PropTypes.number,
 };
