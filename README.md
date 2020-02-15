@@ -48,6 +48,7 @@ panZoomRef.current contains methods like:
 | Function | Description |
 | --- | --- |
 | move(x:**number**, y:**number**) | Add x and y in px to current offset. Returns current position {x, y} |
+| getElements() | Returns map of elements |
 | getPosition() | Returns current position {x, y} |
 | setPosition(x:**number**, y:**number**) | Set offset position of pan |
 | getZoom():**number** | Returns current zoom |
@@ -58,7 +59,7 @@ panZoomRef.current contains methods like:
 
 # Elements
 
-!["Preview"](docs/figures.gif "Heart")
+!["Preview"](docs/figures.gif "Figures")
 
 ```jsx
 <div style={{ width: 300, height: 300 }}>
@@ -74,7 +75,6 @@ panZoomRef.current contains methods like:
 ```
 
 ## Element properties
-# Properties
 
 | Name | | Default | Description |
 | --- | --- | --- | --- |
