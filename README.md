@@ -62,6 +62,10 @@ panZoomRef.current contains methods like:
 !["Preview"](docs/figures.gif "Figures")
 
 ```jsx
+import PanZoom, { Element } from '@sasza/react-panzoom'
+
+// ...
+
 <div style={{ width: 300, height: 300 }}>
   <PanZoom>
     <Element id="orange" x={50} y={60}>
