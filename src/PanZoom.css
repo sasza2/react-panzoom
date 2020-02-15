@@ -15,10 +15,6 @@
     background-color: #ddd;
 }
 
-.react-panzoom__in > * {
-    position: absolute;
-}
-
 .react-panzoom--disable-user-select {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
