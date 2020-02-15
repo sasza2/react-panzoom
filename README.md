@@ -58,18 +58,30 @@ panZoomRef.current contains methods like:
 
 # Elements
 
-!["Preview"](docs/heart.gif "Heart")
+!["Preview"](docs/figures.gif "Heart")
 
 ```jsx
-<PanZoom>
-  <Element id="orange">
-    <Circle />
-  </Element>
-  <Element id="red">
-    <Square />
-  </Element>
-</PanZoom>
+<div style={{ width: 300, height: 300 }}>
+  <PanZoom>
+    <Element id="orange" x={50} y={60}>
+      <Circle />
+    </Element>
+    <Element id="red" x={120} y={150}>
+      <Square />
+    </Element>
+  </PanZoom>
+</div>
 ```
+
+## Element properties
+# Properties
+
+| Name | | Default | Description |
+| --- | --- | --- | --- |
+| id * | string/id | undefined | Unique ID of element |
+| children __*__ | node  |||
+| x | number  | 0 | x position of element |
+| y | number  | 0 | y position of element |
 
 # Testing
 ```
