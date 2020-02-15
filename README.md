@@ -18,7 +18,9 @@ https://codesandbox.io/s/goofy-rgb-48tbu
 | disabled | bool | false | disabling pan and zoom |
 | disabledMove | bool | false | disabling move |
 | disabledZoom | bool | false | disabling zoom |
+| elementsInterval | number | 250 | interval for executing `onElementsChange` |
 | onChange | func | null | event on move/zoom |
+| onElementsChange | func | null | callback executed when elements change position |
 | onPositionChange | func | null | event on position change |
 | onZoomChange | func | null | event on zoom change |
 | zoomMax | number | null | maximum zoom |
@@ -51,6 +53,18 @@ panZoomRef.current contains methods like:
 | zoomIn(zoom:**number**) | Add to current zoom, could be also negative number (it will work like zoomOut) |
 | zoomOut(zoom:**number**) | Sub from current zoom |
 | reset() | Reset to (0, 0, 0) |
+
+# Elements
+```jsx
+<PanZoom>
+  <Element id="orange">
+    <Circle />
+  </Element>
+  <Element id="red">
+    <Square />
+  </Element>
+</PanZoom>
+```
 
 # Testing
 ```

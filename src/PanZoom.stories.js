@@ -12,7 +12,7 @@ export const rectangles = () => (
     border: '1px solid green',
   }}
   >
-    <PanZoom onElementsChange={console.log}>
+    <PanZoom>
       <div style={{ width: 500, height: 400 }}>
         <Element id="a" x={50} y={90}>
           <div style={{
@@ -98,57 +98,45 @@ export const API = () => {
   );
 };
 
-export const boxBounding = () => {
-  const panZoomRef = React.createRef();
-  const innerRef = React.createRef();
-
-  const onChange = ({ position, zoom }) => {
-    innerRef.current.innerHTML = `${parseInt(position.x, 10)}:${parseInt(position.y, 10)} (${zoom.toFixed(2)}x)`;
-  };
-
-  return (
-    <div style={{ border: '1px dashed #000', width: 400, height: 400 }}>
-      <PanZoom
-        boundary={{
-          parent: true,
-        }}
-        disableUserSelect
-        onChange={onChange}
-        ref={panZoomRef}
-      >
-        <Element id="orange">
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderRadius: '50%',
-              width: 120,
-              height: 120,
-              backgroundColor: 'orange',
-              fontSize: 14,
-            }}
-          >
-            <span ref={innerRef}>move me</span>
-          </div>
-        </Element>
-        <Element id="red">
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderRadius: '50%',
-              width: 60,
-              height: 60,
-              backgroundColor: 'red',
-              fontSize: 14,
-            }}
-          >
-            <span ref={innerRef}>or me</span>
-          </div>
-        </Element>
-      </PanZoom>
-    </div>
-  );
-};
+export const boxBounding = () => (
+  <div style={{ border: '1px dashed #000', width: 400, height: 400 }}>
+    <PanZoom
+      boundary={{
+        parent: true,
+      }}
+      disableUserSelect
+    >
+      <Element id="orange">
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderRadius: '50%',
+            width: 120,
+            height: 120,
+            backgroundColor: 'orange',
+            fontSize: 14,
+          }}
+        >
+          <span>move me</span>
+        </div>
+      </Element>
+      <Element id="red" x={100} y={150}>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: 60,
+            height: 60,
+            backgroundColor: 'red',
+            fontSize: 14,
+          }}
+        >
+          <span>or me</span>
+        </div>
+      </Element>
+    </PanZoom>
+  </div>
+);

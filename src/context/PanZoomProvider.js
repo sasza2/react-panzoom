@@ -42,7 +42,6 @@ PanZoomProvider.propTypes = {
     bottom: PropTypes.number,
     left: PropTypes.number,
   }),
-  capturing: PropTypes.bool,
   children: PropTypes.node.isRequired,
   disabled: PropTypes.bool,
   disabledMove: PropTypes.bool,
@@ -60,11 +59,10 @@ PanZoomProvider.propTypes = {
 
 PanZoomProvider.defaultProps = {
   boundary: {},
-  capturing: false,
   disabled: false,
   disabledMove: false,
   disabledZoom: false,
-  elementsInterval: 150,
+  elementsInterval: 250,
   onChange: null,
   onElementsChange: null,
   onPositionChange: null,
