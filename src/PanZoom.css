@@ -12,6 +12,7 @@
     height: 100%;
     transform-origin: 0 0;
     pointer-events: none;
+    background-color: #ddd;
 }
 
 .react-panzoom--disable-user-select {

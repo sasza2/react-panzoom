@@ -1,5 +1,5 @@
 import React, {
-  useEffect, useLayoutEffect, useRef, useState,
+  memo, useEffect, useLayoutEffect, useRef, useState,
 } from 'react';
 import PropTypes from 'prop-types';
 import throttle from 'lodash/throttle';
@@ -11,7 +11,8 @@ import positionFromEvent from '../helpers/positionFromEvent';
 
 import './Element.css';
 
-// TODO: z index, memo
+let lastZIndex = 2;
+
 const Element = ({
   children, id, x, y,
 }) => {
@@ -19,6 +20,7 @@ const Element = ({
 
   const [moving, setMoving] = useState(null);
   const elementRef = useRef();
+
   const {
     boundary,
     childRef,
@@ -40,7 +42,7 @@ const Element = ({
     elementsRef.current[id] = {
       node: elementRef,
     };
-    return moveRef.current.clear;
+    return moveRef.current.cancel;
   }, [id]);
 
   useLayoutEffect(() => {
@@ -77,21 +79,28 @@ const Element = ({
     };
   }, [boundary, id, moving]);
 
-  const mousedown = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    const eventPosition = positionFromEvent(e);
-    const parent = childRef.current.parentNode.getBoundingClientRect();
-    const rect = elementRef.current.getBoundingClientRect();
-
-    setMoving({
-      x: (eventPosition.clientX - rect.left + parent.left) / zoomRef.current,
-      y: (eventPosition.clientY - rect.top + parent.top) / zoomRef.current,
-    });
-  };
-
   useLayoutEffect(() => {
+    const increateZIndex = () => {
+      lastZIndex += 1;
+      elementRef.current.style.zIndex = lastZIndex;
+    };
+
+    const mousedown = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const eventPosition = positionFromEvent(e);
+      const parent = childRef.current.parentNode.getBoundingClientRect();
+      const rect = elementRef.current.getBoundingClientRect();
+
+      setMoving({
+        x: (eventPosition.clientX - rect.left + parent.left) / zoomRef.current,
+        y: (eventPosition.clientY - rect.top + parent.top) / zoomRef.current,
+      });
+
+      increateZIndex();
+    };
+
     const mouseDownClear = onMouseDown(elementRef.current, mousedown);
     return mouseDownClear;
   }, []);
@@ -115,4 +124,4 @@ Element.defaultProps = {
   y: 0,
 };
 
-export default Element;
+export default memo(Element);
