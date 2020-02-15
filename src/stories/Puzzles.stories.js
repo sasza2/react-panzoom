@@ -2,9 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import PanZoom, { Element } from '..';
 
-export default { title: 'Heart' };
+export default { title: 'Puzzles' };
 
-export const boxBounding = () => {
+export const puzzles = () => {
   const timeRef = useRef();
   const [connected, setConnected] = useState(false);
   const [puzzleExists, setPuzzleExists] = useState(true);
