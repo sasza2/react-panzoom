@@ -24,6 +24,7 @@ const Element = ({
   const {
     boundary,
     childRef,
+    disabledElements,
     elementsInterval,
     elementsRef,
     elementsChangesRef,
@@ -39,18 +40,19 @@ const Element = ({
   }, elementsInterval));
 
   useLayoutEffect(() => {
+    elementRef.current.style.transform = `translate(${x}px, ${y}px)`;
     elementsRef.current[id] = {
       node: elementRef,
+      position: {
+        x, y,
+      },
     };
-    return moveRef.current.cancel;
-  }, [id]);
 
-  useLayoutEffect(() => {
-    elementRef.current.style.transform = `translate(${x}px, ${y}px)`;
-  }, [x, y]);
+    return moveRef.current.cancel;
+  }, [id, x, y]);
 
   useEffect(() => {
-    if (!moving) return undefined;
+    if (!moving || disabledElements) return undefined;
 
     const mousemove = (e) => {
       const eventPosition = positionFromEvent(e);
@@ -77,7 +79,7 @@ const Element = ({
       mouseMoveClear();
       mouseUpClear();
     };
-  }, [boundary, id, moving]);
+  }, [boundary, disabledElements, id, moving]);
 
   useLayoutEffect(() => {
     const increateZIndex = () => {

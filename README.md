@@ -16,6 +16,7 @@ https://codesandbox.io/s/goofy-rgb-48tbu
 | boundary | { top, right, bottom left, parent } | {} | **top, right, bottom, left** - numbers in px.<br />**parent** - bool, if set to true child's wrapper width and height are added to boundary |
 | children __*__ | node  |||
 | disabled | bool | false | disabling pan and zoom |
+| disabledElements | bool | false | disabling moving elements |
 | disabledMove | bool | false | disabling move |
 | disabledZoom | bool | false | disabling zoom |
 | elementsInterval | number | 250 | interval for executing `onElementsChange` |
@@ -55,6 +56,9 @@ panZoomRef.current contains methods like:
 | reset() | Reset to (0, 0, 0) |
 
 # Elements
+
+!["Preview"](docs/heart.gif "Heart")
+
 ```jsx
 <PanZoom>
   <Element id="orange">
