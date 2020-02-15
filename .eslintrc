@@ -17,7 +17,7 @@
   },
   "settings": {
     "react": {
-      "version": "latest"
+      "version": "16.9.0"
     }
   },
   "parser": "babel-eslint"
