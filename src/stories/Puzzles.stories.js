@@ -34,11 +34,12 @@ export const puzzles = () => {
             style={{
               opacity: connected ? 1 : 0.5,
               transition: 'all 1s',
+              width: 180,
             }}
             src={
               connected
-                ? 'https://i.postimg.cc/ppnCv9Sf/heart-all.png'
-                : 'https://i.postimg.cc/XrfgZR4X/heart-missing.png'
+                ? 'https://raw.githubusercontent.com/sasza2/react-panzoom/master/docs/heart/heart_all.png'
+                : 'https://raw.githubusercontent.com/sasza2/react-panzoom/master/docs/heart/heart_missing.png'
             }
             alt="heart missing"
           />
@@ -46,7 +47,7 @@ export const puzzles = () => {
         {
           puzzleExists && (
             <Element id="puzzle" x={250} y={250}>
-              <img style={{ width: 68 }} src="https://i.postimg.cc/gxFD2z9f/heart-puzzle.png" alt="puzzle" />
+              <img style={{ width: 68 }} src="https://raw.githubusercontent.com/sasza2/react-panzoom/master/docs/heart/heart_puzzle.png" alt="puzzle" />
             </Element>
           )
         }
