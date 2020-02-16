@@ -14,8 +14,8 @@ const useMove = () => {
     disabled,
     disabledMove,
     loading,
-    onChange,
-    onPositionChange,
+    onContainerChange,
+    onContainerPositionChange,
     positionRef,
     zoomRef,
   } = usePanZoom();
@@ -69,13 +69,17 @@ const useMove = () => {
         position: positionRef.current,
         zoom: zoomRef.current,
       });
-      if (onChange) onChange({ position: { ...positionRef.current }, zoom: zoomRef.current });
-      if (onPositionChange) onPositionChange({ position: { ...positionRef.current } });
+      if (onContainerChange) {
+        onContainerChange({ position: { ...positionRef.current }, zoom: zoomRef.current });
+      }
+      if (onContainerPositionChange) {
+        onContainerPositionChange({ position: { ...positionRef.current } });
+      }
     };
 
     const mouseMoveClear = onMouseMove(move);
     return mouseMoveClear;
-  }, [boundary, loading, moving, onChange, onPositionChange]);
+  }, [boundary, loading, moving, onContainerChange, onContainerPositionChange]);
 
   return positionRef;
 };

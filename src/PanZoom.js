@@ -12,7 +12,7 @@ import './PanZoom.css';
 const CLASS_NAME = 'react-panzoom';
 
 const PanZoom = ({
-  apiRef, children, className, disableUserSelect,
+  apiRef, children, className, disabledUserSelect,
 }) => {
   const { childRef, elementsRef, setLoading } = usePanZoom();
 
@@ -23,10 +23,10 @@ const PanZoom = ({
 
   const classNameMemo = useMemo(() => {
     const classes = [CLASS_NAME];
-    if (disableUserSelect) classes.push(`${CLASS_NAME}--disable-user-select`);
+    if (disabledUserSelect) classes.push(`${CLASS_NAME}--disable-user-select`);
     if (className) classes.push(className);
     return classes.join(' ');
-  }, [className, disableUserSelect]);
+  }, [className, disabledUserSelect]);
 
   const classNameChildMemo = useMemo(() => {
     const classes = [`${CLASS_NAME}__in`];
@@ -63,13 +63,13 @@ PanZoom.propTypes = {
   ]),
   className: PropTypes.string,
   children: PropTypes.node.isRequired,
-  disableUserSelect: PropTypes.bool,
+  disabledUserSelect: PropTypes.bool,
 };
 
 PanZoom.defaultProps = {
   apiRef: null,
   className: null,
-  disableUserSelect: false,
+  disabledUserSelect: false,
 };
 
 const PanZoomWithContext = (props, ref) => (

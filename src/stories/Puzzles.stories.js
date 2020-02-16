@@ -26,7 +26,7 @@ export const puzzles = () => {
   return (
     <div style={{ border: '1px dashed #000', width: 400, height: 400 }}>
       <PanZoom
-        disableUserSelect
+        disabledUserSelect
         onElementsChange={onElementsChange}
       >
         <Element id="heart">

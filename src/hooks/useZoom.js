@@ -15,8 +15,8 @@ const useZoom = () => {
     disabledZoom,
     loading,
     positionRef,
-    onChange,
-    onZoomChange,
+    onContainerChange,
+    onContainerZoomChange,
     zoomMax,
     zoomMin,
     zoomRef,
@@ -32,8 +32,8 @@ const useZoom = () => {
     disabled,
     disabledZoom,
     loading,
-    onChange,
-    onZoomChange,
+    onContainerChange,
+    onContainerZoomChange,
     zoomSpeed,
     zoomStep,
   ];
@@ -68,8 +68,12 @@ const useZoom = () => {
       positionRef.current = nextPosition;
       panZoomRef.style.transform = transform({ position: positionRef.current, zoom: nextZoom });
 
-      if (onChange) onChange({ position: { ...positionRef.current }, zoom: nextZoom });
-      if (onZoomChange) onZoomChange({ zoom: nextZoom, position: { ...positionRef.current } });
+      if (onContainerChange) {
+        onContainerChange({ position: { ...positionRef.current }, zoom: nextZoom });
+      }
+      if (onContainerZoomChange) {
+        onContainerZoomChange({ zoom: nextZoom, position: { ...positionRef.current } });
+      }
     }, ZOOM_SPEED_BASE / zoomSpeed);
 
     if (!panZoomRef) return wheel.cancel;

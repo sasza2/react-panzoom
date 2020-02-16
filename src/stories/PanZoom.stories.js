@@ -42,7 +42,7 @@ export const rectangles = () => (
 
 export const text = () => (
   <div style={{ height: 200 }}>
-    <PanZoom disableUserSelect>
+    <PanZoom disabledUserSelect>
       abcdef
     </PanZoom>
   </div>
@@ -77,34 +77,13 @@ export const imageSVGAnimation = () => {
   );
 };
 
-export const API = () => {
-  const panZoomRef = React.createRef();
-  return (
-    <div>
-      <button type="button" onClick={() => panZoomRef.current.zoomIn(0.2)}>+</button>
-      <button type="button" onClick={() => panZoomRef.current.zoomOut(0.2)}>-</button>
-      <button type="button" onClick={() => panZoomRef.current.reset()}>reset</button>
-      <button type="button" onClick={() => panZoomRef.current.move(-20, 0)}>&lt;-</button>
-      <button type="button" onClick={() => panZoomRef.current.move(20, 0)}>-&gt;</button>
-      <PanZoom ref={panZoomRef}>
-        <div style={{
-          display: 'flex', alignItems: 'center', justifyContent: 'center', width: 200, height: 200,
-        }}
-        >
-          <span>abc</span>
-        </div>
-      </PanZoom>
-    </div>
-  );
-};
-
 export const boxBounding = () => (
   <div style={{ border: '1px dashed #000', width: 400, height: 400 }}>
     <PanZoom
       boundary={{
         parent: true,
       }}
-      disableUserSelect
+      disabledUserSelect
     >
       <Element id="orange">
         <div

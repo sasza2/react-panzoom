@@ -15,16 +15,16 @@ https://codesandbox.io/s/goofy-rgb-48tbu
 | --- | --- | --- | --- |
 | boundary | { top, right, bottom left, parent } | {} | **top, right, bottom, left** - numbers in px.<br />**parent** - bool, if set to true child's wrapper width and height are added to boundary |
 | children __*__ | node  |||
-| disableUserSelect | bool | false | prevent css select as text etc |
+| disabledUserSelect | bool | false | prevent css select as text etc |
 | disabled | bool | false | disabling pan and zoom |
 | disabledElements | bool | false | disabling moving elements |
 | disabledMove | bool | false | disabling move |
 | disabledZoom | bool | false | disabling zoom |
 | elementsInterval | number | 250 | interval for executing `onElementsChange` |
-| onChange | func | null | event on move/zoom |
+| onContainerChange | func | null | event on move/zoom |
+| onContainerPositionChange | func | null | event on position change |
+| onContainerZoomChange | func | null | event on zoom change |
 | onElementsChange | func | null | callback invoked when elements change position |
-| onPositionChange | func | null | event on position change |
-| onZoomChange | func | null | event on zoom change |
 | zoomMax | number | null | maximum zoom |
 | zoomMin | number | 0.1 | minimum zoom |
 | zoomSpeed | number | 1 | zoom speed on wheel event |
