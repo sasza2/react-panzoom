@@ -2,21 +2,22 @@ import React, { forwardRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 import PanZoomContext, { usePanZoom } from './context';
+import useApi from './hooks/useApi';
 import useMove from './hooks/useMove';
 import useZoom from './hooks/useZoom';
-import api from './api';
 
 import './PanZoom.css';
 
 const CLASS_NAME = 'react-panzoom';
 
 const PanZoom = ({
-  apiRef, children, className, disabledUserSelect,
+  children, className, disabledUserSelect,
 }) => {
-  const { childRef, elementsRef, setLoading } = usePanZoom();
+  const { childRef, setLoading } = usePanZoom();
 
-  const positionRef = useMove();
-  const zoomRef = useZoom();
+  useMove();
+  useZoom();
+  useApi();
 
   const classNameMemo = useMemo(() => {
     const classes = [CLASS_NAME];
@@ -36,14 +37,6 @@ const PanZoom = ({
     setLoading(false);
   };
 
-  api({
-    apiRef,
-    childRef,
-    elementsRef,
-    positionRef,
-    zoomRef,
-  });
-
   return (
     <div className={classNameMemo}>
       <div draggable={false} className={classNameChildMemo} ref={createRef}>
@@ -54,24 +47,19 @@ const PanZoom = ({
 };
 
 PanZoom.propTypes = {
-  apiRef: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.shape({ current: PropTypes.object }),
-  ]),
   className: PropTypes.string,
   children: PropTypes.node.isRequired,
   disabledUserSelect: PropTypes.bool,
 };
 
 PanZoom.defaultProps = {
-  apiRef: null,
   className: null,
   disabledUserSelect: false,
 };
 
-const PanZoomWithContext = (props, ref) => (
-  <PanZoomContext {...props}>
-    <PanZoom apiRef={ref} {...props} />
+const PanZoomWithContext = (props, apiRef) => (
+  <PanZoomContext apiRef={apiRef} {...props}>
+    <PanZoom {...props} />
   </PanZoomContext>
 );
 

@@ -69,12 +69,14 @@ const useMove = () => {
         position: positionRef.current,
         zoom: zoomRef.current,
       });
-      if (onContainerChange) {
-        onContainerChange({ position: { ...positionRef.current }, zoom: zoomRef.current });
-      }
-      if (onContainerPositionChange) {
-        onContainerPositionChange({ position: { ...positionRef.current } });
-      }
+
+      const eventValue = {
+        position: { ...positionRef.current },
+        zoom: zoomRef.current,
+      };
+
+      if (onContainerChange) onContainerChange(eventValue);
+      if (onContainerPositionChange) onContainerPositionChange(eventValue);
     };
 
     const mouseMoveClear = onMouseMove(move);

@@ -54,6 +54,7 @@ panZoomRef.current contains methods like:
 | setZoom(zoom:**number**) | Sets zoom |
 | zoomIn(zoom:**number**) | Add to current zoom, could be also negative number (it will work like zoomOut) |
 | zoomOut(zoom:**number**) | Sub from current zoom |
+| ref() | Returns node element |
 | reset() | Reset to (0, 0, 0) |
 
 # Elements
