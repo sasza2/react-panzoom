@@ -2,7 +2,6 @@ import React, {
   memo, useEffect, useLayoutEffect, useRef, useState,
 } from 'react';
 import PropTypes from 'prop-types';
-import throttle from 'lodash/throttle';
 
 import { onMouseDown, onMouseUp, onMouseMove } from '../helpers/eventListener';
 import { usePanZoom } from '../context';
@@ -25,25 +24,13 @@ const Element = ({
     boundary,
     childRef,
     disabledElements,
-    elementsInterval,
     elementsRef,
-    elementsChangesRef,
+    onElementsChange,
     positionRef,
     zoomRef,
   } = usePanZoom();
 
-  const moveRef = useRef();
-
   useLayoutEffect(() => {
-    const moveThrottle = throttle((position) => {
-      elementsChangesRef.current = {
-        ...elementsChangesRef.current,
-        [id]: position,
-      };
-    }, elementsInterval);
-
-    moveRef.current = moveThrottle;
-
     elementRef.current.style.transform = `translate(${x}px, ${y}px)`;
     elementsRef.current[id] = {
       node: elementRef,
@@ -54,7 +41,6 @@ const Element = ({
 
     return () => {
       delete elementsRef.current[id];
-      moveThrottle.cancel();
     };
   }, [id, x, y]);
 
@@ -72,9 +58,11 @@ const Element = ({
       });
 
       elementsRef.current[id].position = translate;
-
       elementRef.current.style.transform = `translate(${translate.x}px, ${translate.y}px)`;
-      moveRef.current(translate);
+
+      onElementsChange({
+        [id]: translate,
+      });
     };
 
     const mouseup = () => setMoving(null);
@@ -86,7 +74,7 @@ const Element = ({
       mouseMoveClear();
       mouseUpClear();
     };
-  }, [boundary, disabledElements, id, moving]);
+  }, [boundary, disabledElements, id, moving, onElementsChange]);
 
   useLayoutEffect(() => {
     const increateZIndex = () => {

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import PanZoomContext, { usePanZoom } from './context';
 import useMove from './hooks/useMove';
-import useWatchElements from './hooks/useWatchElements';
 import useZoom from './hooks/useZoom';
 import api from './api';
 
@@ -18,8 +17,6 @@ const PanZoom = ({
 
   const positionRef = useMove();
   const zoomRef = useZoom();
-
-  useWatchElements();
 
   const classNameMemo = useMemo(() => {
     const classes = [CLASS_NAME];

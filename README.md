@@ -20,7 +20,6 @@ https://codesandbox.io/s/goofy-rgb-48tbu
 | disabledElements | bool | false | disabling moving elements |
 | disabledMove | bool | false | disabling move |
 | disabledZoom | bool | false | disabling zoom |
-| elementsInterval | number | 250 | interval for executing `onElementsChange` |
 | onContainerChange | func | null | event on move/zoom |
 | onContainerPositionChange | func | null | event on position change |
 | onContainerZoomChange | func | null | event on zoom change |

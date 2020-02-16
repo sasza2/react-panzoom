@@ -10,7 +10,6 @@ const PanZoomProvider = ({
   const [loading, setLoading] = useState(true);
   const childRef = useRef();
   const elementsRef = useRef({});
-  const elementsChangesRef = useRef({});
   const positionRef = useRef();
   const zoomRef = useRef();
 
@@ -22,7 +21,6 @@ const PanZoomProvider = ({
       value={{
         childRef,
         elementsRef,
-        elementsChangesRef,
         loading,
         positionRef,
         setLoading,
@@ -48,7 +46,6 @@ PanZoomProvider.propTypes = {
   disabledMove: PropTypes.bool,
   disabledUserSelect: PropTypes.bool,
   disabledZoom: PropTypes.bool,
-  elementsInterval: PropTypes.number,
   onContainerChange: PropTypes.func,
   onElementsChange: PropTypes.func,
   onContainerPositionChange: PropTypes.func,
@@ -66,7 +63,6 @@ PanZoomProvider.defaultProps = {
   disabledMove: false,
   disabledUserSelect: false,
   disabledZoom: false,
-  elementsInterval: 250,
   onContainerChange: null,
   onElementsChange: null,
   onContainerPositionChange: null,
