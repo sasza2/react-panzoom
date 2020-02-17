@@ -5,3 +5,7 @@
     top: 0;
     pointer-events: all;
 }
+
+.react-panzoom-element--disabled {
+    pointer-events: none;
+}
