@@ -7,7 +7,7 @@ React component for pan and zoom with possibility to moving elements inside.
 https://codesandbox.io/s/goofy-rgb-48tbu
 
 # Installation
-```npm install react-panzoom```
+```npm install @sasza/react-panzoom```
 
 # Properties
 
@@ -84,6 +84,7 @@ import PanZoom, { Element } from '@sasza/react-panzoom'
 | --- | --- | --- | --- |
 | id * | string/id | undefined | Unique ID of element |
 | children __*__ | node  |||
+| disabled | bool  | false | Disabling element |
 | x | number  | 0 | x position of element |
 | y | number  | 0 | y position of element |
 
