@@ -1,5 +1,5 @@
 import React, {
-  memo, useEffect, useLayoutEffect, useRef, useState,
+  memo, useEffect, useLayoutEffect, useMemo, useRef, useState,
 } from 'react';
 import PropTypes from 'prop-types';
 
@@ -13,7 +13,7 @@ import './Element.css';
 let lastZIndex = 2;
 
 const Element = ({
-  children, id, x, y,
+  children, disabled, id, x, y,
 }) => {
   if (!id) throw new Error("Id can't be undefined");
 
@@ -77,6 +77,8 @@ const Element = ({
   }, [boundary, disabledElements, id, moving, onElementsChange]);
 
   useLayoutEffect(() => {
+    if (disabled) return undefined;
+
     const increateZIndex = () => {
       lastZIndex += 1;
       elementRef.current.style.zIndex = lastZIndex;
@@ -100,10 +102,17 @@ const Element = ({
 
     const mouseDownClear = onMouseDown(elementRef.current, mousedown);
     return mouseDownClear;
-  }, []);
+  }, [disabled]);
+
+  const className = useMemo(() => {
+    const base = 'react-panzoom-element';
+    const classes = [base];
+    if (disabled) classes.push(`${base}--disabled`);
+    return classes.join(' ');
+  }, [disabled]);
 
   return (
-    <div ref={elementRef} className="react-panzoom-element">
+    <div ref={elementRef} className={className}>
       {children}
     </div>
   );
@@ -111,12 +120,14 @@ const Element = ({
 
 Element.propTypes = {
   children: PropTypes.node.isRequired,
+  disabled: PropTypes.bool,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   x: PropTypes.number,
   y: PropTypes.number,
 };
 
 Element.defaultProps = {
+  disabled: false,
   x: 0,
   y: 0,
 };
