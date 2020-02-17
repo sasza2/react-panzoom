@@ -29,7 +29,7 @@ export const puzzles = () => {
         disabledUserSelect
         onElementsChange={onElementsChange}
       >
-        <Element id="heart">
+        <Element id="heart" disabled={puzzleExists}>
           <img
             style={{
               opacity: connected ? 1 : 0.5,
