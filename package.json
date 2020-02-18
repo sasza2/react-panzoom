@@ -1,6 +1,6 @@
 {
   "name": "@sasza/react-panzoom",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "React component for pan and zoom with possibility to moving elements inside",
   "main": "dist/main.js",
   "keywords": [
