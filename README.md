@@ -20,10 +20,12 @@ https://codesandbox.io/s/goofy-rgb-48tbu
 | disabledElements | bool | false | disabling moving elements |
 | disabledMove | bool | false | disabling move |
 | disabledZoom | bool | false | disabling zoom |
+| height | string/number | 100% | height of child container |
 | onContainerChange | func | null | event on move/zoom |
 | onContainerPositionChange | func | null | event on position change |
 | onContainerZoomChange | func | null | event on zoom change |
 | onElementsChange | func | null | callback invoked when elements change position |
+| width | string/number | 100% | width of child container |
 | zoomMax | number | null | maximum zoom |
 | zoomMin | number | 0.1 | minimum zoom |
 | zoomSpeed | number | 1 | zoom speed on wheel event |
