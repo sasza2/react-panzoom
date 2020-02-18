@@ -60,9 +60,11 @@ const Element = ({
       elementsRef.current[id].position = translate;
       elementRef.current.style.transform = `translate(${translate.x}px, ${translate.y}px)`;
 
-      onElementsChange({
-        [id]: translate,
-      });
+      if (onElementsChange) {
+        onElementsChange({
+          [id]: translate,
+        });
+      }
     };
 
     const mouseup = () => setMoving(null);
