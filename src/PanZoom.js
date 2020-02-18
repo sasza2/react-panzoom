@@ -11,7 +11,7 @@ import './PanZoom.css';
 const CLASS_NAME = 'react-panzoom';
 
 const PanZoom = ({
-  children, className, disabledUserSelect,
+  children, className, disabledUserSelect, height, width,
 }) => {
   const { childRef, setLoading } = usePanZoom();
 
@@ -32,6 +32,11 @@ const PanZoom = ({
     return classes.join(' ');
   }, [className]);
 
+  const style = useMemo(() => ({
+    height,
+    width,
+  }), [height, width]);
+
   const createRef = (node) => {
     childRef.current = node;
     setLoading(false);
@@ -39,7 +44,7 @@ const PanZoom = ({
 
   return (
     <div className={classNameMemo}>
-      <div draggable={false} className={classNameChildMemo} ref={createRef}>
+      <div draggable={false} className={classNameChildMemo} ref={createRef} style={style}>
         {children}
       </div>
     </div>
@@ -50,11 +55,15 @@ PanZoom.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node.isRequired,
   disabledUserSelect: PropTypes.bool,
+  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };
 
 PanZoom.defaultProps = {
   className: null,
   disabledUserSelect: false,
+  height: '100%',
+  width: '100%',
 };
 
 const PanZoomWithContext = (props, apiRef) => (

@@ -80,10 +80,12 @@ export const imageSVGAnimation = () => {
 export const boxBounding = () => (
   <div style={{ border: '1px dashed #000', width: 400, height: 400 }}>
     <PanZoom
+      disabledUserSelect
       boundary={{
         parent: true,
       }}
-      disabledUserSelect
+      height={5000}
+      width={5000}
     >
       <Element id="orange">
         <div

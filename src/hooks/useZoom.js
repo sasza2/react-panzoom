@@ -55,7 +55,10 @@ const useZoom = () => {
         if (zoomMin && zoomRef.current <= zoomMin) return zoomMin;
         return zoomRef.current - zoomStep;
       })();
+
       zoomRef.current = nextZoom;
+
+      panZoomRef.style.transform = transform({ position: positionRef.current, zoom: nextZoom });
 
       const nextPosition = produceBounding({
         boundary,
@@ -63,10 +66,11 @@ const useZoom = () => {
         y: e.clientY - rect.top - yoff * nextZoom,
         parent: rect,
         rect: panZoomRef.getBoundingClientRect(),
+        co: nextZoom,
       });
 
       positionRef.current = nextPosition;
-      panZoomRef.style.transform = transform({ position: positionRef.current, zoom: nextZoom });
+      panZoomRef.style.transform = transform({ position: nextPosition, zoom: nextZoom });
 
       if (onContainerChange) {
         onContainerChange({ position: { ...positionRef.current }, zoom: nextZoom });

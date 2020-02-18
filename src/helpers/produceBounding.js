@@ -28,7 +28,7 @@ const positionHorizontal = ({
     return Math.max(x, boundary.left - diff);
   }
   if (boundary.left === undefined && boundary.right !== undefined) {
-    return Math.min(x, boundary.right - rect.height + diff);
+    return Math.min(x, boundary.right - rect.width + diff);
   }
 
   const leftMax = boundary.left - diff; // px
@@ -55,7 +55,7 @@ const produceBounding = ({
   boundary, x, y, parent, rect,
 }) => {
   const boundaryNext = withParent({ boundary, parent });
-  const nextPosition = { x, y };
+  const nextPosition = {};
   nextPosition.x = positionHorizontal({
     boundary: boundaryNext, x, parent, rect,
   });
