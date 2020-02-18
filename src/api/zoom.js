@@ -1,11 +1,12 @@
 import transform from '../helpers/produceStyle';
+import zoomRound from '../helpers/zoomRound';
 
 export const getZoom = ({ zoomRef }) => () => zoomRef.current;
 
 export const setZoom = ({ childRef, positionRef, zoomRef }) => (value) => {
   const ref = childRef;
   const zoom = zoomRef;
-  zoom.current = value;
+  zoom.current = zoomRound(value);
   ref.current.style.transform = transform({ position: positionRef.current, zoom: zoomRef.current });
 };
 
