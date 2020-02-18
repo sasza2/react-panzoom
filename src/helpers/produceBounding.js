@@ -34,7 +34,7 @@ const positionHorizontal = ({
   const leftMax = boundary.left - diff; // px
   if (x < leftMax) return leftMax;
 
-  const rightMax = boundary.right - rect.height + diff; // px
+  const rightMax = boundary.right - rect.width + diff; // px
   if (x > rightMax) return rightMax;
 
   return x;
@@ -44,10 +44,10 @@ const withParent = ({ boundary, parent }) => {
   if (!boundary.parent) return boundary;
 
   return {
-    top: 0 + (boundary.top || 0),
+    top: boundary.top || 0,
     right: parent.width + (boundary.right || 0),
     bottom: parent.height + (boundary.bottom || 0),
-    left: 0 + (boundary.left || 0),
+    left: boundary.left || 0,
   };
 };
 
