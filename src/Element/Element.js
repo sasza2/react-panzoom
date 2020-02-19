@@ -110,8 +110,9 @@ const Element = ({
     const base = 'react-panzoom-element';
     const classes = [base];
     if (disabled) classes.push(`${base}--disabled`);
+    classes.push(`${base}--id-${id}`);
     return classes.join(' ');
-  }, [disabled]);
+  }, [disabled, id]);
 
   return (
     <div ref={elementRef} className={className}>
