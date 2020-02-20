@@ -1,7 +1,7 @@
 import React, { forwardRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
-import PanZoomContext, { usePanZoom } from './context';
+import PanZoomProvider, { usePanZoom } from './context';
 import useApi from './hooks/useApi';
 import useMove from './hooks/useMove';
 import useZoom from './hooks/useZoom';
@@ -67,9 +67,9 @@ PanZoom.defaultProps = {
 };
 
 const PanZoomWithContext = (props, apiRef) => (
-  <PanZoomContext apiRef={apiRef} {...props}>
+  <PanZoomProvider apiRef={apiRef} {...props}>
     <PanZoom {...props} />
-  </PanZoomContext>
+  </PanZoomProvider>
 );
 
 export default forwardRef(PanZoomWithContext);
