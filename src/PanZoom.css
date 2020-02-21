@@ -6,13 +6,6 @@
     -webkit-font-smoothing: antialiased;
 }
 
-.react-panzoom__in {
-    position: relative;
-    transform-origin: 0 0;
-    pointer-events: none;
-    background-color: #ddd;
-}
-
 .react-panzoom--disable-user-select {
     -webkit-touch-callout: none;
     -webkit-user-select: none;

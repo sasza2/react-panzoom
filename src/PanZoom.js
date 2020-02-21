@@ -9,6 +9,12 @@ import useZoom from './hooks/useZoom';
 import './PanZoom.css';
 
 const CLASS_NAME = 'react-panzoom';
+const CHILD_STYLE = {
+  position: 'relative',
+  transformOrigin: '0 0',
+  pointerEvents: 'none',
+  backgroundColor: '#ddd',
+};
 
 const PanZoom = ({
   children, className, disabledUserSelect, height, width,
@@ -32,10 +38,17 @@ const PanZoom = ({
     return classes.join(' ');
   }, [className]);
 
-  const style = useMemo(() => ({
-    height,
-    width,
-  }), [height, width]);
+  const childStyle = useMemo(() => {
+    const style = {
+      ...CHILD_STYLE,
+      height,
+      width,
+    };
+
+    if (className) style.backgroundColor = null;
+
+    return style;
+  }, [className, height, width]);
 
   const createRef = (node) => {
     childRef.current = node;
@@ -44,7 +57,7 @@ const PanZoom = ({
 
   return (
     <div className={classNameMemo}>
-      <div draggable={false} className={classNameChildMemo} ref={createRef} style={style}>
+      <div draggable={false} className={classNameChildMemo} ref={createRef} style={childStyle}>
         {children}
       </div>
     </div>
