@@ -15,6 +15,14 @@ const CHILD_STYLE = {
   pointerEvents: 'none',
   backgroundColor: '#ddd',
 };
+const CHILD_DISABLED_STYLE = {
+  '-webkit-touch-callout': 'none',
+  '-webkit-user-select': 'none',
+  '-khtml-user-select': 'none',
+  '-moz-user-select': 'none',
+  '-ms-user-select': 'none',
+  'user-select': 'none',
+};
 
 const PanZoom = ({
   children, className, disabledUserSelect, height, width,
@@ -39,16 +47,17 @@ const PanZoom = ({
   }, [className]);
 
   const childStyle = useMemo(() => {
-    const style = {
+    let style = {
       ...CHILD_STYLE,
       height,
       width,
     };
 
     if (className) style.backgroundColor = null;
+    if (disabledUserSelect) style = { ...style, ...CHILD_DISABLED_STYLE };
 
     return style;
-  }, [className, height, width]);
+  }, [className, disabledUserSelect, height, width]);
 
   const createRef = (node) => {
     childRef.current = node;
