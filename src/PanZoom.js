@@ -6,9 +6,15 @@ import useApi from './hooks/useApi';
 import useMove from './hooks/useMove';
 import useZoom from './hooks/useZoom';
 
-import './PanZoom.css';
-
 const CLASS_NAME = 'react-panzoom';
+
+const PARENT_STYLE = {
+  width: '100%',
+  height: '100%',
+  overflow: 'hidden',
+  'touch-action': 'none',
+  '-webkit-font-smoothing': 'antialiased',
+};
 const CHILD_STYLE = {
   position: 'relative',
   transformOrigin: '0 0',
@@ -65,7 +71,7 @@ const PanZoom = ({
   };
 
   return (
-    <div className={classNameMemo}>
+    <div className={classNameMemo} style={PARENT_STYLE}>
       <div draggable={false} className={classNameChildMemo} ref={createRef} style={childStyle}>
         {children}
       </div>
