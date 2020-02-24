@@ -1,34 +1,13 @@
 import React, { forwardRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
+import { PARENT_STYLE, CHILD_STYLE, CHILD_DISABLED_STYLE } from './styles';
 import PanZoomProvider, { usePanZoom } from './context';
 import useApi from './hooks/useApi';
 import useMove from './hooks/useMove';
 import useZoom from './hooks/useZoom';
 
 const CLASS_NAME = 'react-panzoom';
-
-const PARENT_STYLE = {
-  width: '100%',
-  height: '100%',
-  overflow: 'hidden',
-  'touch-action': 'none',
-  '-webkit-font-smoothing': 'antialiased',
-};
-const CHILD_STYLE = {
-  position: 'relative',
-  transformOrigin: '0 0',
-  pointerEvents: 'none',
-  backgroundColor: '#ddd',
-};
-const CHILD_DISABLED_STYLE = {
-  '-webkit-touch-callout': 'none',
-  '-webkit-user-select': 'none',
-  '-khtml-user-select': 'none',
-  '-moz-user-select': 'none',
-  '-ms-user-select': 'none',
-  'user-select': 'none',
-};
 
 const PanZoom = ({
   children, className, disabledUserSelect, height, width,

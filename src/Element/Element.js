@@ -3,23 +3,13 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 
+import { ELEMENT_STYLE, ELEMENT_STYLE_DISABLED } from '../styles';
 import { onMouseDown, onMouseUp, onMouseMove } from '../helpers/eventListener';
 import { usePanZoom } from '../context';
 import produceElementPosition from '../helpers/produceElementPosition';
 import positionFromEvent from '../helpers/positionFromEvent';
 
 let lastZIndex = 2;
-
-const ELEMENT_STYLE = {
-  display: 'inline-block',
-  position: 'absolute',
-  left: 0,
-  top: 0,
-  'pointer-events': 'all',
-};
-const ELEMENT_STYLE_DISABLED = {
-  'pointer-events': 'none',
-};
 
 const Element = ({
   children, disabled, id, x, y,
