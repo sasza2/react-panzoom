@@ -8,9 +8,18 @@ import { usePanZoom } from '../context';
 import produceElementPosition from '../helpers/produceElementPosition';
 import positionFromEvent from '../helpers/positionFromEvent';
 
-import './Element.css';
-
 let lastZIndex = 2;
+
+const ELEMENT_STYLE = {
+  display: 'inline-block',
+  position: 'absolute',
+  left: 0,
+  top: 0,
+  'pointer-events': 'all',
+};
+const ELEMENT_STYLE_DISABLED = {
+  'pointer-events': 'none',
+};
 
 const Element = ({
   children, disabled, id, x, y,
@@ -114,8 +123,14 @@ const Element = ({
     return classes.join(' ');
   }, [disabled, id]);
 
+  const elementStyle = useMemo(() => {
+    let style = { ...ELEMENT_STYLE };
+    if (disabled) style = { ...style, ...ELEMENT_STYLE_DISABLED };
+    return style;
+  }, [disabled]);
+
   return (
-    <div ref={elementRef} className={className}>
+    <div ref={elementRef} className={className} style={elementStyle}>
       {children}
     </div>
   );
