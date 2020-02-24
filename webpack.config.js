@@ -21,6 +21,9 @@ module.exports = {
   externals: {
     react: {
       commonjs2: "react"
+    },
+    'prop-types': {
+      commonjs2: "prop-types"
     }
   }
 };
