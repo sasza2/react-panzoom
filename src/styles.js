@@ -2,8 +2,8 @@ export const PARENT_STYLE = {
   width: '100%',
   height: '100%',
   overflow: 'hidden',
-  'touch-action': 'none',
-  '-webkit-font-smoothing': 'antialiased',
+  touchAction: 'none',
+  WebkitFontSmoothing: 'antialiased',
 };
 
 export const CHILD_STYLE = {
