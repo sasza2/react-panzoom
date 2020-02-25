@@ -1,6 +1,6 @@
 {
   "name": "@sasza/react-panzoom",
-  "version": "1.1.9",
+  "version": "1.1.10",
   "description": "React component for pan and zoom with possibility to moving elements inside",
   "main": "dist/main.js",
   "keywords": [
@@ -48,10 +48,10 @@
     "webpack-cli": "^3.3.10"
   },
   "peerDependencies": {
-    "prop-types": "^15.0.0",
     "react": ">=16.9.0"
   },
   "dependencies": {
+    "prop-types": "^15.0.0",
     "lodash": "^4.17.15"
   }
 }

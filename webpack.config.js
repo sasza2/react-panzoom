@@ -7,6 +7,9 @@ module.exports = {
     filename: 'main.js',
     libraryTarget: 'commonjs2',
   },
+  node: {
+    global: false
+  },
   module: {
     rules: [
       {
@@ -21,9 +24,6 @@ module.exports = {
   externals: {
     react: {
       commonjs2: "react"
-    },
-    'prop-types': {
-      commonjs2: "prop-types"
     }
   }
 };
