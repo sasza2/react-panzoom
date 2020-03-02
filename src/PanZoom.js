@@ -10,7 +10,7 @@ import useZoom from './hooks/useZoom';
 const CLASS_NAME = 'react-panzoom';
 
 const PanZoom = ({
-  children, className, disabledUserSelect, height, width,
+  children, className, disabled, disabledUserSelect, height, width,
 }) => {
   const { childRef, setLoading } = usePanZoom();
 
@@ -20,10 +20,11 @@ const PanZoom = ({
 
   const classNameMemo = useMemo(() => {
     const classes = [CLASS_NAME];
-    if (disabledUserSelect) classes.push(`${CLASS_NAME}--disable-user-select`);
     if (className) classes.push(className);
+    if (disabled) classes.push(`${CLASS_NAME}--disabled`);
+    if (disabledUserSelect) classes.push(`${CLASS_NAME}--disabled-user-select`);
     return classes.join(' ');
-  }, [className, disabledUserSelect]);
+  }, [className, disabled, disabledUserSelect]);
 
   const classNameChildMemo = useMemo(() => {
     const classes = [`${CLASS_NAME}__in`];
@@ -61,6 +62,7 @@ const PanZoom = ({
 PanZoom.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node.isRequired,
+  disabled: PropTypes.bool,
   disabledUserSelect: PropTypes.bool,
   height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
@@ -68,6 +70,7 @@ PanZoom.propTypes = {
 
 PanZoom.defaultProps = {
   className: null,
+  disabled: false,
   disabledUserSelect: false,
   height: '100%',
   width: '100%',
