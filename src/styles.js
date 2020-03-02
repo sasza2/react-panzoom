@@ -14,12 +14,12 @@ export const CHILD_STYLE = {
 };
 
 export const CHILD_DISABLED_STYLE = {
-  '-webkit-touch-callout': 'none',
-  '-webkit-user-select': 'none',
-  '-khtml-user-select': 'none',
-  '-moz-user-select': 'none',
-  '-ms-user-select': 'none',
-  'user-select': 'none',
+  WebkitTouchCallout: 'none',
+  WebkitUserSelect: 'none',
+  KhtmlUserSelect: 'none',
+  MozUserSelect: 'none',
+  msUserSelect: 'none',
+  userSelect: 'none',
 };
 
 export const ELEMENT_STYLE = {
@@ -27,9 +27,9 @@ export const ELEMENT_STYLE = {
   position: 'absolute',
   left: 0,
   top: 0,
-  'pointer-events': 'all',
+  pointerEvents: 'all',
 };
 
 export const ELEMENT_STYLE_DISABLED = {
-  'pointer-events': 'none',
+  pointerEvents: 'none',
 };
