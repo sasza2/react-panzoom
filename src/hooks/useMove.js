@@ -15,6 +15,7 @@ const useMove = () => {
     disabledMove,
     loading,
     onContainerChange,
+    onContainerClick,
     onContainerPositionChange,
     positionRef,
     zoomRef,
@@ -24,15 +25,26 @@ const useMove = () => {
 
   // Handle mousedown + mouseup
   useEffect(() => {
-    if (loading || disabled || disabledMove) return undefined;
+    if (loading) return undefined;
 
     const mousedown = (e) => {
       const eventPosition = positionFromEvent(e);
       const rect = childRef.current.parentNode.getBoundingClientRect();
-      setMoving({
+
+      const position = {
         x: eventPosition.clientX - rect.left - (positionRef.current.x || 0),
         y: eventPosition.clientY - rect.top - (positionRef.current.y || 0),
-      });
+      };
+
+      if (onContainerClick) {
+        onContainerClick({
+          x: position.x / zoomRef.current,
+          y: position.y / zoomRef.current,
+        });
+      }
+      if (disabled || disabledMove) return;
+
+      setMoving(position);
     };
 
     const mouseup = () => setMoving(null);
@@ -47,7 +59,7 @@ const useMove = () => {
       mouseDownClear();
       mouseUpClear();
     };
-  }, [disabled, disabledMove, loading]);
+  }, [disabled, disabledMove, loading, onContainerClick]);
 
   // Handle mousemove
   useEffect(() => {
