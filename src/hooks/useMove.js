@@ -4,7 +4,9 @@ import { onMouseDown, onMouseUp, onMouseMove } from '../helpers/eventListener';
 import positionFromEvent from '../helpers/positionFromEvent';
 import transform from '../helpers/produceStyle';
 import produceBounding from '../helpers/produceBounding';
+import stopEventPropagation from '../helpers/stopEventPropagation';
 import { usePanZoom } from '../context';
+import useContainerMouseDownPosition from './useContainerMouseDownPosition';
 
 const useMove = () => {
   const [moving, setMoving] = useState(null);
@@ -22,27 +24,24 @@ const useMove = () => {
   } = usePanZoom();
 
   const panZoomRef = childRef.current;
+  const containerMouseDownPosition = useContainerMouseDownPosition();
 
   // Handle mousedown + mouseup
   useEffect(() => {
     if (loading) return undefined;
 
     const mousedown = (e) => {
-      const eventPosition = positionFromEvent(e);
-      const rect = childRef.current.parentNode.getBoundingClientRect();
-
-      const position = {
-        x: eventPosition.clientX - rect.left - (positionRef.current.x || 0),
-        y: eventPosition.clientY - rect.top - (positionRef.current.y || 0),
-      };
+      const position = containerMouseDownPosition(e);
+      const stop = stopEventPropagation();
 
       if (onContainerClick) {
         onContainerClick({
           x: position.x / zoomRef.current,
           y: position.y / zoomRef.current,
+          stop,
         });
       }
-      if (disabled || disabledMove) return;
+      if (disabled || disabledMove || stop.prevent) return;
 
       setMoving(position);
     };
