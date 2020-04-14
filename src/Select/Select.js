@@ -8,7 +8,7 @@ import SelectProvider, { useSelect } from './context';
 const Select = () => {
   const { selectRef, expandingRef, movingRef } = useSelect();
   const { boundary, expanding } = useBoundary();
-  useBoundaryMove({ boundary });
+  useBoundaryMove();
 
   const boundaryStyle = useMemo(() => {
     const style = { ...SELECT_BOX_STYLE };

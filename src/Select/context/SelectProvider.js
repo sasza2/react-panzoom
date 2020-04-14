@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import SelectContext from './SelectContext';
@@ -9,10 +9,13 @@ const SelectProvider = ({
   const expandingRef = useRef();
   const movingRef = useRef();
   const selectRef = useRef();
+  const [boundary, setBoundary] = useState(null);
 
   return (
     <SelectContext.Provider
       value={{
+        boundary,
+        setBoundary,
         expandingRef,
         movingRef,
         selectRef,

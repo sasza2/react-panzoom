@@ -8,8 +8,9 @@ import { useSelect } from '../context';
 
 const useBoundary = () => {
   const [expanding, setExpanding] = useState(null);
-  const [boundary, setBoundary] = useState(null);
-  const { selectRef, expandingRef } = useSelect();
+  const {
+    boundary, setBoundary, selectRef, expandingRef,
+  } = useSelect();
   const boundaryRef = useRef();
   const { childRef, zoomRef } = usePanZoom();
   const containerMouseDownPosition = useContainerMouseDownPosition();

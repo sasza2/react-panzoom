@@ -1,11 +1,13 @@
 import { useLayoutEffect, useState } from 'react';
 
-import { onMouseUp, onMouseMove } from '../../helpers/eventListener';
+import { onMouseDown, onMouseUp, onMouseMove } from '../../helpers/eventListener';
 import { useElementMouseDownPosition, useElementMouseMovePosition } from '../../hooks/useElementEventPosition';
 import { useSelect } from '../context';
 
-const useBoundaryMove = ({ boundary }) => {
-  const { movingRef, selectRef } = useSelect();
+const useBoundaryMove = () => {
+  const {
+    boundary, setBoundary, movingRef, selectRef,
+  } = useSelect();
   const mouseDownPosition = useElementMouseDownPosition();
   const mouseMovePosition = useElementMouseMovePosition();
   const [move, setMove] = useState(null);
@@ -17,7 +19,7 @@ const useBoundaryMove = ({ boundary }) => {
       e.preventDefault();
       e.stopPropagation();
 
-      console.log('stop'); // eslint-disable-line
+      setBoundary(null);
     };
 
     const mousedownOnMovingArea = (e) => {
@@ -32,12 +34,11 @@ const useBoundaryMove = ({ boundary }) => {
       });
     };
 
-    selectRef.current.addEventListener('mousedown', mousedownOnSelectArea);
-    movingRef.current.addEventListener('mousedown', mousedownOnMovingArea);
-
+    const selectMouseDownClear = onMouseDown(selectRef.current, mousedownOnSelectArea);
+    const movingMouseDownClear = onMouseDown(movingRef.current, mousedownOnMovingArea);
     return () => {
-      selectRef.current.removeEventListener('mousedown', mousedownOnSelectArea);
-      movingRef.current.removeEventListener('mousedown', mousedownOnMovingArea);
+      selectMouseDownClear();
+      movingMouseDownClear();
     };
   }, [boundary]);
 
