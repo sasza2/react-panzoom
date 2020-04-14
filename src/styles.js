@@ -30,6 +30,19 @@ export const ELEMENT_STYLE = {
   pointerEvents: 'all',
 };
 
-export const ELEMENT_STYLE_DISABLED = {
+export const ELEMENT_STYLE_DISABLED = { // todo
   pointerEvents: 'none',
+};
+
+export const SELECT_STYLE = {
+  position: 'absolute',
+  width: '100%',
+  height: '100%',
+  left: 0,
+  top: 0,
+};
+
+export const SELECT_BOX_STYLE = {
+  backgroundColor: '#ccc',
+  opacity: 0.5,
 };
