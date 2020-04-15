@@ -10,6 +10,7 @@ const SelectProvider = ({
   const movingRef = useRef();
   const selectRef = useRef();
   const [boundary, setBoundary] = useState(null);
+  const [move, setMove] = useState(null);
 
   return (
     <SelectContext.Provider
@@ -19,6 +20,8 @@ const SelectProvider = ({
         expandingRef,
         movingRef,
         selectRef,
+        move,
+        setMove,
       }}
     >
       {children}
