@@ -1,5 +1,5 @@
 import {
-  useEffect, useLayoutEffect, useMemo, useRef, useState,
+  useEffect, useLayoutEffect, useRef, useState,
 } from 'react';
 
 import useContainerMouseDownPosition from '../../hooks/useContainerMouseDownPosition';
@@ -15,12 +15,8 @@ const useBoundary = () => {
   const { childRef, zoomRef } = usePanZoom();
   const containerMouseDownPosition = useContainerMouseDownPosition();
 
-  const containerSize = useMemo(() => {
-    if (!expanding) return null;
-    return childRef.current.getBoundingClientRect();
-  }, [expanding]);
-
   const mouseEvent = (e, positionStart) => {
+    const containerSize = childRef.current.getBoundingClientRect();
     const position = containerMouseDownPosition(e);
 
     if (position.x < 0) position.x = 0;
@@ -45,6 +41,9 @@ const useBoundary = () => {
       boundaryCurrent.height = -boundaryCurrent.height;
       boundaryCurrent.top -= boundaryCurrent.height;
     }
+
+    boundaryCurrent.right = boundaryCurrent.left + boundaryCurrent.width;
+    boundaryCurrent.bottom = boundaryCurrent.top + boundaryCurrent.height;
 
     expandingRef.current.style.transform = `translate(${boundaryCurrent.left}px, ${boundaryCurrent.top}px)`;
     expandingRef.current.style.width = `${boundaryCurrent.width}px`;
@@ -71,7 +70,7 @@ const useBoundary = () => {
   }, [boundary, expanding]);
 
   useEffect(() => {
-    if (!expanding || boundary || !containerSize) return undefined;
+    if (!expanding || boundary) return undefined;
 
     const mouseup = (e) => {
       mouseEvent(e, expanding);
@@ -88,7 +87,7 @@ const useBoundary = () => {
       window.removeEventListener('mousemove', mousemove);
       window.removeEventListener('mouseup', mouseup);
     };
-  }, [boundary, containerSize, expanding]);
+  }, [boundary, expanding]);
 
   return { expanding, boundary };
 };
