@@ -1,16 +1,15 @@
-import { useLayoutEffect, useState } from 'react';
+import { useLayoutEffect } from 'react';
 
 import { onMouseDown, onMouseUp, onMouseMove } from '../../helpers/eventListener';
 import { useElementMouseDownPosition, useElementMouseMovePosition } from '../../hooks/useElementEventPosition';
 import { useSelect } from '../context';
 
-const useBoundaryMove = () => {
+const useBoundaryMove = ({ grabElementsRef }) => {
   const {
-    boundary, setBoundary, movingRef, selectRef,
+    boundary, setBoundary, movingRef, selectRef, move, setMove,
   } = useSelect();
   const mouseDownPosition = useElementMouseDownPosition();
   const mouseMovePosition = useElementMouseMovePosition();
-  const [move, setMove] = useState(null);
 
   useLayoutEffect(() => {
     if (!boundary) return undefined;
@@ -27,15 +26,16 @@ const useBoundaryMove = () => {
       e.stopPropagation();
 
       const position = mouseDownPosition(e, selectRef);
-
-      setMove({
+      const nextMove = {
         x: position.x - boundary.left,
         y: position.y - boundary.top,
-      });
+      };
+      setMove(nextMove);
     };
 
     const selectMouseDownClear = onMouseDown(selectRef.current, mousedownOnSelectArea);
     const movingMouseDownClear = onMouseDown(movingRef.current, mousedownOnMovingArea);
+
     return () => {
       selectMouseDownClear();
       movingMouseDownClear();
@@ -48,9 +48,13 @@ const useBoundaryMove = () => {
     const mousemove = (e) => {
       const position = mouseMovePosition(e, move, movingRef);
       movingRef.current.style.transform = `translate(${position.x}px, ${position.y}px)`;
+      grabElementsRef.current(position);
     };
 
-    const mouseup = () => setMove(null);
+    const mouseup = () => {
+      setMove(null);
+      setBoundary(null);
+    };
 
     const mouseMoveClear = onMouseMove(mousemove);
     const mouseUpClear = onMouseUp(mouseup);
