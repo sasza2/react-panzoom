@@ -3,12 +3,14 @@ import React, { useMemo } from 'react';
 import { SELECT_STYLE, SELECT_BOX_STYLE } from '../styles';
 import useBoundary from './hooks/useBoundary';
 import useBoundaryMove from './hooks/useBoundaryMove';
+import useGrabElements from './hooks/useGrabElements';
 import SelectProvider, { useSelect } from './context';
 
 const Select = () => {
   const { selectRef, expandingRef, movingRef } = useSelect();
   const { boundary, expanding } = useBoundary();
-  useBoundaryMove();
+  const grabElementsRef = useGrabElements();
+  useBoundaryMove({ grabElementsRef });
 
   const boundaryStyle = useMemo(() => {
     const style = { ...SELECT_BOX_STYLE };
