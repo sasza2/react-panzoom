@@ -46,6 +46,9 @@ const useBoundaryMove = ({ grabElementsRef }) => {
     if (!move) return undefined;
 
     const mousemove = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
       const position = mouseMovePosition(e, move, movingRef);
       movingRef.current.style.transform = `translate(${position.x}px, ${position.y}px)`;
       grabElementsRef.current(position);
