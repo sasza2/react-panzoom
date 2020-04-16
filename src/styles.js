@@ -45,4 +45,5 @@ export const SELECT_STYLE = {
 export const SELECT_BOX_STYLE = {
   backgroundColor: '#ccc',
   opacity: 0.5,
+  zIndex: 16777271,
 };
