@@ -1,5 +1,5 @@
 # react-panzoom
-React component for pan and zoom with possibility to moving elements inside.
+React component for pan and zoom with possibility to moving and selecting elements inside.
 
 !["Preview"](docs/preview.gif "Example preview")
 
@@ -26,6 +26,7 @@ https://codesandbox.io/s/goofy-rgb-48tbu
 | onContainerPositionChange | func | null | event on position change |
 | onContainerZoomChange | func | null | event on zoom change |
 | onElementsChange | func | null | callback invoked when elements change position |
+| selecting | bool | false | switches to selecting mode, see `selecting` |
 | width | string/number | 100% | width of child container |
 | zoomMax | number | null | maximum zoom |
 | zoomMin | number | 0.1 | minimum zoom |
@@ -88,8 +89,33 @@ import PanZoom, { Element } from '@sasza/react-panzoom'
 | id * | string/id | undefined | Unique ID of element |
 | children __*__ | node  |||
 | disabled | bool  | false | Disabling element |
+| onClick | func | null | event on element's click |
 | x | number  | 0 | x position of element |
 | y | number  | 0 | y position of element |
+
+# Selecting
+
+```jsx
+import PanZoom, { Element } from '@sasza/react-panzoom'
+
+// ...
+
+<div style={{ width: 300, height: 300 }}>
+  <PanZoom selecting>
+    <Element id="orange" x={50} y={60}>
+      <Circle />
+    </Element>
+    <Element id="red" x={120} y={150}>
+      <Square />
+    </Element>
+    <Element id="green" x={200} y={50}>
+      <SquareRounded />
+    </Element>
+  </PanZoom>
+</div>
+```
+
+!["Preview"](docs/selecting.gif "Selecting elements")
 
 # Testing
 ```

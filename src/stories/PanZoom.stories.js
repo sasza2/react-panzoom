@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from 'react';
+import React, { useCallback, useLayoutEffect, useState } from 'react';
 
 import PanZoom, { Element } from '..';
 
@@ -121,3 +121,80 @@ export const boxBounding = () => (
     </PanZoom>
   </div>
 );
+
+export const selectingBoxes = () => {
+  const [selecting, setSelecting] = useState(true);
+
+  const toggle = useCallback(
+    (e) => setSelecting(e.target.checked),
+    [selecting],
+  );
+
+  return (
+    <>
+      <label htmlFor="selecting">
+        Selecting mode
+        <input id="selecting" type="checkbox" onChange={toggle} checked={selecting} />
+      </label>
+      <div style={{ border: '1px dashed #000', width: 400, height: 400 }}>
+        <PanZoom
+          disabledUserSelect
+          boundary={{
+            parent: true,
+          }}
+          height={5000}
+          width={5000}
+          selecting={selecting}
+        >
+          <Element id="orange">
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: '50%',
+                width: 120,
+                height: 120,
+                backgroundColor: 'orange',
+                fontSize: 14,
+              }}
+            >
+              <span>move me</span>
+            </div>
+          </Element>
+          <Element id="red" x={100} y={150}>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: 60,
+                height: 60,
+                backgroundColor: 'red',
+                fontSize: 14,
+              }}
+            >
+              <span>or me</span>
+            </div>
+          </Element>
+          <Element id="green" x={200} y={50}>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: '10px',
+                width: 100,
+                height: 160,
+                backgroundColor: 'green',
+                fontSize: 14,
+              }}
+            >
+              <span>hello world</span>
+            </div>
+          </Element>
+        </PanZoom>
+      </div>
+    </>
+  );
+};

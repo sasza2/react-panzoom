@@ -6,14 +6,17 @@ import PropTypes from 'prop-types';
 import { ELEMENT_STYLE, ELEMENT_STYLE_DISABLED } from '../styles';
 import { onMouseDown, onMouseUp, onMouseMove } from '../helpers/eventListener';
 import { usePanZoom } from '../context';
-import produceElementPosition from '../helpers/produceElementPosition';
-import positionFromEvent from '../helpers/positionFromEvent';
+import stopEventPropagation from '../helpers/stopEventPropagation';
+import { useElementMouseDownPosition, useElementMouseMovePosition } from '../hooks/useElementEventPosition';
 
 let lastZIndex = 2;
 
 const Element = ({
-  children, disabled, id, x, y,
+  children, disabled, id, onClick, x, y,
 }) => {
+  const mouseDownPosition = useElementMouseDownPosition();
+  const mouseMovePosition = useElementMouseMovePosition();
+
   if (!id) throw new Error("Id can't be undefined");
 
   const [moving, setMoving] = useState(null);
@@ -21,17 +24,15 @@ const Element = ({
 
   const {
     boundary,
-    childRef,
     disabledElements,
     elementsRef,
     onElementsChange,
-    positionRef,
-    zoomRef,
   } = usePanZoom();
 
   useLayoutEffect(() => {
     elementRef.current.style.transform = `translate(${x}px, ${y}px)`;
     elementsRef.current[id] = {
+      id,
       node: elementRef,
       position: {
         x, y,
@@ -47,21 +48,14 @@ const Element = ({
     if (!moving || disabledElements) return undefined;
 
     const mousemove = (e) => {
-      const eventPosition = positionFromEvent(e);
-      const translate = produceElementPosition({
-        element: elementRef.current,
-        container: childRef.current,
-        x: (eventPosition.clientX - positionRef.current.x) / zoomRef.current - moving.x,
-        y: (eventPosition.clientY - positionRef.current.y) / zoomRef.current - moving.y,
-        zoom: zoomRef.current,
-      });
+      const position = mouseMovePosition(e, moving, elementRef);
 
-      elementsRef.current[id].position = translate;
-      elementRef.current.style.transform = `translate(${translate.x}px, ${translate.y}px)`;
+      elementsRef.current[id].position = position;
+      elementRef.current.style.transform = `translate(${position.x}px, ${position.y}px)`;
 
       if (onElementsChange) {
         onElementsChange({
-          [id]: translate,
+          [id]: position,
         });
       }
     };
@@ -80,25 +74,31 @@ const Element = ({
   useLayoutEffect(() => {
     if (disabled) return undefined;
 
-    const increateZIndex = () => {
+    const increaseZIndex = () => {
       lastZIndex += 1;
       elementRef.current.style.zIndex = lastZIndex;
     };
 
     const mousedown = (e) => {
+      const position = mouseDownPosition(e, elementRef);
+      const stop = stopEventPropagation();
+
+      if (onClick) {
+        onClick({
+          e,
+          stop,
+          ...position,
+        });
+      }
+
       e.preventDefault();
       e.stopPropagation();
 
-      const eventPosition = positionFromEvent(e);
-      const parent = childRef.current.parentNode.getBoundingClientRect();
-      const rect = elementRef.current.getBoundingClientRect();
+      if (stop.done) return;
 
-      setMoving({
-        x: (eventPosition.clientX - rect.left + parent.left) / zoomRef.current,
-        y: (eventPosition.clientY - rect.top + parent.top) / zoomRef.current,
-      });
+      setMoving(position);
 
-      increateZIndex();
+      increaseZIndex();
     };
 
     const mouseDownClear = onMouseDown(elementRef.current, mousedown);
@@ -130,12 +130,14 @@ Element.propTypes = {
   children: PropTypes.node.isRequired,
   disabled: PropTypes.bool,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  onClick: PropTypes.func,
   x: PropTypes.number,
   y: PropTypes.number,
 };
 
 Element.defaultProps = {
   disabled: false,
+  onClick: null,
   x: 0,
   y: 0,
 };
