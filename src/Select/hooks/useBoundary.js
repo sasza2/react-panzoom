@@ -2,6 +2,7 @@ import {
   useEffect, useLayoutEffect, useRef, useState,
 } from 'react';
 
+import { onMouseUp, onMouseMove } from '../../helpers/eventListener';
 import useContainerMouseDownPosition from '../../hooks/useContainerMouseDownPosition';
 import { usePanZoom } from '../../context';
 import { useSelect } from '../context';
@@ -80,12 +81,12 @@ const useBoundary = () => {
 
     const mousemove = (e) => mouseEvent(e, expanding);
 
-    window.addEventListener('mousemove', mousemove);
-    window.addEventListener('mouseup', mouseup);
+    const mouseMoveClear = onMouseMove(mousemove);
+    const mouseUpClear = onMouseUp(mouseup);
 
     return () => {
-      window.removeEventListener('mousemove', mousemove);
-      window.removeEventListener('mouseup', mouseup);
+      mouseMoveClear();
+      mouseUpClear();
     };
   }, [boundary, expanding]);
 
