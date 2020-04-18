@@ -3,21 +3,22 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 
-import { ELEMENT_STYLE, ELEMENT_STYLE_DISABLED } from '../styles';
-import { onMouseDown, onMouseUp, onMouseMove } from '../helpers/eventListener';
-import { usePanZoom } from '../context';
-import stopEventPropagation from '../helpers/stopEventPropagation';
-import { useElementMouseDownPosition, useElementMouseMovePosition } from '../hooks/useElementEventPosition';
+import { usePanZoom } from 'context';
+import { ELEMENT_STYLE, ELEMENT_STYLE_DISABLED } from 'styles';
+import { onMouseDown, onMouseUp, onMouseMove } from 'helpers/eventListener';
+import produceStyle from 'helpers/produceStyle';
+import stopEventPropagation from 'helpers/stopEventPropagation';
+import { useElementMouseDownPosition, useElementMouseMovePosition } from 'hooks/useElementEventPosition';
 
 let lastZIndex = 2;
 
 const Element = ({
   children, disabled, id, onClick, x, y,
 }) => {
+  if (!id) throw new Error("'id' prop for element can't be undefined");
+
   const mouseDownPosition = useElementMouseDownPosition();
   const mouseMovePosition = useElementMouseMovePosition();
-
-  if (!id) throw new Error("Id can't be undefined");
 
   const [moving, setMoving] = useState(null);
   const elementRef = useRef();
@@ -30,13 +31,13 @@ const Element = ({
   } = usePanZoom();
 
   useLayoutEffect(() => {
-    elementRef.current.style.transform = `translate(${x}px, ${y}px)`;
+    const position = { x, y };
+
+    elementRef.current.style.transform = produceStyle({ position });
     elementsRef.current[id] = {
       id,
       node: elementRef,
-      position: {
-        x, y,
-      },
+      position,
     };
 
     return () => {

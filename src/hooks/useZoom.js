@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import throttle from 'lodash/throttle';
 
-import transform from '../helpers/produceStyle';
-import produceBounding from '../helpers/produceBounding';
-import zoomRound from '../helpers/zoomRound';
-import { usePanZoom } from '../context';
+import { usePanZoom } from 'context';
+import transform from 'helpers/produceStyle';
+import produceBounding from 'helpers/produceBounding';
+import zoomRound from 'helpers/zoomRound';
 
 const ZOOM_SPEED_BASE = 100; // ms
 

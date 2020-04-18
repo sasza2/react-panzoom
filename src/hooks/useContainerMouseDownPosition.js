@@ -1,11 +1,8 @@
-import { usePanZoom } from '../context';
-import positionFromEvent from '../helpers/positionFromEvent';
+import { usePanZoom } from 'context';
+import positionFromEvent from 'helpers/positionFromEvent';
 
 const useContainerMouseDownPosition = () => {
-  const {
-    childRef,
-    positionRef,
-  } = usePanZoom();
+  const { childRef, positionRef } = usePanZoom();
 
   return (e) => {
     const eventPosition = positionFromEvent(e);

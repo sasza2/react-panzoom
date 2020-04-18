@@ -1,5 +1,5 @@
-import positionClone from '../helpers/positionClone';
-import transform from '../helpers/produceStyle';
+import positionClone from 'helpers/positionClone';
+import transform from 'helpers/produceStyle';
 
 const move = ({
   childRef, positionRef, zoomRef,

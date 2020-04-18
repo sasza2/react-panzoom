@@ -1,5 +1,5 @@
-import transform from '../helpers/produceStyle';
-import zoomRound from '../helpers/zoomRound';
+import transform from 'helpers/produceStyle';
+import zoomRound from 'helpers/zoomRound';
 
 export const getZoom = ({ zoomRef }) => () => zoomRef.current;
 

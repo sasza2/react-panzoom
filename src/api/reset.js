@@ -1,4 +1,4 @@
-import transform from '../helpers/produceStyle';
+import transform from 'helpers/produceStyle';
 
 const reset = ({ childRef, positionRef, zoomRef }) => () => {
   const ref = childRef;

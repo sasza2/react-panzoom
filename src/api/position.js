@@ -1,5 +1,5 @@
-import positionClone from '../helpers/positionClone';
-import transform from '../helpers/produceStyle';
+import positionClone from 'helpers/positionClone';
+import transform from 'helpers/produceStyle';
 
 export const getPosition = ({ positionRef }) => () => positionClone(positionRef);
 

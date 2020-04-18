@@ -146,7 +146,7 @@ export const selectingBoxes = () => {
           width={5000}
           selecting={selecting}
         >
-          <Element id="orange">
+          <Element id="orange" x={30} y={30}>
             <div
               style={{
                 display: 'flex',

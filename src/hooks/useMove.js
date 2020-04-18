@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 
-import { onMouseDown, onMouseUp, onMouseMove } from '../helpers/eventListener';
-import positionFromEvent from '../helpers/positionFromEvent';
-import transform from '../helpers/produceStyle';
-import produceBounding from '../helpers/produceBounding';
-import stopEventPropagation from '../helpers/stopEventPropagation';
-import { usePanZoom } from '../context';
+import { usePanZoom } from 'context';
+import { onMouseDown, onMouseUp, onMouseMove } from 'helpers/eventListener';
+import positionFromEvent from 'helpers/positionFromEvent';
+import produceBounding from 'helpers/produceBounding';
+import transform from 'helpers/produceStyle';
+import stopEventPropagation from 'helpers/stopEventPropagation';
 import useContainerMouseDownPosition from './useContainerMouseDownPosition';
 
 const useMove = () => {

@@ -2,9 +2,9 @@ import {
   useEffect, useLayoutEffect, useRef, useState,
 } from 'react';
 
-import { onMouseUp, onMouseMove } from '../../helpers/eventListener';
-import useContainerMouseDownPosition from '../../hooks/useContainerMouseDownPosition';
-import { usePanZoom } from '../../context';
+import { usePanZoom } from 'context';
+import { onMouseUp, onMouseMove } from 'helpers/eventListener';
+import useContainerMouseDownPosition from 'hooks/useContainerMouseDownPosition';
 import { useSelect } from '../context';
 
 const useBoundary = () => {
@@ -59,12 +59,14 @@ const useBoundary = () => {
     const mousedown = (e) => {
       e.preventDefault();
       e.stopPropagation();
+
       const position = containerMouseDownPosition(e);
       setExpanding(position);
       mouseEvent(e, position);
     };
 
     selectRef.current.addEventListener('mousedown', mousedown);
+
     return () => {
       selectRef.current.removeEventListener('mousedown', mousedown);
     };

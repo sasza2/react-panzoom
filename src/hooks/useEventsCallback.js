@@ -1,4 +1,4 @@
-import { usePanZoom } from '../context';
+import { usePanZoom } from 'context';
 
 const useEventsCallback = () => {
   const {

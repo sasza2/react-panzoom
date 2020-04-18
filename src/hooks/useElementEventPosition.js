@@ -1,6 +1,6 @@
-import produceElementPosition from '../helpers/produceElementPosition';
-import positionFromEvent from '../helpers/positionFromEvent';
-import { usePanZoom } from '../context';
+import { usePanZoom } from 'context';
+import positionFromEvent from 'helpers/positionFromEvent';
+import produceElementPosition from 'helpers/produceElementPosition';
 
 export const useElementMouseDownPosition = () => {
   const { childRef, zoomRef } = usePanZoom();
