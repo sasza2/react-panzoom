@@ -16,6 +16,11 @@
     "window": "false"
   },
   "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["src"]
+      }
+    },
     "react": {
       "version": "16.9.0"
     }
