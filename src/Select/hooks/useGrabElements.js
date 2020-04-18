@@ -1,36 +1,16 @@
 import { useLayoutEffect, useRef } from 'react';
 
-import produceElementPosition from '../../helpers/produceElementPosition';
-import { usePanZoom } from '../../context';
+import { usePanZoom } from 'context';
+import produceElementPosition from 'helpers/produceElementPosition';
 import { useSelect } from '../context';
-
-const collectElements = (boundary, elements) => {
-  const elementsInBoundary = {};
-
-  Object.entries(elements).forEach(([id, element]) => {
-    if (element.position.x >= boundary.left
-      && element.position.x <= boundary.right
-      && element.position.y >= boundary.top
-      && element.position.y <= boundary.bottom
-    ) {
-      elementsInBoundary[id] = element;
-    }
-  });
-
-  return elementsInBoundary;
-};
-
-const copyElementsPositions = (elements) => {
-  const positions = {};
-  Object.entries(elements).forEach(([id, element]) => {
-    positions[id] = { ...element.position };
-  });
-  return positions;
-};
+import collectElements from '../helpers/collectElements';
+import copyElementsPositions from '../helpers/copyElementsPositions';
 
 const useGrabElements = () => {
   const { boundary } = useSelect();
-  const { childRef, elementsRef, zoomRef } = usePanZoom();
+  const {
+    childRef, elementsRef, onElementsChange, zoomRef,
+  } = usePanZoom();
   const onMoveRef = useRef();
 
   useLayoutEffect(() => {
@@ -41,21 +21,26 @@ const useGrabElements = () => {
 
     onMoveRef.current = (nextPosition) => {
       if (!fromPosition) fromPosition = nextPosition;
+
+      const elementsNextPositions = {};
       Object.entries(elements).forEach(([id, element]) => {
-        const position = positions[id];
+        const positionOnStart = positions[id];
         const { node } = element;
 
-        const translate = produceElementPosition({
+        const position = produceElementPosition({
           element: element.node.current,
           container: childRef.current,
-          x: position.x + (nextPosition.x - fromPosition.x),
-          y: position.y + (nextPosition.y - fromPosition.y),
+          x: positionOnStart.x + (nextPosition.x - fromPosition.x),
+          y: positionOnStart.y + (nextPosition.y - fromPosition.y),
           zoom: zoomRef.current,
         });
 
-        elementsRef.current[element.id].position = translate;
-        node.current.style.transform = `translate(${translate.x}px, ${translate.y}px)`;
+        elementsRef.current[element.id].position = position;
+        elementsNextPositions[id] = position;
+        node.current.style.transform = `translate(${position.x}px, ${position.y}px)`;
       });
+
+      if (onElementsChange) onElementsChange(elementsNextPositions);
     };
 
     return () => {
