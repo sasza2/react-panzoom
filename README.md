@@ -1,4 +1,4 @@
-# react-panzoom
+# @sasza/react-panzoom
 React component for pan and zoom with possibility to moving and selecting elements inside.
 
 !["Preview"](docs/preview.gif "Example preview")
