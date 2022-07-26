@@ -1,3 +1,5 @@
+import lineToVariable from './lineToVariable';
+
 const positionVertical = ({
   boundary, y, parent, rect,
 }) => {
@@ -40,21 +42,47 @@ const positionHorizontal = ({
   return x;
 };
 
-const withParent = ({ boundary, parent }) => {
-  if (!boundary.parent) return boundary;
+const measureBoundary = ({ boundary, parent, rect }) => {
+  if (!boundary) {
+    return {
+      top: undefined,
+      right: undefined,
+      bottom: undefined,
+      left: undefined,
+    };
+  }
 
-  return {
-    top: boundary.top || 0,
-    right: parent.width + (boundary.right || 0),
-    bottom: parent.height + (boundary.bottom || 0),
-    left: boundary.left || 0,
+  const variables = {
+    containerWidth: parent.width,
+    containerHeight: parent.height,
+    childWidth: rect.width,
+    childHeight: rect.height,
   };
+
+  const defaults = {
+    top: 0,
+    left: 0,
+    right: 'containerWidth',
+    bottom: 'containerHeight',
+  };
+
+  const directions = ['top', 'left', 'right', 'bottom'];
+  return directions.reduce((obj, direction) => {
+    const passedValue = boundary === true ? undefined : boundary[direction];
+    const nextDirectionValue = lineToVariable(
+      passedValue === undefined ? defaults[direction] : passedValue, variables,
+    );
+    return {
+      ...obj,
+      [direction]: nextDirectionValue,
+    };
+  }, {});
 };
 
 const produceBounding = ({
   boundary, x, y, parent, rect,
 }) => {
-  const boundaryNext = withParent({ boundary, parent });
+  const boundaryNext = measureBoundary({ boundary, parent, rect });
   const nextPosition = {};
   nextPosition.x = positionHorizontal({
     boundary: boundaryNext, x, parent, rect,

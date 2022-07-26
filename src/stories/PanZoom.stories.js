@@ -81,11 +81,8 @@ export const boxBounding = () => (
   <div style={{ border: '1px dashed #000', width: 400, height: 400 }}>
     <PanZoom
       disabledUserSelect
-      boundary={{
-        parent: true,
-      }}
-      height={5000}
-      width={5000}
+      boundary={{}}
+      width={2000}
     >
       <Element id="orange">
         <div
@@ -139,9 +136,6 @@ export const selectingBoxes = () => {
       <div style={{ border: '1px dashed #000', width: 400, height: 400 }}>
         <PanZoom
           disabledUserSelect
-          boundary={{
-            parent: true,
-          }}
           height={5000}
           width={5000}
           selecting={selecting}

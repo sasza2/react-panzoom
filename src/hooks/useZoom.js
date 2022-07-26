@@ -67,7 +67,6 @@ const useZoom = () => {
         y: e.clientY - rect.top - yoff * nextZoom,
         parent: rect,
         rect: panZoomRef.getBoundingClientRect(),
-        co: nextZoom,
       });
 
       positionRef.current = nextPosition;

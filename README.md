@@ -13,7 +13,7 @@ https://codesandbox.io/s/goofy-rgb-48tbu
 
 | Name | | Default | Description |
 | --- | --- | --- | --- |
-| boundary | { top, right, bottom left, parent } | {} | **top, right, bottom, left** - numbers in px.<br />**parent** - bool, if set to true child's wrapper width and height are added to boundary |
+| boundary | { top, right, bottom left, parent } `\|` bool | false | **top, right, bottom, left** - numbers in px.<br />can be used as expression like: <br />`{ top: 'childHeight - containerHeight - 100px' }`
 | children __*__ | node  |||
 | disabledUserSelect | bool | false | prevent css select as text etc |
 | disabled | bool | false | disabling pan and zoom |

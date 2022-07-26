@@ -34,12 +34,7 @@ const PanZoomProvider = ({
 };
 
 PanZoomProvider.propTypes = {
-  boundary: PropTypes.shape({
-    top: PropTypes.number,
-    right: PropTypes.number,
-    bottom: PropTypes.number,
-    left: PropTypes.number,
-  }),
+  boundary: PropTypes.oneOf([PropTypes.object, PropTypes.bool]),
   children: PropTypes.node.isRequired,
   disabled: PropTypes.bool,
   disabledElements: PropTypes.bool,
@@ -59,7 +54,7 @@ PanZoomProvider.propTypes = {
 };
 
 PanZoomProvider.defaultProps = {
-  boundary: {},
+  boundary: false,
   disabled: false,
   disabledElements: false,
   disabledMove: false,
