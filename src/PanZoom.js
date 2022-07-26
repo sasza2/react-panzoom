@@ -5,10 +5,10 @@ import useApi from './hooks/useApi';
 import useMove from './hooks/useMove';
 import useZoom from './hooks/useZoom';
 import Select from './Select';
-import { PARENT_STYLE, CHILD_STYLE, CHILD_DISABLED_STYLE } from './styles';
+import {
+  CLASS_NAME, PARENT_STYLE, CHILD_STYLE, CHILD_DISABLED_STYLE,
+} from './styles';
 import PanZoomProvider, { usePanZoom } from './context';
-
-const CLASS_NAME = 'react-panzoom';
 
 const PanZoom = ({
   children, className, disabled, disabledUserSelect, height, width, selecting,

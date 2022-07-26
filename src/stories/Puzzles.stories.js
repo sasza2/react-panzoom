@@ -28,6 +28,7 @@ export const puzzles = () => {
       <PanZoom
         disabledUserSelect
         onElementsChange={onElementsChange}
+        boundary
       >
         <Element id="heart" disabled={puzzleExists}>
           <img

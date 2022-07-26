@@ -1,3 +1,7 @@
+export const CLASS_NAME = 'react-panzoom';
+
+export const GRABBING_CLASS_NAME = `${CLASS_NAME}--grabbing`;
+
 export const PARENT_STYLE = {
   width: '100%',
   height: '100%',
@@ -10,7 +14,6 @@ export const CHILD_STYLE = {
   position: 'relative',
   transformOrigin: '0 0',
   pointerEvents: 'none',
-  backgroundColor: '#ddd',
 };
 
 export const CHILD_DISABLED_STYLE = {
