@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import { usePanZoom } from 'context';
 import { ELEMENT_STYLE, ELEMENT_STYLE_DISABLED } from 'styles';
-import { onMouseDown, onMouseUp, onMouseMove } from 'helpers/eventListener';
+import { onMouseDown, onMouseUp as onMouseUpListener, onMouseMove } from 'helpers/eventListener';
 import produceStyle from 'helpers/produceStyle';
 import stopEventPropagation from 'helpers/stopEventPropagation';
 import { useElementMouseDownPosition, useElementMouseMovePosition } from 'hooks/useElementEventPosition';
@@ -13,7 +13,14 @@ import { useElementMouseDownPosition, useElementMouseMovePosition } from 'hooks/
 let lastZIndex = 2;
 
 const Element = ({
-  children, disabled, id, onClick, x, y,
+  children,
+  disabled,
+  family,
+  id,
+  onClick,
+  onMouseUp,
+  x,
+  y,
 }) => {
   if (!id) throw new Error("'id' prop for element can't be undefined");
 
@@ -35,6 +42,7 @@ const Element = ({
 
     elementRef.current.style.transform = produceStyle({ position });
     elementsRef.current[id] = {
+      family,
       id,
       node: elementRef,
       position,
@@ -61,10 +69,21 @@ const Element = ({
       }
     };
 
-    const mouseup = () => setMoving(null);
+    const mouseup = (e) => {
+      setMoving(null);
+
+      if (onMouseUp) {
+        onMouseUp({
+          id,
+          family,
+          e,
+          position: elementsRef.current[id].position,
+        });
+      }
+    };
 
     const mouseMoveClear = onMouseMove(mousemove);
-    const mouseUpClear = onMouseUp(mouseup);
+    const mouseUpClear = onMouseUpListener(mouseup);
 
     return () => {
       mouseMoveClear();
@@ -86,6 +105,8 @@ const Element = ({
 
       if (onClick) {
         onClick({
+          id,
+          family,
           e,
           stop,
           ...position,
@@ -130,15 +151,19 @@ const Element = ({
 Element.propTypes = {
   children: PropTypes.node.isRequired,
   disabled: PropTypes.bool,
+  family: PropTypes.string,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   onClick: PropTypes.func,
+  onMouseUp: PropTypes.func,
   x: PropTypes.number,
   y: PropTypes.number,
 };
 
 Element.defaultProps = {
   disabled: false,
+  family: null,
   onClick: null,
+  onMouseUp: null,
   x: 0,
   y: 0,
 };
