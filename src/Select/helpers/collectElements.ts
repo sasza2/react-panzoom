@@ -1,5 +1,9 @@
-const collectElements = (boundary, elements) => {
-  const elementsInBoundary = {};
+import { Boundary, Element, Elements } from 'types'
+
+type ElementsInBoundary = Record<string, Element>
+
+const collectElements = (boundary: Boundary, elements: Elements['current']): ElementsInBoundary => {
+  const elementsInBoundary: ElementsInBoundary = {};
 
   Object.entries(elements).forEach(([id, element]) => {
     if (element.position.x >= boundary.left
