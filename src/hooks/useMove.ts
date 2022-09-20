@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState,MutableRefObject } from 'react';
 
+import { Position } from 'types'
 import { usePanZoom } from 'context';
-import { GRABBING_CLASS_NAME } from 'styles'
+import { GRABBING_CLASS_NAME } from 'styles';
 import { onMouseDown, onMouseUp, onMouseMove } from 'helpers/eventListener';
 import positionFromEvent from 'helpers/positionFromEvent';
 import produceBounding from 'helpers/produceBounding';
@@ -9,8 +10,10 @@ import transform from 'helpers/produceStyle';
 import stopEventPropagation from 'helpers/stopEventPropagation';
 import useContainerMouseDownPosition from './useContainerMouseDownPosition';
 
-const useMove = () => {
-  const [moving, setMoving] = useState(null);
+type UseMove = () => MutableRefObject<Position>
+
+const useMove: UseMove = () => {
+  const [moving, setMoving] = useState<Position | null>(null);
   const {
     boundary,
     childRef,
@@ -31,7 +34,7 @@ const useMove = () => {
   useEffect(() => {
     if (loading) return undefined;
 
-    const mousedown = (e) => {
+    const mousedown = (e: MouseEvent) => {
       const position = containerMouseDownPosition(e);
       const stop = stopEventPropagation();
 
@@ -64,7 +67,7 @@ const useMove = () => {
     const node = childRef.current;
     if (!node) return undefined;
 
-    const mouseDownClear = onMouseDown(node.parentNode, mousedown);
+    const mouseDownClear = onMouseDown(node.parentNode as HTMLDivElement, mousedown);
     const mouseUpClear = onMouseUp(mouseup);
 
     return () => {
@@ -77,8 +80,8 @@ const useMove = () => {
   useEffect(() => {
     if (loading || !moving) return undefined;
 
-    const move = (e) => {
-      const rect = childRef.current.parentNode.getBoundingClientRect();
+    const move = (e: MouseEvent) => {
+      const rect = (childRef.current.parentNode as HTMLDivElement).getBoundingClientRect();
       const eventPosition = positionFromEvent(e);
       const nextPosition = produceBounding({
         boundary,
