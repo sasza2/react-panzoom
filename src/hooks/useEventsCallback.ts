@@ -1,6 +1,16 @@
 import { usePanZoom } from 'context';
 
-const useEventsCallback = () => {
+type ApiCallback = (...args: unknown[]) => unknown
+
+type DispatchOptions = { position: boolean, zoom: boolean }
+
+type UseEventsCallback = () => {
+  withEventAll: ApiCallback,
+  withEventPosition: ApiCallback,
+  withEventZoom: ApiCallback,
+}
+
+const useEventsCallback: UseEventsCallback = () => {
   const {
     onContainerChange,
     onContainerPositionChange,
@@ -9,7 +19,7 @@ const useEventsCallback = () => {
     zoomRef,
   } = usePanZoom();
 
-  const dispatchEvents = ({ position, zoom }) => {
+  const dispatchEvents = ({ position, zoom }: DispatchOptions) => {
     const eventValue = {
       position: { ...positionRef.current },
       zoom: zoomRef.current,
@@ -20,23 +30,23 @@ const useEventsCallback = () => {
     if (zoom && onContainerZoomChange) onContainerZoomChange(eventValue);
   };
 
-  const withDispatch = (apiCallback, options) => (...values) => {
+  const withDispatch = (apiCallback: ApiCallback, options: DispatchOptions) => (...values: unknown[]) => {
     const result = apiCallback(...values);
     dispatchEvents(options);
     return result;
   };
 
-  const withEventAll = (apiCallback) => withDispatch(
+  const withEventAll = (apiCallback: ApiCallback) => withDispatch(
     apiCallback,
     { position: true, zoom: true },
   );
 
-  const withEventPosition = (apiCallback) => withDispatch(
+  const withEventPosition = (apiCallback: ApiCallback) => withDispatch(
     apiCallback,
     { position: true, zoom: false },
   );
 
-  const withEventZoom = (apiCallback) => withDispatch(
+  const withEventZoom = (apiCallback: ApiCallback) => withDispatch(
     apiCallback,
     { position: false, zoom: true },
   );
