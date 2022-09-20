@@ -1,6 +1,17 @@
+import { MutableRefObject } from 'react'
+
+import { Position, Zoom } from 'types'
 import transform from 'helpers/produceStyle';
 
-const reset = ({ childRef, positionRef, zoomRef }) => () => {
+type Reset = (
+  props: {
+    childRef: MutableRefObject<HTMLDivElement>,
+    positionRef: MutableRefObject<Position>,
+    zoomRef: Zoom,
+  }
+) => () => void
+
+const reset: Reset = ({ childRef, positionRef, zoomRef }) => () => {
   const ref = childRef;
   const zoom = zoomRef;
   const position = positionRef;
