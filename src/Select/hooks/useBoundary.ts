@@ -2,21 +2,28 @@ import {
   useEffect, useLayoutEffect, useRef, useState,
 } from 'react';
 
+import { Position } from 'types'
 import { usePanZoom } from 'context';
 import { onMouseUp, onMouseMove } from 'helpers/eventListener';
 import useContainerMouseDownPosition from 'hooks/useContainerMouseDownPosition';
+import { Boundary } from '../context/SelectContext'
 import { useSelect } from '../context';
 
-const useBoundary = () => {
-  const [expanding, setExpanding] = useState(null);
+type UseBoundary = () => {
+  expanding: Position | null,
+  boundary: Boundary,
+}
+
+const useBoundary: UseBoundary = () => {
+  const [expanding, setExpanding] = useState<Position | null>(null);
   const {
     boundary, setBoundary, selectRef, expandingRef,
   } = useSelect();
-  const boundaryRef = useRef();
+  const boundaryRef = useRef<Boundary>();
   const { childRef, zoomRef } = usePanZoom();
   const containerMouseDownPosition = useContainerMouseDownPosition();
 
-  const mouseEvent = (e, positionStart) => {
+  const mouseEvent = (e: MouseEvent, positionStart: Position) => {
     const containerSize = childRef.current.getBoundingClientRect();
     const position = containerMouseDownPosition(e);
 
@@ -26,7 +33,7 @@ const useBoundary = () => {
     if (position.y < 0) position.y = 0;
     else if (position.y > containerSize.height) position.y = containerSize.height;
 
-    const boundaryCurrent = {
+    const boundaryCurrent: Partial<Boundary> = {
       width: (position.x - positionStart.x) / zoomRef.current,
       height: (position.y - positionStart.y) / zoomRef.current,
       left: positionStart.x / zoomRef.current,
@@ -50,13 +57,13 @@ const useBoundary = () => {
     expandingRef.current.style.width = `${boundaryCurrent.width}px`;
     expandingRef.current.style.height = `${boundaryCurrent.height}px`;
 
-    boundaryRef.current = boundaryCurrent;
+    boundaryRef.current = boundaryCurrent as Boundary;
   };
 
   useLayoutEffect(() => {
     if (expanding || boundary) return undefined;
 
-    const mousedown = (e) => {
+    const mousedown = (e: MouseEvent) => {
       e.preventDefault();
       e.stopPropagation();
 
@@ -75,13 +82,13 @@ const useBoundary = () => {
   useEffect(() => {
     if (!expanding || boundary) return undefined;
 
-    const mouseup = (e) => {
+    const mouseup = (e: MouseEvent) => {
       mouseEvent(e, expanding);
       setExpanding(null);
       setBoundary(boundaryRef.current);
     };
 
-    const mousemove = (e) => mouseEvent(e, expanding);
+    const mousemove = (e: MouseEvent) => mouseEvent(e, expanding);
 
     const mouseMoveClear = onMouseMove(mousemove);
     const mouseUpClear = onMouseUp(mouseup);
