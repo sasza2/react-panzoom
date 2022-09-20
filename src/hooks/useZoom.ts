@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import throttle from 'lodash/throttle';
 
+import { Zoom } from 'types'
 import { usePanZoom } from 'context';
 import transform from 'helpers/produceStyle';
 import produceBounding from 'helpers/produceBounding';
@@ -8,7 +9,7 @@ import zoomRound from 'helpers/zoomRound';
 
 const ZOOM_SPEED_BASE = 100; // ms
 
-const useZoom = () => {
+const useZoom = (): Zoom => {
   const {
     boundary,
     childRef,
@@ -42,8 +43,8 @@ const useZoom = () => {
   useEffect(() => {
     if (loading || disabled || disabledZoom) return undefined;
 
-    const wheel = throttle((e) => {
-      const rect = panZoomRef.parentNode.getBoundingClientRect();
+    const wheelFunc = (e: WheelEvent) => {
+      const rect = (panZoomRef.parentNode as HTMLDivElement).getBoundingClientRect();
 
       const xoff = (e.clientX - rect.left - positionRef.current.x) / zoomRef.current;
       const yoff = (e.clientY - rect.top - positionRef.current.y) / zoomRef.current;
@@ -78,11 +79,13 @@ const useZoom = () => {
       if (onContainerZoomChange) {
         onContainerZoomChange({ zoom: nextZoom, position: { ...positionRef.current } });
       }
-    }, ZOOM_SPEED_BASE / zoomSpeed);
+    };
+
+    const wheel = throttle(wheelFunc, ZOOM_SPEED_BASE / zoomSpeed)
 
     if (!panZoomRef) return wheel.cancel;
 
-    const onWheel = (e) => {
+    const onWheel = (e: MouseEvent) => {
       e.preventDefault();
       wheel(e);
     };
