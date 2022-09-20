@@ -1,4 +1,9 @@
-const positionFromEvent = (e) => {
+type ClientPosition = {
+  clientX: number,
+  clientY: number,
+}
+
+const positionFromEvent = (e: TouchEvent & MouseEvent): ClientPosition => {
   const { touches } = e;
   if (touches) {
     return {
