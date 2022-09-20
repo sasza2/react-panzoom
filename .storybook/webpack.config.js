@@ -2,6 +2,21 @@ const path = require('path');
 
 module.exports = {
   resolve: {
-    modules: [path.resolve(__dirname, "../src"), "node_modules"]
-  }
-}
+    extensions: ['.tsx', '.ts', '.js'],
+    modules: [path.resolve(__dirname, "../src"), "node_modules"],
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        use: 'babel-loader',
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.ts?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
+    ],
+  },
+};
