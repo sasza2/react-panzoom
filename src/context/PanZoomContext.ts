@@ -9,6 +9,7 @@ export type PanZoomContextProps = {
   positionRef: MutableRefObject<Position>,
   setLoading: (loading: boolean) => void,
   zoomRef: Zoom,
+  zoomSpeed: number,
 } & PanZoomProviderProps
 
 const PanZoomContext = createContext<PanZoomContextProps>({} as PanZoomContextProps);
