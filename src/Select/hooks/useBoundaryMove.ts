@@ -2,9 +2,12 @@ import { useLayoutEffect } from 'react';
 
 import { onMouseDown, onMouseUp, onMouseMove } from 'helpers/eventListener';
 import { useElementMouseDownPosition, useElementMouseMovePosition } from 'hooks/useElementEventPosition';
+import { MoveRef } from '../context/SelectContext'
 import { useSelect } from '../context';
 
-const useBoundaryMove = ({ grabElementsRef }) => {
+type UseBoundaryMove = ({ grabElementsRef }: { grabElementsRef: MoveRef }) => void
+
+const useBoundaryMove: UseBoundaryMove = ({ grabElementsRef }) => {
   const {
     boundary, setBoundary, movingRef, selectRef, move, setMove,
   } = useSelect();
@@ -14,14 +17,14 @@ const useBoundaryMove = ({ grabElementsRef }) => {
   useLayoutEffect(() => {
     if (!boundary) return undefined;
 
-    const mousedownOnSelectArea = (e) => {
+    const mousedownOnSelectArea = (e: MouseEvent) => {
       e.preventDefault();
       e.stopPropagation();
 
       setBoundary(null);
     };
 
-    const mousedownOnMovingArea = (e) => {
+    const mousedownOnMovingArea = (e: MouseEvent) => {
       e.preventDefault();
       e.stopPropagation();
 
@@ -45,7 +48,7 @@ const useBoundaryMove = ({ grabElementsRef }) => {
   useLayoutEffect(() => {
     if (!move) return undefined;
 
-    const mousemove = (e) => {
+    const mousemove = (e: MouseEvent) => {
       e.preventDefault();
       e.stopPropagation();
 

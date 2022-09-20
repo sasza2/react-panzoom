@@ -1,28 +1,30 @@
 import { useLayoutEffect, useRef } from 'react';
 
+import { Position } from 'types'
 import { usePanZoom } from 'context';
 import produceElementPosition from 'helpers/produceElementPosition';
+import { MoveRef } from '../context/SelectContext'
 import { useSelect } from '../context';
 import collectElements from '../helpers/collectElements';
 import copyElementsPositions from '../helpers/copyElementsPositions';
 
-const useGrabElements = () => {
+const useGrabElements = (): MoveRef => {
   const { boundary } = useSelect();
   const {
     childRef, elementsRef, onElementsChange, zoomRef,
   } = usePanZoom();
-  const onMoveRef = useRef();
+  const onMoveRef: MoveRef = useRef();
 
   useLayoutEffect(() => {
     if (!boundary) return undefined;
     const elements = collectElements(boundary, elementsRef.current);
     const positions = copyElementsPositions(elements);
-    let fromPosition = null;
+    let fromPosition: Position | null = null;
 
-    onMoveRef.current = (nextPosition) => {
+    onMoveRef.current = (nextPosition: Position) => {
       if (!fromPosition) fromPosition = nextPosition;
 
-      const elementsNextPositions = {};
+      const elementsNextPositions: Record<string, Position> = {};
       Object.entries(elements).forEach(([id, element]) => {
         const positionOnStart = positions[id];
         const { node } = element;
