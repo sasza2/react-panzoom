@@ -51,7 +51,7 @@ const useMove: UseMove = () => {
           stop,
         });
       }
-      if (disabled || disabledMove || stop.prevent) return;
+      if (disabled || disabledMove || stop.done) return;
 
       setMoving(position);
     };

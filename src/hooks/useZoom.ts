@@ -83,9 +83,12 @@ const useZoom = (): Zoom => {
 
     const wheel = throttle(wheelFunc, ZOOM_SPEED_BASE / zoomSpeed)
 
-    if (!panZoomRef) return wheel.cancel;
+    if (!panZoomRef) {
+      wheel.cancel()
+      return undefined;
+    }
 
-    const onWheel = (e: MouseEvent) => {
+    const onWheel = (e: WheelEvent) => {
       e.preventDefault();
       wheel(e);
     };

@@ -12,14 +12,14 @@ const Select = () => {
   const grabElementsRef = useGrabElements();
   useBoundaryMove({ grabElementsRef });
 
-  const boundaryStyle = useMemo(() => {
-    const style = { ...SELECT_BOX_STYLE };
+  const boundaryStyle: React.CSSProperties = useMemo(() => {
+    const style = { ...SELECT_BOX_STYLE }
     if (boundary) {
       style.transform = `translate(${boundary.left}px, ${boundary.top}px)`;
       style.width = boundary.width;
       style.height = boundary.height;
     }
-    return style;
+    return style
   }, [boundary]);
 
   return (
@@ -38,7 +38,7 @@ const Select = () => {
   );
 };
 
-const SelectWithProvider = () => (
+const SelectWithProvider: React.FC = () => (
   <SelectProvider>
     <Select />
   </SelectProvider>

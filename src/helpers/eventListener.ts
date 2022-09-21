@@ -1,10 +1,10 @@
-type EventNames = Array<'mousedown' | 'mouseup' | 'touchstart' | 'touchend'>
+type EventNames = Array<'mousedown' | 'mouseup' | 'touchstart' | 'touchend' | 'mousemove' | 'touchmove'>
 
 type Callback = (e: MouseEvent) => void
 
 type EventListenerClean = () => void
 
-const eventListener = (node: HTMLDivElement, eventNames: EventNames, callback: Callback): EventListenerClean => {
+const eventListener = (node: Window | HTMLDivElement, eventNames: EventNames, callback: Callback): EventListenerClean => {
   eventNames.forEach((eventName) => {
     node.addEventListener(eventName, callback);
   });

@@ -1,3 +1,5 @@
+import { CSSProperties } from 'react'
+
 export const CLASS_NAME = 'react-panzoom';
 
 export const GRABBING_CLASS_NAME = `${CLASS_NAME}--grabbing`;
@@ -33,11 +35,11 @@ export const ELEMENT_STYLE = {
   pointerEvents: 'all',
 };
 
-export const ELEMENT_STYLE_DISABLED = { // todo
+export const ELEMENT_STYLE_DISABLED = {
   pointerEvents: 'none',
 };
 
-export const SELECT_STYLE = {
+export const SELECT_STYLE: CSSProperties = {
   position: 'absolute',
   width: '100%',
   height: '100%',
@@ -45,7 +47,7 @@ export const SELECT_STYLE = {
   top: 0,
 };
 
-export const SELECT_BOX_STYLE = {
+export const SELECT_BOX_STYLE: CSSProperties = {
   backgroundColor: '#ccc',
   opacity: 0.5,
   zIndex: 2147483647,

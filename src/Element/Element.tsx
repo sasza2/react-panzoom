@@ -1,8 +1,8 @@
 import React, {
-  memo, useEffect, useLayoutEffect, useMemo, useRef, useState,
+  memo, RefObject, useEffect, useLayoutEffect, useMemo, useRef, useState,
 } from 'react';
-import PropTypes from 'prop-types';
 
+import { Position } from 'types'
 import { usePanZoom } from 'context';
 import { ELEMENT_STYLE, ELEMENT_STYLE_DISABLED } from 'styles';
 import { onMouseDown, onMouseUp as onMouseUpListener, onMouseMove } from 'helpers/eventListener';
@@ -12,23 +12,48 @@ import { useElementMouseDownPosition, useElementMouseMovePosition } from 'hooks/
 
 let lastZIndex = 2;
 
-const Element = ({
+type Moving = Record<string, Position>
+
+type OnClick = (props: {
+  id: string | number,
+  family?: string,
+  e: MouseEvent,
+  stop: () => void,
+} & Position) => unknown
+
+type OnMouseUp = (props: {
+  id: string | number,
+  family?: string,
+  e: MouseEvent,
+} & Position) => unknown
+
+type ElementProps = {
+  disabled?: boolean,
+  family?: string,
+  id: string | number,
+  onClick?: OnClick,
+  onMouseUp?: OnMouseUp,
+  x: number,
+  y: number,
+}
+
+const Element: React.FC<ElementProps> = ({
   children,
-  disabled,
+  disabled = false,
   family,
   id,
   onClick,
   onMouseUp,
-  x,
-  y,
+  x = 0,
+  y = 0,
 }) => {
   if (!id) throw new Error("'id' prop for element can't be undefined");
 
   const mouseDownPosition = useElementMouseDownPosition();
   const mouseMovePosition = useElementMouseMovePosition();
 
-  const [moving, setMoving] = useState(null);
-  const elementRef = useRef();
+  const [moving, setMoving] = useState<Moving>(null);
+  const elementRef: RefObject<HTMLDivElement> = useRef();
 
   const {
     boundary,
@@ -41,7 +66,7 @@ const Element = ({
     const position = { x, y };
 
     elementRef.current.style.transform = produceStyle({ position });
-    elementsRef.current[id] = {
+    elementsRef.current[id as string] = {
       family,
       id,
       node: elementRef,
@@ -49,27 +74,31 @@ const Element = ({
     };
 
     return () => {
-      delete elementsRef.current[id];
+      delete elementsRef.current[id as string];
     };
   }, [id, x, y]);
 
   useEffect(() => {
     if (!moving || disabledElements) return undefined;
 
-    const mousemove = (e) => {
-      const position = mouseMovePosition(e, moving, elementRef);
+    const mousemove = (e: MouseEvent) => {
+      const elementsChange: Moving = {}
 
-      elementsRef.current[id].position = position;
-      elementRef.current.style.transform = `translate(${position.x}px, ${position.y}px)`;
+      Object.entries(moving).forEach(([currentElementId, from]) => {
+        const currentElement = elementsRef.current[currentElementId];
 
-      if (onElementsChange) {
-        onElementsChange({
-          [id]: position,
-        });
-      }
+        const position = mouseMovePosition(e, from, currentElement.node);
+
+        elementsChange[currentElementId] = position;
+
+        currentElement.position = position
+        currentElement.node.current.style.transform = `translate(${position.x}px, ${position.y}px)`;
+      });
+
+      if (onElementsChange) onElementsChange(elementsChange);
     };
 
-    const mouseup = (e) => {
+    const mouseup = (e: MouseEvent) => {
       setMoving(null);
 
       if (onMouseUp) {
@@ -77,7 +106,7 @@ const Element = ({
           id,
           family,
           e,
-          position: elementsRef.current[id].position,
+          ...elementsRef.current[id as string].position,
         });
       }
     };
@@ -96,10 +125,13 @@ const Element = ({
 
     const increaseZIndex = () => {
       lastZIndex += 1;
-      elementRef.current.style.zIndex = lastZIndex;
+      elementRef.current.style.zIndex = lastZIndex.toString();
     };
 
-    const mousedown = (e) => {
+    const mousedown = (e: MouseEvent) => {
+      const elements = Object.values(elementsRef.current)
+        .filter((element) => element.id === id || (family && element.family === family));
+
       const position = mouseDownPosition(e, elementRef);
       const stop = stopEventPropagation();
 
@@ -118,14 +150,18 @@ const Element = ({
 
       if (stop.done) return;
 
-      setMoving(position);
+      setMoving(elements.reduce((curr, element) => {
+        const from = mouseDownPosition(e, element.node);
+        curr[element.id] = from
+        return curr;
+      }, {} as Moving));
 
       increaseZIndex();
     };
 
     const mouseDownClear = onMouseDown(elementRef.current, mousedown);
     return mouseDownClear;
-  }, [disabled]);
+  }, [disabled, family, id]);
 
   const className = useMemo(() => {
     const base = 'react-panzoom-element';
@@ -135,10 +171,10 @@ const Element = ({
     return classes.join(' ');
   }, [disabled, id]);
 
-  const elementStyle = useMemo(() => {
+  const elementStyle: React.CSSProperties = useMemo(() => {
     let style = { ...ELEMENT_STYLE };
-    if (disabled) style = { ...style, ...ELEMENT_STYLE_DISABLED };
-    return style;
+    if (disabled) style = { ...style, ...ELEMENT_STYLE_DISABLED }
+    return style as React.CSSProperties;
   }, [disabled]);
 
   return (
@@ -146,26 +182,6 @@ const Element = ({
       {children}
     </div>
   );
-};
-
-Element.propTypes = {
-  children: PropTypes.node.isRequired,
-  disabled: PropTypes.bool,
-  family: PropTypes.string,
-  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  onClick: PropTypes.func,
-  onMouseUp: PropTypes.func,
-  x: PropTypes.number,
-  y: PropTypes.number,
-};
-
-Element.defaultProps = {
-  disabled: false,
-  family: null,
-  onClick: null,
-  onMouseUp: null,
-  x: 0,
-  y: 0,
 };
 
 export default memo(Element);

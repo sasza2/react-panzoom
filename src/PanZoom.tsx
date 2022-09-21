@@ -1,6 +1,6 @@
 import React, { forwardRef, useMemo } from 'react';
-import PropTypes from 'prop-types';
 
+import { PanZoomProps } from 'types'
 import useApi from './hooks/useApi';
 import useMove from './hooks/useMove';
 import useZoom from './hooks/useZoom';
@@ -10,8 +10,14 @@ import {
 } from './styles';
 import PanZoomProvider, { usePanZoom } from './context';
 
-const PanZoom = ({
-  children, className, disabled, disabledUserSelect, height, width, selecting,
+const PanZoom: React.FC<PanZoomProps> = ({
+  children,
+  className,
+  disabled,
+  disabledUserSelect,
+  height = '100%',
+  width = '100%',
+  selecting,
 }) => {
   const { childRef, setLoading } = usePanZoom();
 
@@ -29,26 +35,27 @@ const PanZoom = ({
 
   const classNameChildMemo = useMemo(() => {
     const classes = [`${CLASS_NAME}__in`];
-    if (className) classes.push(`${className}__in`);
-    if (selecting) classes.push(`${className}__selecting`);
+    if (className) {
+      classes.push(`${className}__in`);
+      if (selecting) classes.push(`${className}__selecting`);
+    }
     return classes.join(' ');
   }, [className, selecting]);
 
-  const childStyle = useMemo(() => {
+  const childStyle: React.CSSProperties = useMemo(() => {
     let style = {
       ...CHILD_STYLE,
       height,
       width,
     };
 
-    if (className) style.backgroundColor = null;
     if (disabledUserSelect) style = { ...style, ...CHILD_DISABLED_STYLE };
     if (selecting) style.pointerEvents = 'all';
 
-    return style;
+    return style as React.CSSProperties;
   }, [className, disabledUserSelect, height, width, selecting]);
 
-  const createRef = (node) => {
+  const createRef = (node: HTMLDivElement) => {
     childRef.current = node;
     setLoading(false);
   };
@@ -63,26 +70,7 @@ const PanZoom = ({
   );
 };
 
-PanZoom.propTypes = {
-  className: PropTypes.string,
-  children: PropTypes.node.isRequired,
-  disabled: PropTypes.bool,
-  disabledUserSelect: PropTypes.bool,
-  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  selecting: PropTypes.bool,
-  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-};
-
-PanZoom.defaultProps = {
-  className: null,
-  disabled: false,
-  disabledUserSelect: false,
-  height: '100%',
-  selecting: false,
-  width: '100%',
-};
-
-const PanZoomWithContext = (props, apiRef) => (
+const PanZoomWithContext = (props: PanZoomProps, apiRef: PanZoomProps['apiRef']) => (
   <PanZoomProvider apiRef={apiRef} {...props}>
     <PanZoom {...props} />
   </PanZoomProvider>

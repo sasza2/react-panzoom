@@ -2,7 +2,7 @@ import { Position } from 'types'
 
 type TransformProps = {
   position: Position,
-  zoom: number,
+  zoom?: number,
 }
 
 const transform = ({ position, zoom }: TransformProps): string => {

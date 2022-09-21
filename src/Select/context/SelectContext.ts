@@ -2,6 +2,8 @@ import { createContext, MutableRefObject } from 'react';
 
 import { Position } from 'types'
 
+export type MoveRef = MutableRefObject<((position: Position) => void)>
+
 export type Boundary = {
   left: number,
   top: number,

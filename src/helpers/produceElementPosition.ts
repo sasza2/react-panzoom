@@ -27,7 +27,7 @@ const produceBoundingElement = ({
   else if (y > maxBottom) position.y = maxBottom;
   else position.y = y;
 
-  return position as Position;
+  return position as Position
 };
 
 export default produceBoundingElement;

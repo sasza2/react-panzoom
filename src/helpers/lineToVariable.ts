@@ -2,7 +2,7 @@ const VARIABLES_LIST = ['containerWidth', 'containerHeight', 'childWidth', 'chil
 
 const lineToVariable = (str: string | number, variables: Record<string, number> = {}): number => {
   if (typeof str === 'number') return str
-  if (!isNaN(parseInt(str))) return str as unknown as number; // TODO
+  if (!isNaN(parseInt(str))) return str as unknown as number;
 
   const numbers: Array<number> = [];
   const stack = [];

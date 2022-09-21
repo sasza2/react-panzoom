@@ -1,20 +1,25 @@
 {
-  "extends": "airbnb",
-  "plugins": [
-    "react",
-    "jsx-a11y",
-    "import"
-  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2019,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "project": "./tsconfig.eslint.json"
+  },
   "rules": {
-    "react/jsx-props-no-spreading": 0,
-    "react/jsx-filename-extension": 0
+    "react/prop-types": 0
   },
-  "globals": {
-    "console": "false",
-    "expect": "false",
-    "test": "false",
-    "window": "false"
-  },
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:react/recommended"
+  ],
+  "ignorePatterns": ["src/stories"],
   "settings": {
     "import/resolver": {
       "node": {
@@ -24,6 +29,5 @@
     "react": {
       "version": "16.9.0"
     }
-  },
-  "parser": "babel-eslint"
+  }
 }
