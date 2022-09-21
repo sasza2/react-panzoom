@@ -1,7 +1,11 @@
 module.exports = {
-  moduleDirectories: ["src", "node_modules"],
+  moduleDirectories: ['src', 'node_modules'],
   transform: {
-    "^.+\\.js$": "babel-jest"
+    '^.+\\.ts$': 'ts-jest',
+    '^.+\\.tsx$': 'ts-jest',
+    '^.+\\.js$': 'babel-jest',
   },
-  testEnvironment: "jsdom"
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
+  testEnvironment: 'jsdom',
+  preset: 'ts-jest'
 };
