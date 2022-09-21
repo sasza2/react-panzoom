@@ -35,15 +35,15 @@ export const rectangles = () => (
             222
           </div>
         </Element>
-        <Element id="c" x={310} top={160}>
+        <Element id="c" x={310} top={160} draggableSelector='.drag-me'>
           <div style={{
             width: 120,
             height: 70,
-            backgroundColor: 'yellow',
+            backgroundColor: 'green',
             color: '#fff',
           }}
           >
-            333
+            333 <span className='drag-me' style={{ color: 'red' }}>move me</span>
           </div>
         </Element>
       </div>

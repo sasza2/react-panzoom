@@ -29,6 +29,7 @@ type OnMouseUp = (props: {
 
 type ElementProps = {
   disabled?: boolean,
+  draggableSelector?: string,
   family?: string,
   id: string | number,
   onClick?: OnClick,
@@ -40,6 +41,7 @@ type ElementProps = {
 const Element: React.FC<ElementProps> = ({
   children,
   disabled = false,
+  draggableSelector,
   family,
   id,
   onClick,
@@ -129,6 +131,9 @@ const Element: React.FC<ElementProps> = ({
     };
 
     const mousedown = (e: MouseEvent) => {
+      console.log(e.target)
+      if (draggableSelector && !(e.target as HTMLElement).closest(draggableSelector)) return
+
       const elements = Object.values(elementsRef.current)
         .filter((element) => element.id === id || (family && element.family === family));
 
