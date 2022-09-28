@@ -27,10 +27,13 @@ type OnMouseUp = (props: {
   e: MouseEvent,
 } & Position) => unknown
 
+type FindMin = () => ((currentPositionValue: number, nextPositionValue: number) => void) & { value: number }
+
 type ElementProps = {
   disabled?: boolean,
   draggableSelector?: string,
   family?: string,
+  followers?: Array<string | number>,
   id: string | number,
   onClick?: OnClick,
   onMouseUp?: OnMouseUp,
@@ -43,6 +46,7 @@ const Element: React.FC<ElementProps> = ({
   disabled = false,
   draggableSelector,
   family,
+  followers = [],
   id,
   onClick,
   onMouseUp,
@@ -86,16 +90,42 @@ const Element: React.FC<ElementProps> = ({
     const mousemove = (e: MouseEvent) => {
       const elementsChange: Moving = {}
 
+      const findMinDiffBetweenPositions: FindMin = () => {
+        let value: number | null = null
+        const func = (currentPositionValue: number, nextPositionValue: number) => {
+          if (value === null || Math.abs(currentPositionValue - nextPositionValue) < Math.abs(value)) {
+            func.value = value = currentPositionValue - nextPositionValue
+          }
+        }
+        func.value = value
+        return func
+      }
+
+      const xMinFind = findMinDiffBetweenPositions()
+      const yMinFind = findMinDiffBetweenPositions()
+
       Object.entries(moving).forEach(([currentElementId, from]) => {
         const currentElement = elementsRef.current[currentElementId];
 
         const position = mouseMovePosition(e, from, currentElement.node);
 
+        xMinFind(currentElement.position.x, position.x)
+        yMinFind(currentElement.position.y, position.y)
+      });
+
+      Object.entries(moving).forEach(([currentElementId]) => {
+        const currentElement = elementsRef.current[currentElementId];
+
+        const position: Position = {
+          x: currentElement.position.x - xMinFind.value,
+          y: currentElement.position.y - yMinFind.value,
+        }
+
         elementsChange[currentElementId] = position;
 
         currentElement.position = position
         currentElement.node.current.style.transform = `translate(${position.x}px, ${position.y}px)`;
-      });
+      })
 
       if (onElementsChange) onElementsChange(elementsChange);
     };
@@ -120,7 +150,7 @@ const Element: React.FC<ElementProps> = ({
       mouseMoveClear();
       mouseUpClear();
     };
-  }, [boundary, disabledElements, id, moving, onElementsChange]);
+  }, [JSON.stringify(boundary), disabledElements, id, moving, onElementsChange]);
 
   useLayoutEffect(() => {
     if (disabled) return undefined;
@@ -131,11 +161,14 @@ const Element: React.FC<ElementProps> = ({
     };
 
     const mousedown = (e: MouseEvent) => {
-      console.log(e.target)
       if (draggableSelector && !(e.target as HTMLElement).closest(draggableSelector)) return
 
       const elements = Object.values(elementsRef.current)
-        .filter((element) => element.id === id || (family && element.family === family));
+        .filter((element) =>
+          element.id === id
+          || (family && element.family === family)
+          || followers.includes(element.id)
+        );
 
       const position = mouseDownPosition(e, elementRef);
       const stop = stopEventPropagation();
@@ -166,7 +199,7 @@ const Element: React.FC<ElementProps> = ({
 
     const mouseDownClear = onMouseDown(elementRef.current, mousedown);
     return mouseDownClear;
-  }, [disabled, family, id]);
+  }, [disabled, family, JSON.stringify(followers), id]);
 
   const className = useMemo(() => {
     const base = 'react-panzoom-element';

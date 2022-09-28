@@ -13,7 +13,7 @@ export const rectangles = () => (
   }}
   >
     <PanZoom>
-      <div style={{ width: 500, height: 400 }}>
+      <div style={{ width: 500, height: 400, backgroundColor: '#f1f1f1' }}>
         <Element id="a" family="aaa" x={50} y={90}>
           <div style={{
             width: 100,
@@ -24,7 +24,7 @@ export const rectangles = () => (
             111
           </div>
         </Element>
-        <Element id="b" family="aaa" x={210} top={260}>
+        <Element id="b" family="aaa" x={210} y={60}>
           <div style={{
             width: 40,
             height: 170,
@@ -35,7 +35,7 @@ export const rectangles = () => (
             222
           </div>
         </Element>
-        <Element id="c" x={310} top={160} draggableSelector='.drag-me'>
+        <Element id="c" followers={['a', 'b']} x={310} y={160} draggableSelector='.drag-me'>
           <div style={{
             width: 120,
             height: 70,
@@ -43,7 +43,18 @@ export const rectangles = () => (
             color: '#fff',
           }}
           >
-            333 <span className='drag-me' style={{ color: 'red' }}>move me</span>
+            333 <span className='drag-me' style={{ color: 'red', cursor: 'move' }}>here</span>
+          </div>
+        </Element>
+        <Element id="d" x={300} y={260}>
+          <div style={{
+            width: 120,
+            height: 70,
+            backgroundColor: 'violet',
+            color: '#fff',
+          }}
+          >
+            444
           </div>
         </Element>
       </div>
