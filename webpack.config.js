@@ -16,6 +16,7 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.js'],
     modules: [
       path.resolve('./src'),
+      path.resolve('./types'),
       path.resolve('./node_modules'),
     ],
   },
