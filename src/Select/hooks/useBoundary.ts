@@ -91,7 +91,7 @@ const useBoundary: UseBoundary = () => {
     const mousemove = (e: MouseEvent) => mouseEvent(e, expanding);
 
     const mouseMoveClear = onMouseMove(mousemove);
-    const mouseUpClear = onMouseUp(mouseup);
+    const mouseUpClear = onMouseUp(window, mouseup);
 
     return () => {
       mouseMoveClear();
