@@ -12,7 +12,7 @@
     "moving",
     "selecting"
   ],
-  "types": "types.d.ts",
+  "types": "types/index.d.ts",
   "scripts": {
     "build": "webpack --mode=production",
     "lint": "eslint src/**/*.ts --fix",

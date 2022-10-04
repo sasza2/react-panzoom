@@ -31,7 +31,6 @@ https://codesandbox.io/s/goofy-rgb-48tbu
 | zoomMax | number | null | maximum zoom |
 | zoomMin | number | 0.1 | minimum zoom |
 | zoomSpeed | number | 1 | zoom speed on wheel event |
-| zoomStep | number | 0.05 | zoom accuracy |
 
 __*__ - is required
 

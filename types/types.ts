@@ -77,3 +77,28 @@ export type API = {
   ref: () => MutableRefObject<HTMLDivElement>,
   reset: () => void,
 }
+
+type ElementOnClick = (props: {
+  id: string | number,
+  family?: string,
+  e: MouseEvent,
+  stop: () => void,
+} & Position) => unknown
+
+type ElementOnMouseUp = (props: {
+  id: string | number,
+  family?: string,
+  e: MouseEvent,
+} & Position) => unknown
+
+export type ElementProps = {
+  disabled?: boolean,
+  draggableSelector?: string,
+  family?: string,
+  followers?: Array<string | number>,
+  id: string | number,
+  onClick?: ElementOnClick,
+  onMouseUp?: ElementOnMouseUp,
+  x: number,
+  y: number,
+}

@@ -2,7 +2,7 @@ import React, {
   memo, RefObject, useEffect, useLayoutEffect, useMemo, useRef, useState,
 } from 'react';
 
-import { Position } from 'types'
+import { ElementProps, Position } from 'types'
 import { usePanZoom } from 'context';
 import { ELEMENT_STYLE, ELEMENT_STYLE_DISABLED } from 'styles';
 import { onMouseDown, onMouseUp as onMouseUpListener, onMouseMove } from 'helpers/eventListener';
@@ -14,32 +14,7 @@ let lastZIndex = 2;
 
 type Moving = Record<string, Position>
 
-type OnClick = (props: {
-  id: string | number,
-  family?: string,
-  e: MouseEvent,
-  stop: () => void,
-} & Position) => unknown
-
-type OnMouseUp = (props: {
-  id: string | number,
-  family?: string,
-  e: MouseEvent,
-} & Position) => unknown
-
 type FindMin = () => ((currentPositionValue: number, nextPositionValue: number) => void) & { value: number }
-
-type ElementProps = {
-  disabled?: boolean,
-  draggableSelector?: string,
-  family?: string,
-  followers?: Array<string | number>,
-  id: string | number,
-  onClick?: OnClick,
-  onMouseUp?: OnMouseUp,
-  x: number,
-  y: number,
-}
 
 const Element: React.FC<ElementProps> = ({
   children,
