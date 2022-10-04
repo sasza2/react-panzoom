@@ -62,6 +62,7 @@ const Element: React.FC<ElementProps> = ({
   const elementRef: RefObject<HTMLDivElement> = useRef();
 
   const {
+    blockMovingRef,
     boundary,
     disabledElements,
     elementsRef,
@@ -85,9 +86,37 @@ const Element: React.FC<ElementProps> = ({
   }, [id, x, y]);
 
   useEffect(() => {
+    if (disabledElements || !moving) return undefined
+
+    const mouseup = (e: MouseEvent) => {
+      setMoving(null);
+
+      if (onMouseUp) {
+        onMouseUp({
+          id,
+          family,
+          e,
+          ...elementsRef.current[id as string].position,
+        });
+      }
+    };
+
+    const mouseUpClear = onMouseUpListener(elementRef.current, mouseup);
+
+    return () => {
+      mouseUpClear()
+    }
+  }, [disabledElements, id, !!moving])
+
+  useEffect(() => {
     if (!moving || disabledElements) return undefined;
 
     const mousemove = (e: MouseEvent) => {
+      if (blockMovingRef.current) {
+        setMoving(null)
+        return
+      }
+
       const elementsChange: Moving = {}
 
       const findMinDiffBetweenPositions: FindMin = () => {
@@ -130,26 +159,9 @@ const Element: React.FC<ElementProps> = ({
       if (onElementsChange) onElementsChange(elementsChange);
     };
 
-    const mouseup = (e: MouseEvent) => {
-      setMoving(null);
-
-      if (onMouseUp) {
-        onMouseUp({
-          id,
-          family,
-          e,
-          ...elementsRef.current[id as string].position,
-        });
-      }
-    };
-
     const mouseMoveClear = onMouseMove(mousemove);
-    const mouseUpClear = onMouseUpListener(mouseup);
 
-    return () => {
-      mouseMoveClear();
-      mouseUpClear();
-    };
+    return mouseMoveClear
   }, [JSON.stringify(boundary), disabledElements, id, moving, onElementsChange]);
 
   useLayoutEffect(() => {
