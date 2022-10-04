@@ -22,8 +22,9 @@
   "ignorePatterns": ["src/stories"],
   "settings": {
     "import/resolver": {
-      "node": {
-        "paths": ["src"]
+      "webpack": {
+        "moduleDirectory": ["src", "types"],
+        "extensions": [".ts"]
       }
     },
     "react": {

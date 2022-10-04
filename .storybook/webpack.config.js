@@ -3,7 +3,7 @@ const path = require('path');
 module.exports = {
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
-    modules: [path.resolve(__dirname, "../src"), "node_modules"],
+    modules: [path.resolve(__dirname, "../src"), "types", "node_modules"],
   },
   module: {
     rules: [

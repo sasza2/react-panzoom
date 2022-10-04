@@ -13,10 +13,11 @@
     "paths": {
       "*": [
         "node_modules/*",
-        "src/*"
+        "src/*",
+        "types/*"
       ]
     },
-    "rootDirs": [ "src" ],
+    "rootDirs": [ "src", "types" ],
     "target": "es5",
   },
 }
