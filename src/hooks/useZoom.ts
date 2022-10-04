@@ -1,16 +1,23 @@
 import { useEffect } from 'react';
 
-import { Zoom } from 'types'
+import { Zoom, ZoomEvent } from 'types'
 import { usePanZoom } from 'context';
+import isEventMobileZoom from 'helpers/isEventMobileZoom'
 import transform from 'helpers/produceStyle';
 import produceBounding from 'helpers/produceBounding';
+import produceNextZoom from 'helpers/produceNextZoom';
 import throttle from 'helpers/throttle'
-import zoomRound from 'helpers/zoomRound';
+import touchEventToZoomInit from 'helpers/touchEventToZoomInit'
 
-const ZOOM_SPEED_BASE = 100; // ms
+const ANIMATION_DELAY = 300 // ms
+const ANIMATION_DELAY_STR = `${ANIMATION_DELAY / 1000}s`
+const DESKTOP_THROTTLE_DELAY = 100 // ms
+const NON_DESKTOP_THROTTLE_DELAY = 5 // ms
+const NON_DESKTOP_MOVING_BLOCK_DELAY = 300 // ms
 
 const useZoom = (): Zoom => {
   const {
+    blockMovingRef,
     boundary,
     childRef,
     disabled,
@@ -23,44 +30,38 @@ const useZoom = (): Zoom => {
     zoomMin,
     zoomRef,
     zoomSpeed,
-    zoomStep,
   } = usePanZoom();
 
   const panZoomRef = childRef.current;
 
   const dependencies = [
-    boundary,
+    JSON.stringify(boundary),
     childRef,
     disabled,
     disabledZoom,
     loading,
-    onContainerChange,
-    onContainerZoomChange,
     zoomSpeed,
-    zoomStep,
   ];
 
   useEffect(() => {
     if (loading || disabled || disabledZoom) return undefined;
 
-    const wheelFunc = (e: WheelEvent) => {
+    const wheelFunc = (e: ZoomEvent, { isDesktop }: { isDesktop: boolean }) => {
       const rect = (panZoomRef.parentNode as HTMLDivElement).getBoundingClientRect();
 
       const xoff = (e.clientX - rect.left - positionRef.current.x) / zoomRef.current;
       const yoff = (e.clientY - rect.top - positionRef.current.y) / zoomRef.current;
 
-      const nextZoom = zoomRound((() => {
-        if (e.deltaY < 0) {
-          if (zoomMax && zoomRef.current >= zoomMax) return zoomMax;
-          return zoomRef.current + zoomStep;
-        }
-        if (zoomMin && zoomRef.current <= zoomMin) return zoomMin;
-        return zoomRef.current - zoomStep;
-      })());
+      const nextZoom = produceNextZoom({
+        e,
+        isDesktop,
+        zoomRef,
+        zoomSpeed,
+        zoomMin,
+        zoomMax,
+      })
 
       zoomRef.current = nextZoom;
-
-      panZoomRef.style.transform = transform({ position: positionRef.current, zoom: nextZoom });
 
       const nextPosition = produceBounding({
         boundary,
@@ -72,6 +73,7 @@ const useZoom = (): Zoom => {
 
       positionRef.current = nextPosition;
       panZoomRef.style.transform = transform({ position: nextPosition, zoom: nextZoom });
+      panZoomRef.style.setProperty('--zoom', nextZoom.toString());
 
       if (onContainerChange) {
         onContainerChange({ position: { ...positionRef.current }, zoom: nextZoom });
@@ -81,23 +83,56 @@ const useZoom = (): Zoom => {
       }
     };
 
-    const wheel = throttle(wheelFunc, ZOOM_SPEED_BASE / zoomSpeed)
+    const wheelDesktop = throttle(wheelFunc, DESKTOP_THROTTLE_DELAY)
+    const wheelMobile = throttle(wheelFunc, NON_DESKTOP_THROTTLE_DELAY)
 
-    if (!panZoomRef) {
-      wheel.cancel()
-      return undefined;
+    const [touchEventToZoom, resetTouchEvent] = touchEventToZoomInit()
+
+    const animationInit = () => {
+      let animationTimer: ReturnType<typeof setTimeout> = null
+      let blockTimer: ReturnType<typeof setTimeout> = null
+      return ({ isDesktop }: { isDesktop: boolean }) => {
+        clearTimeout(animationTimer)
+        clearTimeout(blockTimer)
+
+        animationTimer = setTimeout(() => {
+          resetTouchEvent()
+          panZoomRef.style.transition = null
+        }, ANIMATION_DELAY)
+
+        if (!isDesktop) {
+          blockTimer = setTimeout(() => {
+            blockMovingRef.current = false
+          }, NON_DESKTOP_MOVING_BLOCK_DELAY)
+
+          blockMovingRef.current = true
+        }
+
+        panZoomRef.style.transition = `transform ${ANIMATION_DELAY_STR}`
+      }
     }
 
+    const doAnimation = animationInit()
+
     const onWheel = (e: WheelEvent) => {
-      e.preventDefault();
-      wheel(e);
-    };
+      doAnimation({ isDesktop: true })
+      wheelDesktop(e, { isDesktop: true })
+    }
+
+    const onWheelMobile = (e: TouchEvent) => {
+      if (!isEventMobileZoom(e)) return
+      doAnimation({ isDesktop: false })
+      wheelMobile(touchEventToZoom(e), { isDesktop: false })
+    }
 
     panZoomRef.parentNode.addEventListener('wheel', onWheel);
+    panZoomRef.parentNode.addEventListener('touchmove', onWheelMobile);
 
     return () => {
-      wheel.cancel();
+      wheelDesktop.cancel();
+      wheelMobile.cancel();
       panZoomRef.parentNode.removeEventListener('wheel', onWheel);
+      panZoomRef.parentNode.removeEventListener('touchmove', onWheelMobile);
     };
   }, dependencies);
 

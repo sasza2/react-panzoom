@@ -1,5 +1,5 @@
 module.exports = {
-  moduleDirectories: ['src', 'node_modules'],
+  moduleDirectories: ['src', 'types', 'node_modules'],
   transform: {
     '^.+\\.ts$': 'ts-jest',
     '^.+\\.tsx$': 'ts-jest',

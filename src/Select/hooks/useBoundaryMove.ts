@@ -63,7 +63,7 @@ const useBoundaryMove: UseBoundaryMove = ({ grabElementsRef }) => {
     };
 
     const mouseMoveClear = onMouseMove(mousemove);
-    const mouseUpClear = onMouseUp(mouseup);
+    const mouseUpClear = onMouseUp(window, mouseup);
 
     return () => {
       mouseMoveClear();

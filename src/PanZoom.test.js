@@ -27,7 +27,7 @@ test('PanZoom zoom', () => {
 
   fireEvent.wheel(container.firstChild);
 
-  expect(container.firstChild.firstChild.style.transform).toBe('translate(0px, 0px) scale(0.95)');
+  expect(container.firstChild.firstChild.style.transform).toBe('translate(0px, 0px) scale(1)');
 });
 
 test('PanZoom double zoom', (done) => {
@@ -41,7 +41,7 @@ test('PanZoom double zoom', (done) => {
   fireEvent.wheel(container.firstChild);
   setTimeout(() => {
     fireEvent.wheel(container.firstChild);
-    expect(Math.ceil(panZoomRef.current.getZoom() * 100)).toBe(90);
+    expect(Math.ceil(panZoomRef.current.getZoom() * 100)).toBe(100);
     done();
   }, 200);
 });

@@ -15,6 +15,7 @@ type UseMove = () => MutableRefObject<Position>
 const useMove: UseMove = () => {
   const [moving, setMoving] = useState<Position | null>(null);
   const {
+    blockMovingRef,
     boundary,
     childRef,
     disabled,
@@ -35,6 +36,8 @@ const useMove: UseMove = () => {
     if (loading) return undefined;
 
     const mousedown = (e: MouseEvent) => {
+      if (blockMovingRef.current) return
+
       const position = containerMouseDownPosition(e);
       const stop = stopEventPropagation();
 
@@ -68,7 +71,7 @@ const useMove: UseMove = () => {
     if (!node) return undefined;
 
     const mouseDownClear = onMouseDown(node.parentNode as HTMLDivElement, mousedown);
-    const mouseUpClear = onMouseUp(mouseup);
+    const mouseUpClear = onMouseUp(node.parentNode as HTMLDivElement, mouseup);
 
     return () => {
       mouseDownClear();
@@ -81,6 +84,13 @@ const useMove: UseMove = () => {
     if (loading || !moving) return undefined;
 
     const move = (e: MouseEvent) => {
+      if (blockMovingRef.current) {
+        setMoving(null)
+        return
+      }
+
+      panZoomRef.style.transition = null
+
       const rect = (childRef.current.parentNode as HTMLDivElement).getBoundingClientRect();
       const eventPosition = positionFromEvent(e);
       const nextPosition = produceBounding({

@@ -3,6 +3,7 @@ import { createContext, MutableRefObject } from 'react';
 import { Elements, PanZoomProviderProps, Position, Zoom } from '../types'
 
 export type PanZoomContextProps = {
+  blockMovingRef: MutableRefObject<boolean>,
   childRef: MutableRefObject<HTMLDivElement>,
   elementsRef: Elements,
   loading: boolean,
