@@ -1,4 +1,4 @@
-import { RefObject, MutableRefObject } from 'react'
+import { ReactNode, RefObject, MutableRefObject } from 'react'
 
 type Edge = string | number
 
@@ -37,7 +37,7 @@ type OnContainerChange = ({ position, zoom }: { position: Position, zoom: number
 
 export type PanZoomProviderProps = {
   apiRef?: MutableRefObject<API>,
-  boundary: Boundary,
+  boundary?: BoundaryProp,
   disabled?: boolean,
   disabledElements?: boolean,
   disabledMove?: boolean,
@@ -45,7 +45,7 @@ export type PanZoomProviderProps = {
   disabledZoom?: boolean,
   onElementsChange?: (elements: Record<string, Position>) => unknown,
   onContainerChange?: OnContainerChange,
-  onContainerClick: (
+  onContainerClick?: (
     click: {
       e: MouseEvent,
       stop: () => unknown,
@@ -60,6 +60,7 @@ export type PanZoomProviderProps = {
 }
 
 export type PanZoomProps = {
+  children: ReactNode,
   className?: string,
   height?: string | number,
   width?: string | number,
@@ -92,6 +93,7 @@ type ElementOnMouseUp = (props: {
 } & Position) => unknown
 
 export type ElementProps = {
+  children: ReactNode,
   disabled?: boolean,
   draggableSelector?: string,
   family?: string,
