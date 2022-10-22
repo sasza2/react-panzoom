@@ -2,7 +2,7 @@ import { useImperativeHandle } from 'react';
 
 import { API } from 'types'
 import { usePanZoom } from 'context';
-import getElements from 'api/elements';
+import { getElements, updateElementPosition } from 'api/elements';
 import move from 'api/move';
 import { getPosition, setPosition } from 'api/position';
 import reset from 'api/reset';
@@ -30,6 +30,7 @@ const useApi = (): void => {
       childRef, positionRef, zoomRef,
     })),
     getElements: getElements({ elementsRef }),
+    updateElementPosition: updateElementPosition({ elementsRef }),
     getPosition: getPosition({ positionRef }),
     setPosition: withEventPosition(setPosition({
       childRef, positionRef, zoomRef,

@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { Zoom, ZoomEvent } from 'types'
 import { usePanZoom } from 'context';
 import isEventMobileZoom from 'helpers/isEventMobileZoom'
-import transform from 'helpers/produceStyle';
+import produceStyle from 'helpers/produceStyle';
 import produceBounding from 'helpers/produceBounding';
 import produceNextZoom from 'helpers/produceNextZoom';
 import throttle from 'helpers/throttle'
@@ -46,6 +46,8 @@ const useZoom = (): Zoom => {
   useEffect(() => {
     if (loading || disabled || disabledZoom) return undefined;
 
+    const isMobile = ('ontouchstart' in window)
+
     const wheelFunc = (e: ZoomEvent, { isDesktop }: { isDesktop: boolean }) => {
       const rect = (panZoomRef.parentNode as HTMLDivElement).getBoundingClientRect();
 
@@ -72,7 +74,7 @@ const useZoom = (): Zoom => {
       });
 
       positionRef.current = nextPosition;
-      panZoomRef.style.transform = transform({ position: nextPosition, zoom: nextZoom });
+      panZoomRef.style.transform = produceStyle({ position: nextPosition, zoom: nextZoom });
       panZoomRef.style.setProperty('--zoom', nextZoom.toString());
 
       if (onContainerChange) {
@@ -97,7 +99,7 @@ const useZoom = (): Zoom => {
 
         animationTimer = setTimeout(() => {
           resetTouchEvent()
-          panZoomRef.style.transition = null
+          if (!isMobile) panZoomRef.style.transition = null
         }, ANIMATION_DELAY)
 
         if (!isDesktop) {
@@ -108,7 +110,7 @@ const useZoom = (): Zoom => {
           blockMovingRef.current = true
         }
 
-        panZoomRef.style.transition = `transform ${ANIMATION_DELAY_STR}`
+        if (!isMobile) panZoomRef.style.transition = `transform ${ANIMATION_DELAY_STR}`
       }
     }
 
@@ -125,14 +127,26 @@ const useZoom = (): Zoom => {
       wheelMobile(touchEventToZoom(e), { isDesktop: false })
     }
 
-    panZoomRef.parentNode.addEventListener('wheel', onWheel);
-    panZoomRef.parentNode.addEventListener('touchmove', onWheelMobile);
+    if (isMobile) {
+      panZoomRef.parentNode.addEventListener('touchmove', onWheelMobile);
+      panZoomRef.parentNode.addEventListener('touchup', resetTouchEvent);
+      panZoomRef.parentNode.addEventListener('touchend', resetTouchEvent);
+      panZoomRef.parentNode.addEventListener('touchcancel', resetTouchEvent);
+    } else {
+      panZoomRef.parentNode.addEventListener('wheel', onWheel);
+    }
 
     return () => {
-      wheelDesktop.cancel();
-      wheelMobile.cancel();
-      panZoomRef.parentNode.removeEventListener('wheel', onWheel);
-      panZoomRef.parentNode.removeEventListener('touchmove', onWheelMobile);
+      if (isMobile) {
+        panZoomRef.parentNode.removeEventListener('touchmove', onWheelMobile);
+        panZoomRef.parentNode.removeEventListener('touchup', resetTouchEvent);
+        panZoomRef.parentNode.removeEventListener('touchend', resetTouchEvent);
+        panZoomRef.parentNode.removeEventListener('touchcancel', resetTouchEvent);
+        wheelMobile.cancel();
+      } else {
+        panZoomRef.parentNode.removeEventListener('wheel', onWheel);
+        wheelDesktop.cancel();
+      }
     };
   }, dependencies);
 

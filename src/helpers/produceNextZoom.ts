@@ -2,7 +2,7 @@ import { Zoom, ZoomEvent } from 'types'
 import zoomRound from './zoomRound'
 
 const DESKTOP_DEFAULT_STEP = 0.25 // transform scale
-const NON_DESKTOP_DEFAULT_STEP = 0.05 // transform scale
+const NON_DESKTOP_DEFAULT_STEP = 0.04 // transform scale
 
 type ProduceNextZoom = (props: {
   isDesktop: boolean,
