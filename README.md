@@ -87,7 +87,7 @@ import PanZoom, { Element } from '@sasza/react-panzoom'
 | --- | --- | --- | --- |
 | id * | string/id | undefined | Unique ID of element |
 | children __*__ | node  |||
-| className | string | undefined | Class name for element|
+| className | string | undefined | Class name for element |
 | disabled | bool  | false | Disabling element |
 | draggableSelector | string | undefined | Selector for dragging element |
 | family | string | undefined | Name of element's family, all of elements are connected during moving |
