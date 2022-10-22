@@ -1,6 +1,6 @@
 {
   "name": "@sasza/react-panzoom",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "description": "React component for pan and zoom with possibility to moving and selecting elements inside",
   "main": "dist/main.js",
   "keywords": [
@@ -17,6 +17,7 @@
     "build": "webpack --mode=production",
     "lint": "eslint src/**/*.ts --fix",
     "storybook": "start-storybook",
+    "storybook-build": "build-storybook",
     "test": "jest"
   },
   "repository": {

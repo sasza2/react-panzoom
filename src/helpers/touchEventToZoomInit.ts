@@ -1,29 +1,23 @@
 import { ZoomEvent } from 'types'
 
 const calculateTouchPointsArea = (touches: TouchList) => {
-  if (touches.length === 2) {
-    const x = Math.abs(touches.item(0).clientX - touches.item(1).clientX)
-    const y = Math.abs(touches.item(0).clientY - touches.item(1).clientY)
-    return Math.sqrt(x * x + y * y)
-  }
-  let total = 0;
-  for (let i = 0; i < touches.length; i++) {
-    const addX = touches.item(i).clientX;
-    const addY = touches.item(i === touches.length - 1 ? 0 : i + 1).clientY
-    const subX = touches.item(i === touches.length - 1 ? 0 : i + 1).clientX
-    const subY = touches.item(i).clientY
-    total += (addX * addY * 0.5) - (subX * subY * 0.5);
-  }
-  return Math.abs(total);
+  const x = Math.abs(touches.item(0).clientX - touches.item(1).clientX)
+  const y = Math.abs(touches.item(0).clientY - touches.item(1).clientY)
+  return Math.sqrt(x * x + y * y)
 }
 
 type TouchEventToZoomInit = () => [(e: TouchEvent) => ZoomEvent, () => void]
 
 const touchEventToZoomInit: TouchEventToZoomInit = () => {
   let lastArea: number | null = null
+  let points: Record<number, boolean> = {}
 
   const transform = (e: TouchEvent): ZoomEvent => {
-    if (e.touches.length  < 2) return null
+    for (let i = 0 ; i < e.touches.length; i++) {
+      points[e.touches.item(i).identifier] = true
+    }
+
+    if (Object.keys(points).length !== 2) return null
 
     e.preventDefault()
     e.stopPropagation()
@@ -50,7 +44,6 @@ const touchEventToZoomInit: TouchEventToZoomInit = () => {
     const deltaY = currentArea > lastArea ? -1 : 1
     lastArea = currentArea
 
-
     return {
       deltaY,
       clientX,
@@ -58,7 +51,8 @@ const touchEventToZoomInit: TouchEventToZoomInit = () => {
     } as WheelEvent
   }
 
-  const reset = () => {
+  const reset = (e?: TouchEvent) => {
+    if (e) points = {}
     lastArea = null
   }
 

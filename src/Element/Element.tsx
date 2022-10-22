@@ -18,6 +18,7 @@ type FindMin = () => ((currentPositionValue: number, nextPositionValue: number) 
 
 const Element: React.FC<ElementProps> = ({
   children,
+  className,
   disabled = false,
   draggableSelector,
   family,
@@ -188,13 +189,14 @@ const Element: React.FC<ElementProps> = ({
     return mouseDownClear;
   }, [disabled, family, JSON.stringify(followers), id]);
 
-  const className = useMemo(() => {
+  const classNameWrapper = useMemo(() => {
     const base = 'react-panzoom-element';
     const classes = [base];
+    if (className) classes.push(className)
     if (disabled) classes.push(`${base}--disabled`);
     classes.push(`${base}--id-${id}`);
     return classes.join(' ');
-  }, [disabled, id]);
+  }, [className, disabled, id]);
 
   const elementStyle: React.CSSProperties = useMemo(() => {
     let style = { ...ELEMENT_STYLE };
@@ -203,7 +205,7 @@ const Element: React.FC<ElementProps> = ({
   }, [disabled]);
 
   return (
-    <div ref={elementRef} className={className} style={elementStyle}>
+    <div ref={elementRef} className={classNameWrapper} style={elementStyle}>
       {children}
     </div>
   );

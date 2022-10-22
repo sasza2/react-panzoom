@@ -1,6 +1,7 @@
 /.storybook
 /docs
 /src
+/storybook-static
 .babelrc
 .eslintrc
 jest.config.js

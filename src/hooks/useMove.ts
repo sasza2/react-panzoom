@@ -6,7 +6,7 @@ import { GRABBING_CLASS_NAME } from 'styles';
 import { onMouseDown, onMouseUp, onMouseMove } from 'helpers/eventListener';
 import positionFromEvent from 'helpers/positionFromEvent';
 import produceBounding from 'helpers/produceBounding';
-import transform from 'helpers/produceStyle';
+import produceStyle from 'helpers/produceStyle';
 import stopEventPropagation from 'helpers/stopEventPropagation';
 import useContainerMouseDownPosition from './useContainerMouseDownPosition';
 
@@ -36,8 +36,6 @@ const useMove: UseMove = () => {
     if (loading) return undefined;
 
     const mousedown = (e: MouseEvent) => {
-      if (blockMovingRef.current) return
-
       const position = containerMouseDownPosition(e);
       const stop = stopEventPropagation();
 
@@ -84,10 +82,7 @@ const useMove: UseMove = () => {
     if (loading || !moving) return undefined;
 
     const move = (e: MouseEvent) => {
-      if (blockMovingRef.current) {
-        setMoving(null)
-        return
-      }
+      if (blockMovingRef.current) return
 
       panZoomRef.style.transition = null
 
@@ -102,7 +97,7 @@ const useMove: UseMove = () => {
       });
 
       positionRef.current = nextPosition;
-      panZoomRef.style.transform = transform({
+      panZoomRef.style.transform = produceStyle({
         position: positionRef.current,
         zoom: zoomRef.current,
       });

@@ -69,6 +69,7 @@ export type PanZoomProps = {
 export type API = {
   move: (x: number, y: number) => void,
   getElements: () => Elements['current'],
+  updateElementPosition: (id: string | number, position: Position) => void,
   getPosition: () => Position,
   setPosition: (position: Position) => void,
   getZoom: () => number,
@@ -94,6 +95,7 @@ type ElementOnMouseUp = (props: {
 
 export type ElementProps = {
   children: ReactNode,
+  className?: string,
   disabled?: boolean,
   draggableSelector?: string,
   family?: string,
