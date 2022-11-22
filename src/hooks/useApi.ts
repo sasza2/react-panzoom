@@ -2,6 +2,7 @@ import { useImperativeHandle } from 'react';
 
 import { API } from 'types'
 import { usePanZoom } from 'context';
+import { useElements } from 'ElementsProvider'
 import { getElements, updateElementPosition } from 'api/elements';
 import move from 'api/move';
 import { getPosition, setPosition } from 'api/position';
@@ -15,10 +16,11 @@ const useApi = (): void => {
   const {
     apiRef,
     childRef,
-    elementsRef,
     positionRef,
     zoomRef,
   } = usePanZoom();
+
+  const { elementsRef } = useElements();
 
   const { withEventAll, withEventPosition, withEventZoom } = useEventsCallback();
 

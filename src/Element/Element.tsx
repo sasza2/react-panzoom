@@ -1,20 +1,19 @@
 import React, {
-  memo, RefObject, useEffect, useLayoutEffect, useMemo, useRef, useState,
+  memo, MutableRefObject, useEffect, useLayoutEffect, useMemo, useRef, useState,
 } from 'react';
 
-import { ElementProps, Position } from 'types'
+import { ElementsInMove, ElementProps } from 'types'
 import { usePanZoom } from 'context';
 import { ELEMENT_STYLE, ELEMENT_STYLE_DISABLED } from 'styles';
+import { useElements } from 'ElementsProvider'
 import { onMouseDown, onMouseUp as onMouseUpListener, onMouseMove } from 'helpers/eventListener';
+import positionFromEvent from 'helpers/positionFromEvent';
 import produceStyle from 'helpers/produceStyle';
 import stopEventPropagation from 'helpers/stopEventPropagation';
+import updateFamilyOfElementsPosition from 'helpers/updateFamilyOfElementsPosition'
 import { useElementMouseDownPosition, useElementMouseMovePosition } from 'hooks/useElementEventPosition';
 
 let lastZIndex = 2;
-
-type Moving = Record<string, Position>
-
-type FindMin = () => ((currentPositionValue: number, nextPositionValue: number) => void) & { value: number }
 
 const Element: React.FC<ElementProps> = ({
   children,
@@ -31,19 +30,30 @@ const Element: React.FC<ElementProps> = ({
 }) => {
   if (!id) throw new Error("'id' prop for element can't be undefined");
 
+  const [isMoved, setIsMoved] = useState<boolean>(false);
+  const elementRef: MutableRefObject<HTMLDivElement> = useRef();
+
   const mouseDownPosition = useElementMouseDownPosition();
   const mouseMovePosition = useElementMouseMovePosition();
-
-  const [moving, setMoving] = useState<Moving>(null);
-  const elementRef: RefObject<HTMLDivElement> = useRef();
 
   const {
     blockMovingRef,
     boundary,
     disabledElements,
-    elementsRef,
     onElementsChange,
   } = usePanZoom();
+
+  const {
+    elementsInMove,
+    elementsRef,
+    lastElementMouseMoveEventRef,
+    setElementsInMove,
+  } = useElements()
+
+  const onElementsAction = (nextElementsInMove: ElementsInMove) => {
+    setElementsInMove(nextElementsInMove)
+    setIsMoved(!!nextElementsInMove)
+  }
 
   useLayoutEffect(() => {
     const position = { x, y };
@@ -62,10 +72,10 @@ const Element: React.FC<ElementProps> = ({
   }, [id, x, y]);
 
   useEffect(() => {
-    if (disabledElements || !moving) return undefined
+    if (disabledElements || !isMoved) return undefined
 
     const mouseup = (e: MouseEvent) => {
-      setMoving(null);
+      onElementsAction(null);
 
       if (onMouseUp) {
         onMouseUp({
@@ -82,63 +92,37 @@ const Element: React.FC<ElementProps> = ({
     return () => {
       mouseUpClear()
     }
-  }, [disabledElements, id, !!moving])
+  }, [disabledElements, id, isMoved])
 
   useEffect(() => {
-    if (!moving || disabledElements) return undefined;
+    if (disabledElements || !isMoved) return undefined;
 
     const mousemove = (e: MouseEvent) => {
       if (blockMovingRef.current) {
-        setMoving(null)
+        onElementsAction(null)
         return
       }
 
-      const elementsChange: Moving = {}
+      lastElementMouseMoveEventRef.current = positionFromEvent(e)
 
-      const findMinDiffBetweenPositions: FindMin = () => {
-        let value: number | null = null
-        const func = (currentPositionValue: number, nextPositionValue: number) => {
-          if (value === null || Math.abs(currentPositionValue - nextPositionValue) < Math.abs(value)) {
-            func.value = value = currentPositionValue - nextPositionValue
-          }
-        }
-        func.value = value
-        return func
-      }
-
-      const xMinFind = findMinDiffBetweenPositions()
-      const yMinFind = findMinDiffBetweenPositions()
-
-      Object.entries(moving).forEach(([currentElementId, from]) => {
-        const currentElement = elementsRef.current[currentElementId];
-
-        const position = mouseMovePosition(e, from, currentElement.node);
-
-        xMinFind(currentElement.position.x, position.x)
-        yMinFind(currentElement.position.y, position.y)
-      });
-
-      Object.entries(moving).forEach(([currentElementId]) => {
-        const currentElement = elementsRef.current[currentElementId];
-
-        const position: Position = {
-          x: currentElement.position.x - xMinFind.value,
-          y: currentElement.position.y - yMinFind.value,
-        }
-
-        elementsChange[currentElementId] = position;
-
-        currentElement.position = position
-        currentElement.node.current.style.transform = `translate(${position.x}px, ${position.y}px)`;
+      updateFamilyOfElementsPosition({
+        elementsRef,
+        elementsInMove,
+        produceNextPosition: (from, currentElement) => {
+          const position = mouseMovePosition(e, from, currentElement.node)
+          return position
+        },
+        onElementsChange,
       })
-
-      if (onElementsChange) onElementsChange(elementsChange);
     };
 
     const mouseMoveClear = onMouseMove(mousemove);
 
-    return mouseMoveClear
-  }, [JSON.stringify(boundary), disabledElements, id, moving, onElementsChange]);
+    return () => {
+      mouseMoveClear()
+      if (isMoved) setElementsInMove(null)
+    }
+  }, [JSON.stringify(boundary), disabledElements, id, isMoved, onElementsChange]);
 
   useLayoutEffect(() => {
     if (disabled) return undefined;
@@ -176,11 +160,10 @@ const Element: React.FC<ElementProps> = ({
 
       if (stop.done) return;
 
-      setMoving(elements.reduce((curr, element) => {
-        const from = mouseDownPosition(e, element.node);
-        curr[element.id] = from
+      onElementsAction(elements.reduce((curr, element) => {
+        curr[element.id] = mouseDownPosition(e, element.node);
         return curr;
-      }, {} as Moving));
+      }, {} as ElementsInMove));
 
       increaseZIndex();
     };

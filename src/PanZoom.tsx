@@ -8,6 +8,7 @@ import Select from './Select';
 import {
   CLASS_NAME, PARENT_STYLE, CHILD_STYLE, CHILD_DISABLED_STYLE,
 } from './styles';
+import ElementsProvider from './ElementsProvider'
 import PanZoomProvider, { usePanZoom } from './context';
 
 const PanZoom: React.FC<PanZoomProps> = ({
@@ -72,7 +73,9 @@ const PanZoom: React.FC<PanZoomProps> = ({
 
 const PanZoomWithContext = (props: PanZoomProps, apiRef: PanZoomProps['apiRef']) => (
   <PanZoomProvider apiRef={apiRef} {...props}>
-    <PanZoom {...props} />
+    <ElementsProvider>
+      <PanZoom {...props} />
+    </ElementsProvider>
   </PanZoomProvider>
 );
 
