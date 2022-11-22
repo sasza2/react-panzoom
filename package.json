@@ -1,6 +1,6 @@
 {
   "name": "@sasza/react-panzoom",
-  "version": "1.5.2",
+  "version": "1.6.0",
   "description": "React component for pan and zoom with possibility to moving and selecting elements inside",
   "main": "dist/main.js",
   "keywords": [
@@ -38,6 +38,7 @@
     "@babel/preset-env": "^7.9.5",
     "@babel/preset-react": "^7.9.4",
     "@babel/preset-typescript": "^7.18.6",
+    "@storybook/addon-knobs": "^5.3.18",
     "@storybook/react": "^5.3.18",
     "@testing-library/jest-dom": "^5.5.0",
     "@testing-library/react": "^10.0.2",

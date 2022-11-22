@@ -2,6 +2,7 @@ import { useLayoutEffect, useRef } from 'react';
 
 import { Position } from 'types'
 import { usePanZoom } from 'context';
+import { useElements } from 'ElementsProvider'
 import produceElementPosition from 'helpers/produceElementPosition';
 import { MoveRef } from '../context/SelectContext'
 import { useSelect } from '../context';
@@ -10,9 +11,8 @@ import copyElementsPositions from '../helpers/copyElementsPositions';
 
 const useGrabElements = (): MoveRef => {
   const { boundary } = useSelect();
-  const {
-    childRef, elementsRef, onElementsChange, zoomRef,
-  } = usePanZoom();
+  const { childRef, onElementsChange, zoomRef, } = usePanZoom();
+  const { elementsRef } = useElements()
   const onMoveRef: MoveRef = useRef();
 
   useLayoutEffect(() => {

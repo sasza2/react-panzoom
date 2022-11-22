@@ -1,6 +1,6 @@
 import { Position } from 'types'
 
-type ProduceBoundingElementProps = {
+type ProduceElementPositionProps = {
   element: HTMLElement,
   container: HTMLDivElement,
   x: number,
@@ -8,26 +8,24 @@ type ProduceBoundingElementProps = {
   zoom: number,
 }
 
-const produceBoundingElement = ({
+const produceElementPosition = ({
   element, container, x, y, zoom,
-}: ProduceBoundingElementProps): Position => {
+}: ProduceElementPositionProps): Position => {
   const elementRect = element.getBoundingClientRect();
   const containerRect = container.getBoundingClientRect();
 
   const maxRight = (containerRect.width - elementRect.width) / zoom;
   const maxBottom = (containerRect.height - elementRect.height) / zoom;
 
-  const position: Partial<Position> = {};
+  const position: Position = { x, y };
 
-  if (x < 0) position.x = 0;
-  else if (x > maxRight) position.x = maxRight;
-  else position.x = x;
+  if (position.x < 0) position.x = 0;
+  else if (position.x > maxRight) position.x = maxRight;
 
-  if (y < 0) position.y = 0;
-  else if (y > maxBottom) position.y = maxBottom;
-  else position.y = y;
+  if (position.y < 0) position.y = 0;
+  else if (position.y > maxBottom) position.y = maxBottom;
 
-  return position as Position
+  return position
 };
 
-export default produceBoundingElement;
+export default produceElementPosition;

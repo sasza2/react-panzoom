@@ -1,8 +1,12 @@
 import React, { useCallback, useLayoutEffect, useState } from 'react';
+import { withKnobs, select, number } from '@storybook/addon-knobs'
 
 import PanZoom, { Element } from '..';
 
-export default { title: 'PanZoom' };
+export default {
+  title: 'PanZoom',
+  decorators: [withKnobs],
+};
 
 export const rectangles = () => (
   <div style={{
@@ -10,62 +14,73 @@ export const rectangles = () => (
     position: 'relative',
     overflow: 'hidden',
     border: '1px solid green',
+    width: number('container width', 2500),
+    marginTop: number('margin top', 200),
+    marginBottom: number('margin bottom', 2000),
+    marginLeft: number('margin left', 200),
+    marginRight: number('margin right', 250),
+    height: number('container height', 400),
   }}
   >
-    <PanZoom>
-      <div style={{ width: 500, height: 400, backgroundColor: '#f1f1f1' }}>
-        <Element id="a" family="aaa" x={50} y={90}>
-          <div style={{
-            width: 100,
-            height: 100,
-            backgroundColor: 'red',
-          }}
-          >
-            111
-          </div>
-        </Element>
-        <Element id="b" family="aaa" x={210} y={60}>
-          <div style={{
-            width: 40,
-            height: 170,
-            backgroundColor: 'blue',
-            color: '#fff',
-          }}
-          >
-            222
-          </div>
-        </Element>
-        <Element id="c" followers={['a', 'b']} x={310} y={160} draggableSelector='.drag-me'>
-          <div style={{
-            width: 120,
-            height: 70,
-            backgroundColor: 'green',
-            color: '#fff',
-          }}
-          >
-            333 <span className='drag-me' style={{ color: 'red', cursor: 'move' }}>here</span>
-          </div>
-        </Element>
-        <Element id="d" x={300} y={260}>
-          <div style={{
-            width: 120,
-            height: 70,
-            backgroundColor: 'violet',
-            color: '#fff',
-          }}
-          >
-            444
-          </div>
-        </Element>
-      </div>
+    <style dangerouslySetInnerHTML={{ __html: `
+      .react-panzoom__in {
+        background-color: ${select('background', ['white', 'orange'])}
+      }
+    ` }}
+    />
+    <PanZoom width={number('width', 2900)} height={number('height', 2000)}>
+      <Element id="a" family="aaa" x={50} y={90}>
+        <div style={{
+          width: 100,
+          height: 100,
+          backgroundColor: 'red',
+        }}
+        >
+          111
+        </div>
+      </Element>
+      <Element id="b" family="aaa" x={210} y={60}>
+        <div style={{
+          width: 40,
+          height: 170,
+          backgroundColor: 'blue',
+          color: '#fff',
+        }}
+        >
+          222
+        </div>
+      </Element>
+      <Element id="c" followers={['a', 'b']} x={310} y={160} draggableSelector='.drag-me'>
+        <div style={{
+          width: 120,
+          height: 70,
+          backgroundColor: 'green',
+          color: '#fff',
+        }}
+        >
+          333 <span className='drag-me' style={{ color: 'red', cursor: 'move' }}>here</span>
+        </div>
+      </Element>
+      <Element id="d" x={300} y={260}>
+        <div style={{
+          width: 120,
+          height: 70,
+          backgroundColor: 'violet',
+          color: '#fff',
+        }}
+        >
+          444
+        </div>
+      </Element>
     </PanZoom>
   </div>
 );
 
-export const text = () => (
+export const loremIpsum = () => (
   <div style={{ height: 200 }}>
     <PanZoom disabledUserSelect>
-      abcdef
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam mauris elit, semper id cursus ut, dictum non dolor.
+      Sed sagittis ultricies dui id maximus. Donec nunc tortor, iaculis ut elementum sit amet, pharetra ut odio.
     </PanZoom>
   </div>
 );

@@ -1,5 +1,12 @@
 import { useEffect } from 'react';
 
+import {
+  ZOOM_ANIMATION_DELAY,
+  ZOOM_ANIMATION_DELAY_STR,
+  ZOOM_DESKTOP_THROTTLE_DELAY,
+  ZOOM_NON_DESKTOP_THROTTLE_DELAY,
+  ZOOM_NON_DESKTOP_MOVING_BLOCK_DELAY,
+} from 'consts'
 import { Zoom, ZoomEvent } from 'types'
 import { usePanZoom } from 'context';
 import isEventMobileZoom from 'helpers/isEventMobileZoom'
@@ -8,12 +15,6 @@ import produceBounding from 'helpers/produceBounding';
 import produceNextZoom from 'helpers/produceNextZoom';
 import throttle from 'helpers/throttle'
 import touchEventToZoomInit from 'helpers/touchEventToZoomInit'
-
-const ANIMATION_DELAY = 300 // ms
-const ANIMATION_DELAY_STR = `${ANIMATION_DELAY / 1000}s`
-const DESKTOP_THROTTLE_DELAY = 100 // ms
-const NON_DESKTOP_THROTTLE_DELAY = 5 // ms
-const NON_DESKTOP_MOVING_BLOCK_DELAY = 300 // ms
 
 const useZoom = (): Zoom => {
   const {
@@ -85,8 +86,8 @@ const useZoom = (): Zoom => {
       }
     };
 
-    const wheelDesktop = throttle(wheelFunc, DESKTOP_THROTTLE_DELAY)
-    const wheelMobile = throttle(wheelFunc, NON_DESKTOP_THROTTLE_DELAY)
+    const wheelDesktop = throttle(wheelFunc, ZOOM_DESKTOP_THROTTLE_DELAY)
+    const wheelMobile = throttle(wheelFunc, ZOOM_NON_DESKTOP_THROTTLE_DELAY)
 
     const [touchEventToZoom, resetTouchEvent] = touchEventToZoomInit()
 
@@ -100,23 +101,24 @@ const useZoom = (): Zoom => {
         animationTimer = setTimeout(() => {
           resetTouchEvent()
           if (!isMobile) panZoomRef.style.transition = null
-        }, ANIMATION_DELAY)
+        }, ZOOM_ANIMATION_DELAY)
 
         if (!isDesktop) {
           blockTimer = setTimeout(() => {
             blockMovingRef.current = false
-          }, NON_DESKTOP_MOVING_BLOCK_DELAY)
+          }, ZOOM_NON_DESKTOP_MOVING_BLOCK_DELAY)
 
           blockMovingRef.current = true
         }
 
-        if (!isMobile) panZoomRef.style.transition = `transform ${ANIMATION_DELAY_STR}`
+        if (!isMobile) panZoomRef.style.transition = `transform ${ZOOM_ANIMATION_DELAY_STR}`
       }
     }
 
     const doAnimation = animationInit()
 
     const onWheel = (e: WheelEvent) => {
+      e.preventDefault()
       doAnimation({ isDesktop: true })
       wheelDesktop(e, { isDesktop: true })
     }

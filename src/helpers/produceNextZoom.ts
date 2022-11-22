@@ -1,8 +1,6 @@
+import { ZOOM_DESKTOP_DEFAULT_STEP, ZOOM_NON_DESKTOP_DEFAULT_STEP } from 'consts'
 import { Zoom, ZoomEvent } from 'types'
 import zoomRound from './zoomRound'
-
-const DESKTOP_DEFAULT_STEP = 0.25 // transform scale
-const NON_DESKTOP_DEFAULT_STEP = 0.04 // transform scale
 
 type ProduceNextZoom = (props: {
   isDesktop: boolean,
@@ -21,7 +19,7 @@ const produceNextZoom: ProduceNextZoom = ({
   zoomMin,
   zoomMax,
 }) => {
-  const step = 1 + zoomSpeed * (isDesktop ? DESKTOP_DEFAULT_STEP : NON_DESKTOP_DEFAULT_STEP)
+  const step = 1 + zoomSpeed * (isDesktop ? ZOOM_DESKTOP_DEFAULT_STEP : ZOOM_NON_DESKTOP_DEFAULT_STEP)
 
   const nextZoom = zoomRound((() => {
     if (!e.deltaY) return zoomRef.current

@@ -16,14 +16,16 @@ export type Position = {
   y: number,
 }
 
+export type ElementId = string | number
+
 export type Element = {
   family?: string,
-  id: string | number,
+  id: ElementId,
   node: RefObject<HTMLDivElement>,
   position: Position,
 }
 
-export type Elements = MutableRefObject<Record<string, Element>>
+export type Elements = MutableRefObject<Record<ElementId, Element>>
 
 export type Zoom = MutableRefObject<number>
 
@@ -32,6 +34,15 @@ export type ZoomEvent = {
   clientX: number,
   clientY: number,
 }
+
+export type ElementsInMove = Record<ElementId, Position>
+
+export type ClientPosition = {
+  clientX: number,
+  clientY: number,
+}
+
+export type OnElementsChange = (elements: Record<string, Position>) => unknown
 
 type OnContainerChange = ({ position, zoom }: { position: Position, zoom: number }) => unknown
 
@@ -43,7 +54,7 @@ export type PanZoomProviderProps = {
   disabledMove?: boolean,
   disabledUserSelect?: boolean,
   disabledZoom?: boolean,
-  onElementsChange?: (elements: Record<string, Position>) => unknown,
+  onElementsChange?: OnElementsChange,
   onContainerChange?: OnContainerChange,
   onContainerClick?: (
     click: {
@@ -81,14 +92,14 @@ export type API = {
 }
 
 type ElementOnClick = (props: {
-  id: string | number,
+  id: ElementId,
   family?: string,
   e: MouseEvent,
   stop: () => void,
 } & Position) => unknown
 
 type ElementOnMouseUp = (props: {
-  id: string | number,
+  id: ElementId,
   family?: string,
   e: MouseEvent,
 } & Position) => unknown
@@ -99,8 +110,8 @@ export type ElementProps = {
   disabled?: boolean,
   draggableSelector?: string,
   family?: string,
-  followers?: Array<string | number>,
-  id: string | number,
+  followers?: Array<ElementId>,
+  id: ElementId,
   onClick?: ElementOnClick,
   onMouseUp?: ElementOnMouseUp,
   x: number,
