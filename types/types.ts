@@ -68,6 +68,7 @@ export type PanZoomProviderProps = {
   zoomMax?: number,
   zoomMin?: number,
   zoomSpeed?: number,
+  cover?: string,
 }
 
 export type PanZoomProps = {

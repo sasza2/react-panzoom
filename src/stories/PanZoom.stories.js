@@ -2,6 +2,7 @@ import React, { useCallback, useLayoutEffect, useState } from 'react';
 import { withKnobs, select, number } from '@storybook/addon-knobs'
 
 import PanZoom, { Element } from '..';
+import { PanZoomWithCover } from '../PanZoom';
 
 export default {
   title: 'PanZoom',
@@ -227,5 +228,52 @@ export const selectingBoxes = () => {
         </PanZoom>
       </div>
     </>
+  );
+};
+
+export const coverContainer = () => {
+  const IMAGE_URL =
+    'https://images.unsplash.com/photo-1669158424156-01778fcc6427?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1012&q=80';
+
+  return (
+    <PanZoomWithCover
+      cover={IMAGE_URL}
+      width={number('container width', 400)}
+      height={number('container height', 400)}
+      zoomMax={number('max zoom', 2)}
+    >
+      <Element id="orange">
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderRadius: '50%',
+            width: number('circle size', 360),
+            height: number('circle size', 360),
+            backgroundColor: 'orange',
+            fontSize: 42,
+          }}
+        >
+          <span>move me</span>
+        </div>
+      </Element>
+
+      <Element id="red" x={300} y={450}>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: number('square size', 180),
+            height: number('square size', 180),
+            backgroundColor: 'red',
+            fontSize: 42,
+          }}
+        >
+          <span>or me</span>
+        </div>
+      </Element>
+    </PanZoomWithCover>
   );
 };

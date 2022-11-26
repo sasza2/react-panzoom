@@ -12,7 +12,7 @@ export const PARENT_STYLE = {
   WebkitFontSmoothing: 'antialiased',
 };
 
-export const CHILD_STYLE = {
+export const CHILD_STYLE: CSSProperties = {
   position: 'relative',
   transformOrigin: '0 0',
   pointerEvents: 'none',

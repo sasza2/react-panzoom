@@ -42,6 +42,8 @@ const useZoom = (): Zoom => {
     disabledZoom,
     loading,
     zoomSpeed,
+    zoomMax,
+    zoomMin,
   ];
 
   useEffect(() => {

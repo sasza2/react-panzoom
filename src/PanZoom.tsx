@@ -2,6 +2,7 @@ import React, { forwardRef, useMemo } from 'react';
 
 import { PanZoomProps } from 'types'
 import useApi from './hooks/useApi';
+import useCover from 'hooks/useCover';
 import useMove from './hooks/useMove';
 import useZoom from './hooks/useZoom';
 import Select from './Select';
@@ -19,6 +20,7 @@ const PanZoom: React.FC<PanZoomProps> = ({
   height = '100%',
   width = '100%',
   selecting,
+  cover,
 }) => {
   const { childRef, setLoading } = usePanZoom();
 
@@ -44,17 +46,19 @@ const PanZoom: React.FC<PanZoomProps> = ({
   }, [className, selecting]);
 
   const childStyle: React.CSSProperties = useMemo(() => {
-    let style = {
+    let style: React.CSSProperties = {
       ...CHILD_STYLE,
       height,
       width,
     };
 
-    if (disabledUserSelect) style = { ...style, ...CHILD_DISABLED_STYLE };
+    if (disabledUserSelect)
+      style = { ...style, ...CHILD_DISABLED_STYLE } as React.CSSProperties;
     if (selecting) style.pointerEvents = 'all';
+    if (cover) style.backgroundImage = 'url(' + cover + ')';
 
-    return style as React.CSSProperties;
-  }, [className, disabledUserSelect, height, width, selecting]);
+    return style;
+  }, [className, disabledUserSelect, height, width, selecting, cover]);
 
   const createRef = (node: HTMLDivElement) => {
     childRef.current = node;
@@ -79,4 +83,32 @@ const PanZoomWithContext = (props: PanZoomProps, apiRef: PanZoomProps['apiRef'])
   </PanZoomProvider>
 );
 
-export default forwardRef(PanZoomWithContext);
+const PanZoomWithRef = forwardRef(PanZoomWithContext);
+
+const PanZoomWithCover: React.FC<PanZoomProps> = ({
+  cover,
+  zoomMax,
+  width,
+  height,
+  ...props
+}) => {
+  const { ref, size, zoom } = useCover(cover);
+
+  return (
+    <div style={{ width, height }}>
+      <PanZoomWithRef
+        {...props}
+        {...size}
+        ref={ref}
+        boundary={{}}
+        cover={cover}
+        zoomMin={zoom}
+        zoomMax={zoomMax * zoom}
+      />
+    </div>
+  );
+};
+
+export default PanZoomWithRef;
+
+export { PanZoomWithCover };
