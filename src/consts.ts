@@ -10,5 +10,6 @@ export const ZOOM_PRECISION = 100.0;
 export const ZOOM_ANIMATION_DELAY = 300 // ms
 export const ZOOM_ANIMATION_DELAY_STR = `${ZOOM_ANIMATION_DELAY / 1000}s`
 export const ZOOM_DESKTOP_THROTTLE_DELAY = 100 // ms
+export const ZOOM_INITIAL = 1
 export const ZOOM_NON_DESKTOP_THROTTLE_DELAY = 5 // ms
 export const ZOOM_NON_DESKTOP_MOVING_BLOCK_DELAY = 300 // ms

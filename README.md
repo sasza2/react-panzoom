@@ -28,8 +28,9 @@ https://codesandbox.io/s/goofy-rgb-48tbu
 | onElementsChange | func | null | callback invoked when elements change position |
 | selecting | bool | false | switches to selecting mode, see `selecting` |
 | width | string/number | 100% | width of child container |
-| zoomMax | number | null | maximum zoom |
-| zoomMin | number | 0.1 | minimum zoom |
+| zoomInitial | number | 1 | initial zoom value |
+| zoomMax | number | 5 | maximum zoom |
+| zoomMin | number | 0.3 | minimum zoom |
 | zoomSpeed | number | 1 | zoom speed on wheel event |
 
 __*__ - is required

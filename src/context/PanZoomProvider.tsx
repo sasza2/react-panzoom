@@ -1,12 +1,13 @@
 import React, { useRef, useState } from 'react';
 
-import { ZOOM_MIN_DEFAULT, ZOOM_MAX_DEFAULT, ZOOM_SPEED_DEFAULT } from 'consts'
+import { ZOOM_INITIAL, ZOOM_MIN_DEFAULT, ZOOM_MAX_DEFAULT, ZOOM_SPEED_DEFAULT } from 'consts'
 import { Position, Zoom } from 'types'
 import { PanZoomProviderProps } from '../types';
 import PanZoomContext from './PanZoomContext';
 
 const PanZoomProvider: React.FC<PanZoomProviderProps> = ({
   children,
+  zoomInitial = ZOOM_INITIAL,
   zoomMin = ZOOM_MIN_DEFAULT,
   zoomMax = ZOOM_MAX_DEFAULT,
   zoomSpeed = ZOOM_SPEED_DEFAULT,
@@ -21,7 +22,7 @@ const PanZoomProvider: React.FC<PanZoomProviderProps> = ({
   const positionRef = useRef<Position>();
   const zoomRef: Zoom = useRef<number>();
 
-  if (!zoomRef.current) zoomRef.current = 1;
+  if (!zoomRef.current) zoomRef.current = zoomInitial;
   if (!positionRef.current) positionRef.current = { x: 0, y: 0 };
 
   return (

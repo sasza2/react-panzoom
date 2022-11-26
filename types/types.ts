@@ -65,6 +65,7 @@ export type PanZoomProviderProps = {
   onContainerPositionChange?: OnContainerChange,
   onContainerZoomChange?: OnContainerChange,
   selecting?: boolean,
+  zoomInitial?: number,
   zoomMax?: number,
   zoomMin?: number,
   zoomSpeed?: number,
