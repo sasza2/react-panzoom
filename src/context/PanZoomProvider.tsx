@@ -10,11 +10,14 @@ const PanZoomProvider: React.FC<PanZoomProviderProps> = ({
   zoomMin = ZOOM_MIN_DEFAULT,
   zoomMax = ZOOM_MAX_DEFAULT,
   zoomSpeed = ZOOM_SPEED_DEFAULT,
+  onElementsChange,
   ...props
 }) => {
   const [loading, setLoading] = useState(true);
   const childRef = useRef();
   const blockMovingRef = useRef<boolean>(false)
+  const onElementsChangeRef = useRef<typeof onElementsChange>()
+  onElementsChangeRef.current = onElementsChange
   const positionRef = useRef<Position>();
   const zoomRef: Zoom = useRef<number>();
 
@@ -27,6 +30,7 @@ const PanZoomProvider: React.FC<PanZoomProviderProps> = ({
         blockMovingRef,
         childRef,
         loading,
+        onElementsChangeRef,
         positionRef,
         setLoading,
         zoomRef,

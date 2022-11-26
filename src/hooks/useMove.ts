@@ -75,7 +75,7 @@ const useMove: UseMove = () => {
       mouseDownClear();
       mouseUpClear();
     };
-  }, [disabled, disabledMove, loading, onContainerClick]);
+  }, [disabled, disabledMove, loading]);
 
   // Handle mousemove
   useEffect(() => {
@@ -113,7 +113,7 @@ const useMove: UseMove = () => {
 
     const mouseMoveClear = onMouseMove(move);
     return mouseMoveClear;
-  }, [boundary, loading, moving, onContainerChange, onContainerPositionChange]);
+  }, [boundary, loading, moving]);
 
   return positionRef;
 };

@@ -40,7 +40,7 @@ const Element: React.FC<ElementProps> = ({
     blockMovingRef,
     boundary,
     disabledElements,
-    onElementsChange,
+    onElementsChangeRef,
   } = usePanZoom();
 
   const {
@@ -95,7 +95,7 @@ const Element: React.FC<ElementProps> = ({
   }, [disabledElements, id, isMoved])
 
   useEffect(() => {
-    if (disabledElements || !isMoved) return undefined;
+    if (disabledElements || !elementsInMove || !isMoved) return undefined;
 
     const mousemove = (e: MouseEvent) => {
       if (blockMovingRef.current) {
@@ -112,7 +112,7 @@ const Element: React.FC<ElementProps> = ({
           const position = mouseMovePosition(e, from, currentElement.node)
           return position
         },
-        onElementsChange,
+        onElementsChange: onElementsChangeRef.current,
       })
     };
 
@@ -122,7 +122,7 @@ const Element: React.FC<ElementProps> = ({
       mouseMoveClear()
       if (isMoved) setElementsInMove(null)
     }
-  }, [JSON.stringify(boundary), disabledElements, id, isMoved, onElementsChange]);
+  }, [JSON.stringify(boundary), disabledElements, elementsInMove, id, isMoved]);
 
   useLayoutEffect(() => {
     if (disabled) return undefined;
