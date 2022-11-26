@@ -20,7 +20,7 @@ const PanZoom: React.FC<PanZoomProps> = ({
   width = '100%',
   selecting,
 }) => {
-  const { childRef, setLoading } = usePanZoom();
+  const { childRef, setLoading, zoomRef } = usePanZoom();
 
   useMove();
   useZoom();
@@ -48,6 +48,7 @@ const PanZoom: React.FC<PanZoomProps> = ({
       ...CHILD_STYLE,
       height,
       width,
+      transform: `scale(${zoomRef.current})`,
     };
 
     if (disabledUserSelect) style = { ...style, ...CHILD_DISABLED_STYLE };
