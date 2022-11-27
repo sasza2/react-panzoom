@@ -27,6 +27,7 @@ const useZoom = (): Zoom => {
     positionRef,
     onContainerChange,
     onContainerZoomChange,
+    zoomInitial,
     zoomMax,
     zoomMin,
     zoomRef,
@@ -41,7 +42,10 @@ const useZoom = (): Zoom => {
     disabled,
     disabledZoom,
     loading,
+    zoomInitial,
     zoomSpeed,
+    zoomMax,
+    zoomMin,
   ];
 
   useEffect(() => {
