@@ -120,7 +120,7 @@ export type ElementProps = {
   y: number,
 }
 
-export type PanZoomDefault = {
+export type PanZoomDefaultProps = {
   children: ReactNode,
 } & PanZoomProps
 
