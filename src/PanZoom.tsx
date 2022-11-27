@@ -1,6 +1,6 @@
 import React, { forwardRef, useMemo } from 'react';
 
-import { PanZoomProps } from 'types'
+import { PanZoomDefaultProps } from 'types'
 import useApi from './hooks/useApi';
 import useMove from './hooks/useMove';
 import useZoom from './hooks/useZoom';
@@ -11,16 +11,20 @@ import {
 import ElementsProvider from './ElementsProvider'
 import PanZoomProvider, { usePanZoom } from './context';
 
-const PanZoom: React.FC<PanZoomProps> = ({
+export const PanZoom: React.FC = ({
   children,
-  className,
-  disabled,
-  disabledUserSelect,
-  height = '100%',
-  width = '100%',
-  selecting,
 }) => {
-  const { childRef, setLoading, zoomRef } = usePanZoom();
+  const {
+    className,
+    disabled,
+    disabledUserSelect,
+    height,
+    width,
+    selecting,
+    childRef,
+    setLoading,
+    zoomRef,
+  } = usePanZoom();
 
   useMove();
   useZoom();
@@ -72,10 +76,13 @@ const PanZoom: React.FC<PanZoomProps> = ({
   );
 };
 
-const PanZoomWithContext = (props: PanZoomProps, apiRef: PanZoomProps['apiRef']) => (
+const PanZoomWithContext = (
+  { children, ...props }: PanZoomDefaultProps,
+  apiRef: PanZoomDefaultProps['apiRef'],
+) => (
   <PanZoomProvider apiRef={apiRef} {...props}>
     <ElementsProvider>
-      <PanZoom {...props} />
+      <PanZoom>{children}</PanZoom>
     </ElementsProvider>
   </PanZoomProvider>
 );

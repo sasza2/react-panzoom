@@ -46,9 +46,10 @@ export type OnElementsChange = (elements: Record<string, Position>) => unknown
 
 type OnContainerChange = ({ position, zoom }: { position: Position, zoom: number }) => unknown
 
-export type PanZoomProviderProps = {
+type PanZoomCommon = {
   apiRef?: MutableRefObject<API>,
   boundary?: BoundaryProp,
+  className?: string,
   disabled?: boolean,
   disabledElements?: boolean,
   disabledMove?: boolean,
@@ -71,12 +72,12 @@ export type PanZoomProviderProps = {
   zoomSpeed?: number,
 }
 
-export type PanZoomProps = {
-  children: ReactNode,
-  className?: string,
+export type PanZoomProps = PanZoomCommon & Size
+
+export type Size = {
   height?: string | number,
   width?: string | number,
-} & PanZoomProviderProps
+}
 
 export type API = {
   move: (x: number, y: number) => void,
@@ -118,3 +119,7 @@ export type ElementProps = {
   x: number,
   y: number,
 }
+
+export type PanZoomDefaultProps = {
+  children: ReactNode,
+} & PanZoomProps
