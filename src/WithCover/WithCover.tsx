@@ -12,6 +12,7 @@ let WITH_COVER_ID = 0
 
 type WithCoverProps = {
   cover: string,
+  onCoverLoad?: () => void,
   setScale: (scale: number) => void,
   setSize: (size: Size) => void,
 }
@@ -19,6 +20,7 @@ type WithCoverProps = {
 const LoadCover: React.FC<WithCoverProps> = ({
   children,
   cover,
+  onCoverLoad,
   setScale,
   setSize,
 }) => {
@@ -48,6 +50,8 @@ const LoadCover: React.FC<WithCoverProps> = ({
       zoomRef.current = scale
       childRef.current.style.transform = produceStyle({ position: positionRef.current, zoom: scale });
       childRef.current.style.setProperty('--zoom', scale.toString());
+
+      if (onCoverLoad) onCoverLoad()
     }
   }, [cover])
 
@@ -55,7 +59,13 @@ const LoadCover: React.FC<WithCoverProps> = ({
 }
 
 const PanZoomWithCoverContext = (
-  { children, cover, zoomMax = ZOOM_MAX_DEFAULT, ...props }: PanZoomWithCoverProps,
+  {
+    children,
+    cover,
+    onCoverLoad,
+    zoomMax = ZOOM_MAX_DEFAULT,
+    ...props
+  }: PanZoomWithCoverProps,
   apiRef: PanZoomWithCoverProps['apiRef'],
 ) => {
   const [className] = useState(() => `${CLASS_NAME}-with-cover--id-${++WITH_COVER_ID}`)
@@ -83,6 +93,7 @@ const PanZoomWithCoverContext = (
         <ElementsProvider>
           <LoadCover
             cover={cover}
+            onCoverLoad={onCoverLoad}
             setScale={setScale}
             setSize={setSize}
           >

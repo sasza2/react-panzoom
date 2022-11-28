@@ -127,5 +127,6 @@ export type PanZoomDefaultProps = {
 export type PanZoomWithCoverProps = {
   children: ReactNode,
   className?: string,
+  onCoverLoad?: () => void,
   cover: string,
 } & PanZoomCommon
