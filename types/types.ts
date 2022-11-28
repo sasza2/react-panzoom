@@ -123,3 +123,10 @@ export type ElementProps = {
 export type PanZoomDefaultProps = {
   children: ReactNode,
 } & PanZoomProps
+
+export type PanZoomWithCoverProps = {
+  children: ReactNode,
+  className?: string,
+  onCoverLoad?: () => void,
+  cover: string,
+} & PanZoomCommon
