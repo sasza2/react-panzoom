@@ -66,15 +66,18 @@ const appendToCurrentPosition = ({
     y: positionRef.current.y + toAdd.y,
   }
 
-  if (toAdd.x || toAdd.y) {
-    if (positionRef.current.x > 0) positionRef.current.x = 0
-    if (positionRef.current.y > 0) positionRef.current.y = 0
-
-    const diffX = distanceToRightEdge(childRef, positionRef)
-    if (diffX < 0) positionRef.current.x -= diffX
-
+  if (toAdd.y < 0) {
     const diffY = distanceToBottomEdge(childRef, positionRef)
     if (diffY < 0) positionRef.current.y -= diffY
+  } else if (toAdd.y > 0) {
+    if (positionRef.current.y > 0) positionRef.current.y = 0
+  }
+
+  if (toAdd.x < 0) {
+    const diffX = distanceToRightEdge(childRef, positionRef)
+    if (diffX < 0) positionRef.current.x -= diffX
+  } else if (toAdd.x > 0) {
+    if (positionRef.current.x > 0) positionRef.current.x = 0
   }
 
   childRef.current.style.transform = produceStyle({
