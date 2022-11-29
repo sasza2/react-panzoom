@@ -1,4 +1,5 @@
 import { usePanZoom } from 'context';
+import positionClone from 'helpers/positionClone'
 
 type ApiCallback = (...args: unknown[]) => unknown
 
@@ -21,7 +22,7 @@ const useEventsCallback: UseEventsCallback = () => {
 
   const dispatchEvents = ({ position, zoom }: DispatchOptions) => {
     const eventValue = {
-      position: { ...positionRef.current },
+      position: positionClone(positionRef),
       zoom: zoomRef.current,
     };
 

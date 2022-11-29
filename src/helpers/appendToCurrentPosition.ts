@@ -2,6 +2,7 @@ import { MutableRefObject } from 'react'
 
 import { Position, Zoom } from 'types'
 import produceStyle from 'helpers/produceStyle'
+import { distanceToRightEdge, distanceToBottomEdge } from 'helpers/isEdgeVisible'
 
 const hasScroll = (node: HTMLDivElement) => node.clientHeight < node.scrollHeight
 
@@ -63,6 +64,17 @@ const appendToCurrentPosition = ({
   positionRef.current = {
     x: positionRef.current.x + toAdd.x,
     y: positionRef.current.y + toAdd.y,
+  }
+
+  if (toAdd.x || toAdd.y) {
+    if (positionRef.current.x > 0) positionRef.current.x = 0
+    if (positionRef.current.y > 0) positionRef.current.y = 0
+
+    const diffX = distanceToRightEdge(childRef, positionRef)
+    if (diffX < 0) positionRef.current.x -= diffX
+
+    const diffY = distanceToBottomEdge(childRef, positionRef)
+    if (diffY < 0) positionRef.current.y -= diffY
   }
 
   childRef.current.style.transform = produceStyle({
