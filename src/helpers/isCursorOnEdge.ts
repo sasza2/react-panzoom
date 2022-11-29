@@ -26,12 +26,14 @@ const isCursorOnEdge = (childRef: MutableRefObject<HTMLDivElement>, e: ClientPos
     window.innerWidth - offsetX,
     childRect.right,
     parentRect.right - CURSOR_ON_EDGE_MARGIN,
+    parentRect.right - parentRect.left,
   )
 
   const endY = Math.min(
     window.innerHeight - offsetY,
     childRect.bottom,
     parentRect.bottom - CURSOR_ON_EDGE_MARGIN,
+    parentRect.bottom - parentRect.top,
   )
 
   const mousePositionX = e.clientX - offsetX
