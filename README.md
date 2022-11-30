@@ -4,8 +4,9 @@ React component for pan and zoom with possibility to moving and selecting elemen
 !["Preview"](docs/preview.gif "Example preview")
 
 # Demo
-https://codesandbox.io/s/goofy-rgb-48tbu (example from above)<br />
-https://codesandbox.io/s/bold-pond-v0kvx7 (map with background image)
+https://codesandbox.io/s/goofy-rgb-48tbu<br />
+https://codesandbox.io/s/bold-pond-v0kvx7 (map with background image)<br />
+https://codesandbox.io/s/loving-lederberg-r75ufe (example from above)
 
 # Installation
 ```npm install @sasza/react-panzoom```

@@ -118,7 +118,7 @@ export const boxBounding = () => (
   <div style={{ border: '1px dashed #000', width: 400, height: 400 }}>
     <PanZoom
       disabledUserSelect
-      boundary={{}}
+      boundary
       width={2000}
     >
       <Element id="orange">
