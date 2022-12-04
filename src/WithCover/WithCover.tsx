@@ -47,6 +47,7 @@ const LoadCover: React.FC<WithCoverProps> = ({
 
       zoomRef.current = scale
       childRef.current.style.transform = produceStyle({ position: positionRef.current, zoom: scale });
+      childRef.current.style.backgroundImage = `url('${cover}')`
       childRef.current.style.setProperty('--zoom', scale.toString());
 
       if (onCoverLoad) onCoverLoad()
@@ -71,11 +72,6 @@ const PanZoomWithCoverContext = (
 
   return (
     <>
-      <style
-        dangerouslySetInnerHTML={{
-          __html: `.${CLASS_NAME}-with-cover__in{background-image:url('${cover}')}`,
-        }}
-      />
       <PanZoomProvider
         apiRef={apiRef}
         {...props}
