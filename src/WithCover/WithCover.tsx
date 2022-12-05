@@ -8,8 +8,6 @@ import PanZoomProvider, { usePanZoom } from '../context';
 import { PanZoom } from '../PanZoom'
 import produceStyle from '../helpers/produceStyle'
 
-let WITH_COVER_ID = 0
-
 type WithCoverProps = {
   cover: string,
   onCoverLoad?: () => void,
@@ -49,6 +47,7 @@ const LoadCover: React.FC<WithCoverProps> = ({
 
       zoomRef.current = scale
       childRef.current.style.transform = produceStyle({ position: positionRef.current, zoom: scale });
+      childRef.current.style.backgroundImage = `url('${cover}')`
       childRef.current.style.setProperty('--zoom', scale.toString());
 
       if (onCoverLoad) onCoverLoad()
@@ -68,22 +67,16 @@ const PanZoomWithCoverContext = (
   }: PanZoomWithCoverProps,
   apiRef: PanZoomWithCoverProps['apiRef'],
 ) => {
-  const [className] = useState(() => `${CLASS_NAME}-with-cover--id-${++WITH_COVER_ID}`)
   const [scale, setScale] = useState<number>(ZOOM_INITIAL)
   const [size, setSize] = useState<Size>({ width: '100%', height: '100%' });
 
   return (
     <>
-      <style>{`
-        .${className}__in {
-          background-image: url('${cover}');
-        }
-      `}</style>
       <PanZoomProvider
         apiRef={apiRef}
         {...props}
         boundary
-        className={`${props.className || ''} ${className}`}
+        className={`${props.className || ''} ${CLASS_NAME}-with-cover`}
         width={size.width}
         height={size.height}
         zoomInitial={scale}
