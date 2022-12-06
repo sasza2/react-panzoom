@@ -53,7 +53,35 @@ const useZoom = (): Zoom => {
 
     const isMobile = ('ontouchstart' in window)
 
-    const wheelFunc = (e: ZoomEvent, { isDesktop }: { isDesktop: boolean }) => {
+    const [touchEventToZoom, resetTouchEvent] = touchEventToZoomInit()
+
+    const animationInit = () => {
+      let animationTimer: ReturnType<typeof setTimeout> = null
+      let blockTimer: ReturnType<typeof setTimeout> = null
+      return () => {
+        clearTimeout(animationTimer)
+        clearTimeout(blockTimer)
+
+        animationTimer = setTimeout(() => {
+          resetTouchEvent()
+          if (!isMobile) panZoomRef.style.transition = null
+        }, ZOOM_ANIMATION_DELAY)
+
+        if (isMobile) {
+          blockTimer = setTimeout(() => {
+            blockMovingRef.current = false
+          }, ZOOM_NON_DESKTOP_MOVING_BLOCK_DELAY)
+
+          blockMovingRef.current = true
+        } else {
+          panZoomRef.style.transition = `transform ${ZOOM_ANIMATION_DELAY_STR}`
+        }
+      }
+    }
+
+    const doAnimation = animationInit()
+
+    const wheelFunc = (e: ZoomEvent) => {
       const rect = (panZoomRef.parentNode as HTMLDivElement).getBoundingClientRect();
 
       const xoff = (e.clientX - rect.left - positionRef.current.x) / zoomRef.current;
@@ -61,13 +89,14 @@ const useZoom = (): Zoom => {
 
       const nextZoom = produceNextZoom({
         e,
-        isDesktop,
+        isMobile,
         zoomRef,
         zoomSpeed,
         zoomMin,
         zoomMax,
       })
 
+      const prevZoom = zoomRef.current
       zoomRef.current = nextZoom;
 
       const nextPosition = produceBounding({
@@ -75,8 +104,14 @@ const useZoom = (): Zoom => {
         x: e.clientX - rect.left - xoff * nextZoom,
         y: e.clientY - rect.top - yoff * nextZoom,
         parent: rect,
-        rect: panZoomRef.getBoundingClientRect(),
+        rect: {
+          ...panZoomRef.getBoundingClientRect(),
+          width: panZoomRef.getBoundingClientRect().width * (nextZoom / prevZoom),
+          height: panZoomRef.getBoundingClientRect().height * (nextZoom / prevZoom),
+        } as DOMRect,
       });
+
+      doAnimation()
 
       positionRef.current = nextPosition;
       panZoomRef.style.transform = produceStyle({ position: nextPosition, zoom: nextZoom });
@@ -93,44 +128,14 @@ const useZoom = (): Zoom => {
     const wheelDesktop = throttle(wheelFunc, ZOOM_DESKTOP_THROTTLE_DELAY)
     const wheelMobile = throttle(wheelFunc, ZOOM_NON_DESKTOP_THROTTLE_DELAY)
 
-    const [touchEventToZoom, resetTouchEvent] = touchEventToZoomInit()
-
-    const animationInit = () => {
-      let animationTimer: ReturnType<typeof setTimeout> = null
-      let blockTimer: ReturnType<typeof setTimeout> = null
-      return ({ isDesktop }: { isDesktop: boolean }) => {
-        clearTimeout(animationTimer)
-        clearTimeout(blockTimer)
-
-        animationTimer = setTimeout(() => {
-          resetTouchEvent()
-          if (!isMobile) panZoomRef.style.transition = null
-        }, ZOOM_ANIMATION_DELAY)
-
-        if (!isDesktop) {
-          blockTimer = setTimeout(() => {
-            blockMovingRef.current = false
-          }, ZOOM_NON_DESKTOP_MOVING_BLOCK_DELAY)
-
-          blockMovingRef.current = true
-        }
-
-        if (!isMobile) panZoomRef.style.transition = `transform ${ZOOM_ANIMATION_DELAY_STR}`
-      }
-    }
-
-    const doAnimation = animationInit()
-
     const onWheel = (e: WheelEvent) => {
       e.preventDefault()
-      doAnimation({ isDesktop: true })
-      wheelDesktop(e, { isDesktop: true })
+      wheelDesktop(e)
     }
 
     const onWheelMobile = (e: TouchEvent) => {
       if (!isEventMobileZoom(e)) return
-      doAnimation({ isDesktop: false })
-      wheelMobile(touchEventToZoom(e), { isDesktop: false })
+      wheelMobile(touchEventToZoom(e))
     }
 
     if (isMobile) {
