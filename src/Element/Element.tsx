@@ -133,6 +133,7 @@ const Element: React.FC<ElementProps> = ({
     };
 
     const mousedown = (e: MouseEvent) => {
+      if (e.button) return
       if (draggableSelector && !(e.target as HTMLElement).closest(draggableSelector)) return
 
       const elements = Object.values(elementsRef.current)
