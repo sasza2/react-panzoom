@@ -1,10 +1,8 @@
 import { useEffect } from 'react';
 
 import {
-  ZOOM_ANIMATION_DELAY,
-  ZOOM_ANIMATION_DELAY_STR,
-  ZOOM_DESKTOP_THROTTLE_DELAY,
-  ZOOM_NON_DESKTOP_THROTTLE_DELAY,
+  ZOOM_DESKTOP_THROTTLE_DURATION,
+  ZOOM_NON_DESKTOP_THROTTLE_DURATION,
   ZOOM_NON_DESKTOP_MOVING_BLOCK_DELAY,
 } from 'consts'
 import { Zoom, ZoomEvent } from 'types'
@@ -13,8 +11,8 @@ import isEventMobileZoom from 'helpers/isEventMobileZoom'
 import produceStyle from 'helpers/produceStyle';
 import produceBounding from 'helpers/produceBounding';
 import produceNextZoom from 'helpers/produceNextZoom';
-import throttle from 'helpers/throttle'
 import touchEventToZoomInit from 'helpers/touchEventToZoomInit'
+import throttle from 'helpers/throttle'
 
 const useZoom = (): Zoom => {
   const {
@@ -54,38 +52,23 @@ const useZoom = (): Zoom => {
     const isMobile = ('ontouchstart' in window)
 
     const [touchEventToZoom, resetTouchEvent] = touchEventToZoomInit()
-
-    const animationInit = () => {
-      let animationTimer: ReturnType<typeof setTimeout> = null
-      let blockTimer: ReturnType<typeof setTimeout> = null
-      return () => {
-        clearTimeout(animationTimer)
-        clearTimeout(blockTimer)
-
-        animationTimer = setTimeout(() => {
-          resetTouchEvent()
-          if (!isMobile) panZoomRef.style.transition = null
-        }, ZOOM_ANIMATION_DELAY)
-
-        if (isMobile) {
-          blockTimer = setTimeout(() => {
-            blockMovingRef.current = false
-          }, ZOOM_NON_DESKTOP_MOVING_BLOCK_DELAY)
-
-          blockMovingRef.current = true
-        } else {
-          panZoomRef.style.transition = `transform ${ZOOM_ANIMATION_DELAY_STR}`
-        }
-      }
-    }
-
-    const doAnimation = animationInit()
+    let blockTimer: ReturnType<typeof setTimeout> = null
 
     const wheelFunc = (e: ZoomEvent) => {
-      const rect = (panZoomRef.parentNode as HTMLDivElement).getBoundingClientRect();
+      const parentRect = (panZoomRef.parentNode as HTMLDivElement).getBoundingClientRect();
+      const childRect = panZoomRef.getBoundingClientRect()
 
-      const xoff = (e.clientX - rect.left - positionRef.current.x) / zoomRef.current;
-      const yoff = (e.clientY - rect.top - positionRef.current.y) / zoomRef.current;
+      if (isMobile) {
+        clearTimeout(blockTimer)
+        blockTimer = setTimeout(() => {
+          blockMovingRef.current = false
+        }, ZOOM_NON_DESKTOP_MOVING_BLOCK_DELAY)
+
+        blockMovingRef.current = true
+      }
+
+      const xOffset = (e.clientX - parentRect.left - positionRef.current.x) / zoomRef.current;
+      const yOffset = (e.clientY - parentRect.top - positionRef.current.y) / zoomRef.current;
 
       const nextZoom = produceNextZoom({
         e,
@@ -101,17 +84,14 @@ const useZoom = (): Zoom => {
 
       const nextPosition = produceBounding({
         boundary,
-        x: e.clientX - rect.left - xoff * nextZoom,
-        y: e.clientY - rect.top - yoff * nextZoom,
-        parent: rect,
-        rect: {
-          ...panZoomRef.getBoundingClientRect(),
-          width: panZoomRef.getBoundingClientRect().width * (nextZoom / prevZoom),
-          height: panZoomRef.getBoundingClientRect().height * (nextZoom / prevZoom),
-        } as DOMRect,
+        x: e.clientX - parentRect.left - xOffset * nextZoom,
+        y: e.clientY - parentRect.top - yOffset * nextZoom,
+        parentSize: parentRect,
+        childSize: {
+          width: childRect.width * (nextZoom / prevZoom),
+          height: childRect.height * (nextZoom / prevZoom),
+        },
       });
-
-      doAnimation()
 
       positionRef.current = nextPosition;
       panZoomRef.style.transform = produceStyle({ position: nextPosition, zoom: nextZoom });
@@ -125,8 +105,8 @@ const useZoom = (): Zoom => {
       }
     };
 
-    const wheelDesktop = throttle(wheelFunc, ZOOM_DESKTOP_THROTTLE_DELAY)
-    const wheelMobile = throttle(wheelFunc, ZOOM_NON_DESKTOP_THROTTLE_DELAY)
+    const wheelDesktop = throttle(wheelFunc, ZOOM_DESKTOP_THROTTLE_DURATION)
+    const wheelMobile = throttle(wheelFunc, ZOOM_NON_DESKTOP_THROTTLE_DURATION)
 
     const onWheel = (e: WheelEvent) => {
       e.preventDefault()
