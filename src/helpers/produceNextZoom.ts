@@ -3,7 +3,7 @@ import { Zoom, ZoomEvent } from 'types'
 import zoomRound from './zoomRound'
 
 type ProduceNextZoom = (props: {
-  isDesktop: boolean,
+  isMobile: boolean,
   e: ZoomEvent,
   zoomRef: Zoom,
   zoomSpeed: number,
@@ -13,13 +13,13 @@ type ProduceNextZoom = (props: {
 
 const produceNextZoom: ProduceNextZoom = ({
   e,
-  isDesktop,
+  isMobile,
   zoomRef,
   zoomSpeed,
   zoomMin,
   zoomMax,
 }) => {
-  const step = 1 + zoomSpeed * (isDesktop ? ZOOM_DESKTOP_DEFAULT_STEP : ZOOM_NON_DESKTOP_DEFAULT_STEP)
+  const step = 1 + zoomSpeed * (isMobile ? ZOOM_NON_DESKTOP_DEFAULT_STEP : ZOOM_DESKTOP_DEFAULT_STEP)
 
   const nextZoom = zoomRound((() => {
     if (!e.deltaY) return zoomRef.current

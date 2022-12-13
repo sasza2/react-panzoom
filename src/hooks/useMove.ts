@@ -86,14 +86,14 @@ const useMove: UseMove = () => {
 
       panZoomRef.style.transition = null
 
-      const rect = (childRef.current.parentNode as HTMLDivElement).getBoundingClientRect();
+      const parentRect = (childRef.current.parentNode as HTMLDivElement).getBoundingClientRect();
       const eventPosition = positionFromEvent(e);
       const nextPosition = produceBounding({
         boundary,
-        x: eventPosition.clientX - rect.left - moving.x,
-        y: eventPosition.clientY - rect.top - moving.y,
-        parent: rect,
-        rect: childRef.current.getBoundingClientRect(),
+        x: eventPosition.clientX - parentRect.left - moving.x,
+        y: eventPosition.clientY - parentRect.top - moving.y,
+        parentSize: parentRect,
+        childSize: childRef.current.getBoundingClientRect(),
       });
 
       positionRef.current = nextPosition;

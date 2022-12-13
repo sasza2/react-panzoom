@@ -1,29 +1,34 @@
 import { Boundary, BoundaryProp, Position } from 'types'
 import lineToVariable from './lineToVariable';
 
+type Size = {
+  width: number,
+  height: number,
+}
+
 type PositionVerticalProps = {
   boundary: Boundary,
   y: number,
-  parent: DOMRect,
-  rect: DOMRect,
+  parentSize: Size,
+  childSize: Size,
 }
 
 const positionVertical = ({
-  boundary, y, parent, rect,
+  boundary, y, parentSize, childSize,
 }: PositionVerticalProps): number => {
-  const diff = Math.max(rect.height - parent.height, 0); // px
+  const diff = Math.max(childSize.height - parentSize.height, 0); // px
   if (boundary.top === undefined && boundary.bottom === undefined) return y;
   if (boundary.top !== undefined && boundary.bottom === undefined) {
     return Math.max(y, (boundary.top as number) - diff);
   }
   if (boundary.top === undefined && boundary.bottom !== undefined) {
-    return Math.min(y, (boundary.bottom as number) - rect.height + diff);
+    return Math.min(y, (boundary.bottom as number) - childSize.height + diff);
   }
 
   const top = (boundary.top as number) - diff; // px
   if (y < top) return top;
 
-  const bottom = (boundary.bottom as number) - rect.height + diff; // px
+  const bottom = (boundary.bottom as number) - childSize.height + diff; // px
   if (y > bottom) return bottom;
 
   return y;
@@ -32,26 +37,26 @@ const positionVertical = ({
 type PositionHorizontalProps = {
   boundary: Boundary,
   x: number,
-  parent: DOMRect,
-  rect: DOMRect,
+  parentSize: Size,
+  childSize: Size,
 }
 
 const positionHorizontal = ({
-  boundary, x, parent, rect,
+  boundary, x, parentSize, childSize,
 }: PositionHorizontalProps): number => {
-  const diff = Math.max(rect.width - parent.width, 0); // px
+  const diff = Math.max(childSize.width - parentSize.width, 0); // px
   if (boundary.left === undefined && boundary.right === undefined) return x;
   if (boundary.left !== undefined && boundary.right === undefined) {
     return Math.max(x, (boundary.left as number) - diff);
   }
   if (boundary.left === undefined && boundary.right !== undefined) {
-    return Math.min(x, (boundary.right as number) - rect.width + diff);
+    return Math.min(x, (boundary.right as number) - childSize.width + diff);
   }
 
   const leftMax = (boundary.left as number) - diff; // px
   if (x < leftMax) return leftMax;
 
-  const rightMax = (boundary.right as number) - rect.width + diff; // px
+  const rightMax = (boundary.right as number) - childSize.width + diff; // px
   if (x > rightMax) return rightMax;
 
   return x;
@@ -59,11 +64,11 @@ const positionHorizontal = ({
 
 type MeasureBoundaryProps = {
   boundary: BoundaryProp,
-  parent: DOMRect,
-  rect: DOMRect,
+  parentSize: Size,
+  childSize: Size,
 }
 
-const measureBoundary = ({ boundary, parent, rect }: MeasureBoundaryProps): Boundary => {
+const measureBoundary = ({ boundary, parentSize, childSize }: MeasureBoundaryProps): Boundary => {
   if (!boundary) {
     return {
       top: undefined,
@@ -74,10 +79,10 @@ const measureBoundary = ({ boundary, parent, rect }: MeasureBoundaryProps): Boun
   }
 
   const variables = {
-    containerWidth: parent.width,
-    containerHeight: parent.height,
-    childWidth: rect.width,
-    childHeight: rect.height,
+    containerWidth: parentSize.width,
+    containerHeight: parentSize.height,
+    childWidth: childSize.width,
+    childHeight: childSize.height,
   };
 
   const defaults = {
@@ -104,20 +109,20 @@ type ProduceBoundingProps = {
   boundary: BoundaryProp,
   x: number,
   y: number,
-  parent: DOMRect,
-  rect: DOMRect,
+  parentSize: Size,
+  childSize: Size,
 }
 
 const produceBounding = ({
-  boundary, x, y, parent, rect,
+  boundary, x, y, parentSize, childSize,
 }: ProduceBoundingProps): Position => {
-  const boundaryNext = measureBoundary({ boundary, parent, rect });
+  const boundaryNext = measureBoundary({ boundary, parentSize, childSize });
   const nextPosition: Partial<Position> = {};
   nextPosition.x = positionHorizontal({
-    boundary: boundaryNext, x, parent, rect,
+    boundary: boundaryNext, x, parentSize, childSize,
   });
   nextPosition.y = positionVertical({
-    boundary: boundaryNext, y, parent, rect,
+    boundary: boundaryNext, y, parentSize, childSize,
   });
   return nextPosition as Position;
 };
