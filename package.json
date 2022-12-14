@@ -15,7 +15,7 @@
   "types": "types/index.d.ts",
   "scripts": {
     "build": "webpack --mode=production",
-    "lint": "eslint src/**/*.ts --fix",
+    "lint": "eslint src --fix --ext .ts,.tsx",
     "storybook": "start-storybook",
     "storybook-build": "build-storybook",
     "test": "jest"

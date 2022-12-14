@@ -2,7 +2,7 @@ import { useLayoutEffect } from 'react';
 
 import { onMouseDown, onMouseUp, onMouseMove } from 'helpers/eventListener';
 import { useElementMouseDownPosition, useElementMouseMovePosition } from 'hooks/useElementEventPosition';
-import { MoveRef } from '../context/SelectContext'
+import { MoveRef } from '../context/SelectContext';
 import { useSelect } from '../context';
 
 type UseBoundaryMove = ({ grabElementsRef }: { grabElementsRef: MoveRef }) => void

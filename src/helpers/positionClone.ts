@@ -1,6 +1,6 @@
-import { RefObject } from 'react'
+import { RefObject } from 'react';
 
-import { Position } from 'types'
+import { Position } from 'types';
 
 const positionClone = (positionRef: RefObject<Position>): Position => ({ ...positionRef.current });
 

@@ -1,6 +1,6 @@
-import { ZOOM_DESKTOP_DEFAULT_STEP, ZOOM_NON_DESKTOP_DEFAULT_STEP } from 'consts'
-import { Zoom, ZoomEvent } from 'types'
-import zoomRound from './zoomRound'
+import { ZOOM_DESKTOP_DEFAULT_STEP, ZOOM_NON_DESKTOP_DEFAULT_STEP } from 'consts';
+import { Zoom, ZoomEvent } from 'types';
+import zoomRound from './zoomRound';
 
 type ProduceNextZoom = (props: {
   isMobile: boolean,
@@ -19,21 +19,20 @@ const produceNextZoom: ProduceNextZoom = ({
   zoomMin,
   zoomMax,
 }) => {
-  const step = 1 + zoomSpeed * (isMobile ? ZOOM_NON_DESKTOP_DEFAULT_STEP : ZOOM_DESKTOP_DEFAULT_STEP)
+  const deviceStep = (isMobile ? ZOOM_NON_DESKTOP_DEFAULT_STEP : ZOOM_DESKTOP_DEFAULT_STEP);
+  const step = 1 + zoomSpeed * deviceStep;
 
-  const nextZoom = zoomRound((() => {
-    if (!e.deltaY) return zoomRef.current
+  return zoomRound((() => {
+    if (!e.deltaY) return zoomRef.current;
     if (e.deltaY < 0) {
-      const nextZoom = zoomRef.current * step
+      const nextZoom = zoomRef.current * step;
       if (zoomMax && nextZoom >= zoomMax) return zoomMax;
       return nextZoom;
     }
-    const nextZoom = zoomRef.current / step
+    const nextZoom = zoomRef.current / step;
     if (zoomMin && nextZoom <= zoomMin) return zoomMin;
     return nextZoom;
   })());
+};
 
-  return nextZoom
-}
-
-export default produceNextZoom
+export default produceNextZoom;

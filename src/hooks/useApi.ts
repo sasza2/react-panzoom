@@ -1,8 +1,8 @@
 import { useImperativeHandle } from 'react';
 
-import { API } from 'types'
+import { API } from 'types';
 import { usePanZoom } from 'context';
-import { useElements } from 'ElementsProvider'
+import { useElements } from 'ElementsProvider';
 import { getElements, updateElementPosition } from 'api/elements';
 import move from 'api/move';
 import { getPosition, setPosition } from 'api/position';

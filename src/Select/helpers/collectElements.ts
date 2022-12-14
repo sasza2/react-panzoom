@@ -1,4 +1,4 @@
-import { Boundary, Element, Elements } from 'types'
+import { Boundary, Element, Elements } from 'types';
 
 type ElementsInBoundary = Record<string, Element>
 

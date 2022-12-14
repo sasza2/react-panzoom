@@ -2,15 +2,15 @@ import React, {
   memo, MutableRefObject, useEffect, useLayoutEffect, useMemo, useRef, useState,
 } from 'react';
 
-import { ElementsInMove, ElementProps } from 'types'
+import { ElementsInMove, ElementProps } from 'types';
 import { usePanZoom } from 'context';
 import { ELEMENT_STYLE, ELEMENT_STYLE_DISABLED } from 'styles';
-import { useElements } from 'ElementsProvider'
+import { useElements } from 'ElementsProvider';
 import { onMouseDown, onMouseUp as onMouseUpListener, onMouseMove } from 'helpers/eventListener';
 import positionFromEvent from 'helpers/positionFromEvent';
 import produceStyle from 'helpers/produceStyle';
 import stopEventPropagation from 'helpers/stopEventPropagation';
-import updateFamilyOfElementsPosition from 'helpers/updateFamilyOfElementsPosition'
+import updateFamilyOfElementsPosition from 'helpers/updateFamilyOfElementsPosition';
 import { useElementMouseDownPosition, useElementMouseMovePosition } from 'hooks/useElementEventPosition';
 
 let lastZIndex = 2;
@@ -48,12 +48,12 @@ const Element: React.FC<ElementProps> = ({
     elementsRef,
     lastElementMouseMoveEventRef,
     setElementsInMove,
-  } = useElements()
+  } = useElements();
 
   const onElementsAction = (nextElementsInMove: ElementsInMove) => {
-    setElementsInMove(nextElementsInMove)
-    setIsMoved(!!nextElementsInMove)
-  }
+    setElementsInMove(nextElementsInMove);
+    setIsMoved(!!nextElementsInMove);
+  };
 
   useLayoutEffect(() => {
     const position = { x, y };
@@ -72,7 +72,7 @@ const Element: React.FC<ElementProps> = ({
   }, [id, x, y]);
 
   useEffect(() => {
-    if (disabledElements || !isMoved) return undefined
+    if (disabledElements || !isMoved) return undefined;
 
     const mouseup = (e: MouseEvent) => {
       onElementsAction(null);
@@ -90,38 +90,38 @@ const Element: React.FC<ElementProps> = ({
     const mouseUpClear = onMouseUpListener(elementRef.current, mouseup);
 
     return () => {
-      mouseUpClear()
-    }
-  }, [disabledElements, id, isMoved])
+      mouseUpClear();
+    };
+  }, [disabledElements, id, isMoved]);
 
   useEffect(() => {
     if (disabledElements || !elementsInMove || !isMoved) return undefined;
 
     const mousemove = (e: MouseEvent) => {
       if (blockMovingRef.current) {
-        onElementsAction(null)
-        return
+        onElementsAction(null);
+        return;
       }
 
-      lastElementMouseMoveEventRef.current = positionFromEvent(e)
+      lastElementMouseMoveEventRef.current = positionFromEvent(e);
 
       updateFamilyOfElementsPosition({
         elementsRef,
         elementsInMove,
         produceNextPosition: (from, currentElement) => {
-          const position = mouseMovePosition(e, from, currentElement.node)
-          return position
+          const position = mouseMovePosition(e, from, currentElement.node);
+          return position;
         },
         onElementsChange: onElementsChangeRef.current,
-      })
+      });
     };
 
     const mouseMoveClear = onMouseMove(mousemove);
 
     return () => {
-      mouseMoveClear()
-      if (isMoved) setElementsInMove(null)
-    }
+      mouseMoveClear();
+      if (isMoved) setElementsInMove(null);
+    };
   }, [JSON.stringify(boundary), disabledElements, elementsInMove, id, isMoved]);
 
   useLayoutEffect(() => {
@@ -133,14 +133,12 @@ const Element: React.FC<ElementProps> = ({
     };
 
     const mousedown = (e: MouseEvent) => {
-      if (draggableSelector && !(e.target as HTMLElement).closest(draggableSelector)) return
+      if (draggableSelector && !(e.target as HTMLElement).closest(draggableSelector)) return;
 
       const elements = Object.values(elementsRef.current)
-        .filter((element) =>
-          element.id === id
+        .filter((element) => element.id === id
           || (family && element.family === family)
-          || followers.includes(element.id)
-        );
+          || followers.includes(element.id));
 
       const position = mouseDownPosition(e, elementRef);
       const stop = stopEventPropagation();
@@ -175,7 +173,7 @@ const Element: React.FC<ElementProps> = ({
   const classNameWrapper = useMemo(() => {
     const base = 'react-panzoom-element';
     const classes = [base];
-    if (className) classes.push(className)
+    if (className) classes.push(className);
     if (disabled) classes.push(`${base}--disabled`);
     classes.push(`${base}--id-${id}`);
     return classes.join(' ');
@@ -183,7 +181,7 @@ const Element: React.FC<ElementProps> = ({
 
   const elementStyle: React.CSSProperties = useMemo(() => {
     let style = { ...ELEMENT_STYLE };
-    if (disabled) style = { ...style, ...ELEMENT_STYLE_DISABLED }
+    if (disabled) style = { ...style, ...ELEMENT_STYLE_DISABLED };
     return style as React.CSSProperties;
   }, [disabled]);
 
