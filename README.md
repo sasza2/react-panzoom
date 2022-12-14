@@ -39,8 +39,8 @@ Library <a href="https://www.npmjs.com/package/react-drawing">react-drawing</a>
 __*__ - is required
 
 # API
-```jsx
-const panZoomRef = createRef()
+```tsx
+const panZoomRef = useRef<PanZoomAPI>();
 // ...
 return (
   <PanZoom ref={panZoomRef}>
