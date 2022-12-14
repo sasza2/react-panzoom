@@ -13,13 +13,13 @@ const Select = () => {
   useBoundaryMove({ grabElementsRef });
 
   const boundaryStyle: React.CSSProperties = useMemo(() => {
-    const style = { ...SELECT_BOX_STYLE }
+    const style = { ...SELECT_BOX_STYLE };
     if (boundary) {
       style.transform = `translate(${boundary.left}px, ${boundary.top}px)`;
       style.width = boundary.width;
       style.height = boundary.height;
     }
-    return style
+    return style;
   }, [boundary]);
 
   return (

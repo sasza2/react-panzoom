@@ -1,6 +1,6 @@
 import React, { forwardRef, useMemo } from 'react';
 
-import { PanZoomDefaultProps } from 'types'
+import { PanZoomDefaultProps } from 'types';
 import useApi from './hooks/useApi';
 import useMove from './hooks/useMove';
 import useZoom from './hooks/useZoom';
@@ -8,7 +8,7 @@ import Select from './Select';
 import {
   CLASS_NAME, PARENT_STYLE, CHILD_STYLE, CHILD_DISABLED_STYLE,
 } from './styles';
-import ElementsProvider from './ElementsProvider'
+import ElementsProvider from './ElementsProvider';
 import PanZoomProvider, { usePanZoom } from './context';
 
 export const PanZoom: React.FC = ({

@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 
-import { Position } from 'types'
+import { Position } from 'types';
 import SelectContext, { SelectContextType } from './SelectContext';
 
 const SelectProvider: React.FC = ({

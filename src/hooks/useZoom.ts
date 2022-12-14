@@ -4,15 +4,15 @@ import {
   ZOOM_DESKTOP_THROTTLE_DURATION,
   ZOOM_NON_DESKTOP_THROTTLE_DURATION,
   ZOOM_NON_DESKTOP_MOVING_BLOCK_DELAY,
-} from 'consts'
-import { Zoom, ZoomEvent } from 'types'
+} from 'consts';
+import { Zoom, ZoomEvent } from 'types';
 import { usePanZoom } from 'context';
-import isEventMobileZoom from 'helpers/isEventMobileZoom'
+import isEventMobileZoom from 'helpers/isEventMobileZoom';
 import produceStyle from 'helpers/produceStyle';
 import produceBounding from 'helpers/produceBounding';
 import produceNextZoom from 'helpers/produceNextZoom';
-import touchEventToZoomInit from 'helpers/touchEventToZoomInit'
-import throttle from 'helpers/throttle'
+import touchEventToZoomInit from 'helpers/touchEventToZoomInit';
+import throttle from 'helpers/throttle';
 
 const useZoom = (): Zoom => {
   const {
@@ -49,22 +49,22 @@ const useZoom = (): Zoom => {
   useEffect(() => {
     if (loading || disabled || disabledZoom) return undefined;
 
-    const isMobile = ('ontouchstart' in window)
+    const isMobile = ('ontouchstart' in window);
 
-    const [touchEventToZoom, resetTouchEvent] = touchEventToZoomInit()
-    let blockTimer: ReturnType<typeof setTimeout> = null
+    const [touchEventToZoom, resetTouchEvent] = touchEventToZoomInit();
+    let blockTimer: ReturnType<typeof setTimeout> = null;
 
     const wheelFunc = (e: ZoomEvent) => {
       const parentRect = (panZoomRef.parentNode as HTMLDivElement).getBoundingClientRect();
-      const childRect = panZoomRef.getBoundingClientRect()
+      const childRect = panZoomRef.getBoundingClientRect();
 
       if (isMobile) {
-        clearTimeout(blockTimer)
+        clearTimeout(blockTimer);
         blockTimer = setTimeout(() => {
-          blockMovingRef.current = false
-        }, ZOOM_NON_DESKTOP_MOVING_BLOCK_DELAY)
+          blockMovingRef.current = false;
+        }, ZOOM_NON_DESKTOP_MOVING_BLOCK_DELAY);
 
-        blockMovingRef.current = true
+        blockMovingRef.current = true;
       }
 
       const xOffset = (e.clientX - parentRect.left - positionRef.current.x) / zoomRef.current;
@@ -77,9 +77,9 @@ const useZoom = (): Zoom => {
         zoomSpeed,
         zoomMin,
         zoomMax,
-      })
+      });
 
-      const prevZoom = zoomRef.current
+      const prevZoom = zoomRef.current;
       zoomRef.current = nextZoom;
 
       const nextPosition = produceBounding({
@@ -105,18 +105,18 @@ const useZoom = (): Zoom => {
       }
     };
 
-    const wheelDesktop = throttle(wheelFunc, ZOOM_DESKTOP_THROTTLE_DURATION)
-    const wheelMobile = throttle(wheelFunc, ZOOM_NON_DESKTOP_THROTTLE_DURATION)
+    const wheelDesktop = throttle(wheelFunc, ZOOM_DESKTOP_THROTTLE_DURATION);
+    const wheelMobile = throttle(wheelFunc, ZOOM_NON_DESKTOP_THROTTLE_DURATION);
 
     const onWheel = (e: WheelEvent) => {
-      e.preventDefault()
-      wheelDesktop(e)
-    }
+      e.preventDefault();
+      wheelDesktop(e);
+    };
 
     const onWheelMobile = (e: TouchEvent) => {
-      if (!isEventMobileZoom(e)) return
-      wheelMobile(touchEventToZoom(e))
-    }
+      if (!isEventMobileZoom(e)) return;
+      wheelMobile(touchEventToZoom(e));
+    };
 
     if (isMobile) {
       panZoomRef.parentNode.addEventListener('touchmove', onWheelMobile);

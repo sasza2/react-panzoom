@@ -1,4 +1,4 @@
-import { Boundary, BoundaryProp, Position } from 'types'
+import { Boundary, BoundaryProp, Position } from 'types';
 import lineToVariable from './lineToVariable';
 
 type Size = {

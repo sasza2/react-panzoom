@@ -1,4 +1,4 @@
-import { Position } from 'types'
+import { Position } from 'types';
 import { usePanZoom } from 'context';
 import positionFromEvent from 'helpers/positionFromEvent';
 

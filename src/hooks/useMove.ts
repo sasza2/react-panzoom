@@ -1,6 +1,6 @@
-import { useEffect, useState,MutableRefObject } from 'react';
+import { useEffect, useState, MutableRefObject } from 'react';
 
-import { Position } from 'types'
+import { Position } from 'types';
 import { usePanZoom } from 'context';
 import { GRABBING_CLASS_NAME } from 'styles';
 import { onMouseDown, onMouseUp, onMouseMove } from 'helpers/eventListener';
@@ -82,9 +82,9 @@ const useMove: UseMove = () => {
     if (loading || !moving) return undefined;
 
     const move = (e: MouseEvent) => {
-      if (blockMovingRef.current) return
+      if (blockMovingRef.current) return;
 
-      panZoomRef.style.transition = null
+      panZoomRef.style.transition = null;
 
       const parentRect = (childRef.current.parentNode as HTMLDivElement).getBoundingClientRect();
       const eventPosition = positionFromEvent(e);

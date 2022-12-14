@@ -1,6 +1,6 @@
-import { MutableRefObject } from 'react'
+import { MutableRefObject } from 'react';
 
-import { Position, Zoom } from 'types'
+import { Position, Zoom } from 'types';
 import produceStyle from 'helpers/produceStyle';
 import zoomRound from 'helpers/zoomRound';
 
@@ -20,7 +20,10 @@ export const setZoom: SetZoom = ({ childRef, positionRef, zoomRef }) => (value) 
   const ref = childRef;
   const zoom = zoomRef;
   zoom.current = zoomRound(value);
-  ref.current.style.transform = produceStyle({ position: positionRef.current, zoom: zoomRef.current });
+  ref.current.style.transform = produceStyle({
+    position: positionRef.current,
+    zoom: zoomRef.current,
+  });
 };
 
 type ZoomIn = SetZoom
