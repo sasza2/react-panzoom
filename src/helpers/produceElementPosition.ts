@@ -1,4 +1,4 @@
-import { Position } from 'types'
+import { Position } from 'types';
 
 type ProduceElementPositionProps = {
   element: HTMLElement,
@@ -25,7 +25,7 @@ const produceElementPosition = ({
   if (position.y < 0) position.y = 0;
   else if (position.y > maxBottom) position.y = maxBottom;
 
-  return position
+  return position;
 };
 
 export default produceElementPosition;

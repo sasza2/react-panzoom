@@ -1,12 +1,12 @@
 import React, { forwardRef, useLayoutEffect, useState } from 'react';
 
-import { PanZoomWithCoverProps, Size } from 'types'
-import { ZOOM_INITIAL, ZOOM_MAX_DEFAULT } from 'consts'
-import { CLASS_NAME } from 'styles'
-import ElementsProvider from '../ElementsProvider'
+import { PanZoomWithCoverProps, Size } from 'types';
+import { ZOOM_INITIAL, ZOOM_MAX_DEFAULT } from 'consts';
+import { CLASS_NAME } from 'styles';
+import ElementsProvider from '../ElementsProvider';
 import PanZoomProvider, { usePanZoom } from '../context';
-import { PanZoom } from '../PanZoom'
-import produceStyle from '../helpers/produceStyle'
+import { PanZoom } from '../PanZoom';
+import produceStyle from '../helpers/produceStyle';
 
 type WithCoverProps = {
   cover: string,
@@ -22,7 +22,7 @@ const LoadCover: React.FC<WithCoverProps> = ({
   setScale,
   setSize,
 }) => {
-  const { childRef, positionRef, zoomRef } = usePanZoom()
+  const { childRef, positionRef, zoomRef } = usePanZoom();
 
   useLayoutEffect(() => {
     const image = new Image();
@@ -36,30 +36,34 @@ const LoadCover: React.FC<WithCoverProps> = ({
         height: image.naturalHeight,
       };
 
-      setSize(imageSize)
+      setSize(imageSize);
 
       const scale = Math.max(
         containerSize.width / imageSize.width,
-        containerSize.height / imageSize.height
+        containerSize.height / imageSize.height,
       );
 
-      setScale(scale)
+      setScale(scale);
 
-      zoomRef.current = scale
-      childRef.current.style.transform = produceStyle({ position: positionRef.current, zoom: scale });
-      childRef.current.style.backgroundImage = `url('${cover}')`
+      zoomRef.current = scale;
+      childRef.current.style.transform = produceStyle({
+        position: positionRef.current,
+        zoom: scale,
+      });
+      childRef.current.style.backgroundImage = `url('${cover}')`;
       childRef.current.style.setProperty('--zoom', scale.toString());
 
-      if (onCoverLoad) onCoverLoad()
-    }
-  }, [cover])
+      if (onCoverLoad) onCoverLoad();
+    };
+  }, [cover]);
 
-  return children as React.ReactElement
-}
+  return children as React.ReactElement;
+};
 
 const PanZoomWithCoverContext = (
   {
     children,
+    className,
     cover,
     onCoverLoad,
     zoomMax = ZOOM_MAX_DEFAULT,
@@ -67,7 +71,7 @@ const PanZoomWithCoverContext = (
   }: PanZoomWithCoverProps,
   apiRef: PanZoomWithCoverProps['apiRef'],
 ) => {
-  const [scale, setScale] = useState<number>(ZOOM_INITIAL)
+  const [scale, setScale] = useState<number>(ZOOM_INITIAL);
   const [size, setSize] = useState<Size>({ width: '100%', height: '100%' });
 
   return (
@@ -76,7 +80,7 @@ const PanZoomWithCoverContext = (
         apiRef={apiRef}
         {...props}
         boundary
-        className={`${props.className || ''} ${CLASS_NAME}-with-cover`}
+        className={`${className || ''} ${CLASS_NAME}-with-cover`}
         width={size.width}
         height={size.height}
         zoomInitial={scale}
@@ -95,7 +99,7 @@ const PanZoomWithCoverContext = (
         </ElementsProvider>
       </PanZoomProvider>
     </>
-  )
-}
+  );
+};
 
 export default forwardRef(PanZoomWithCoverContext);

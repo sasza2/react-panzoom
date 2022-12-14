@@ -1,4 +1,4 @@
-import { Elements, Position } from 'types'
+import { Elements, Position } from 'types';
 
 const copyElementsPositions = (elements: Elements['current']): Record<string, Position> => {
   const positions: Record<string, Position> = {};

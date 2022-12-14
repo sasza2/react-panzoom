@@ -1,6 +1,6 @@
 const isEventMobileZoom = (event: MouseEvent | TouchEvent): boolean => {
-  if ('touches' in event) return event.touches.length > 1
-  return false
-}
+  if ('touches' in event) return event.touches.length > 1;
+  return false;
+};
 
-export default isEventMobileZoom
+export default isEventMobileZoom;

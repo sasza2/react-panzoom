@@ -9,17 +9,28 @@
     "project": "./tsconfig.eslint.json"
   },
   "rules": {
-    "react/prop-types": 0
+    "@typescript-eslint/no-floating-promises": 0,
+    "@typescript-eslint/no-use-before-define": ["error"],
+    "import/extensions": 0,
+    "jsx-a11y/click-events-have-key-events": 0,
+    "jsx-a11y/no-static-element-interactions": 0,
+    "no-param-reassign": 0,
+    "no-plusplus": 0,
+    "no-use-before-define": "off",
+    "react/prop-types": 0,
+    "react/jsx-props-no-spreading": 0,
+    "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }]
   },
-  "plugins": ["@typescript-eslint"],
+  "plugins": ["@typescript-eslint", "import", "react"],
   "extends": [
+    "airbnb",
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "plugin:react/recommended"
   ],
-  "ignorePatterns": ["src/stories"],
+  "ignorePatterns": ["src/stories", "**/*.test.js"],
   "settings": {
     "import/resolver": {
       "webpack": {

@@ -1,4 +1,4 @@
-import { ClientPosition } from 'types'
+import { ClientPosition } from 'types';
 
 const positionFromEvent = (e: TouchEvent | MouseEvent): ClientPosition => {
   const { touches } = e as TouchEvent;
@@ -9,7 +9,7 @@ const positionFromEvent = (e: TouchEvent | MouseEvent): ClientPosition => {
     };
   }
 
-  const mouseEvent = e as MouseEvent
+  const mouseEvent = e as MouseEvent;
   return {
     clientX: mouseEvent.clientX,
     clientY: mouseEvent.clientY,

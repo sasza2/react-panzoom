@@ -1,6 +1,8 @@
 import { createContext, MutableRefObject } from 'react';
 
-import { OnElementsChange, PanZoomProps, Position, Zoom } from '../types'
+import {
+  OnElementsChange, PanZoomProps, Position, Zoom,
+} from 'types';
 
 export type PanZoomContextProps = {
   blockMovingRef: MutableRefObject<boolean>,
