@@ -50,6 +50,12 @@ const Element: React.FC<ElementProps> = ({
     setElementsInMove,
   } = useElements();
 
+  const onClickRef = useRef<typeof onClick>();
+  onClickRef.current = onClick;
+
+  const onMouseUpRef = useRef<typeof onMouseUp>();
+  onMouseUpRef.current = onMouseUp;
+
   const onElementsAction = (nextElementsInMove: ElementsInMove) => {
     setElementsInMove(nextElementsInMove);
     setIsMoved(!!nextElementsInMove);
@@ -77,8 +83,8 @@ const Element: React.FC<ElementProps> = ({
     const mouseup = (e: MouseEvent) => {
       onElementsAction(null);
 
-      if (onMouseUp) {
-        onMouseUp({
+      if (onMouseUpRef.current) {
+        onMouseUpRef.current({
           id,
           family,
           e,
@@ -144,8 +150,8 @@ const Element: React.FC<ElementProps> = ({
       const position = mouseDownPosition(e, elementRef);
       const stop = stopEventPropagation();
 
-      if (onClick) {
-        onClick({
+      if (onClickRef.current) {
+        onClickRef.current({
           id,
           family,
           e,

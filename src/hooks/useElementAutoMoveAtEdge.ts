@@ -15,7 +15,7 @@ const useElementAutoMoveAtEdge: UseElementAutoMoveAtEdge = () => {
   const {
     childRef,
     disabledElements,
-    onElementsChange,
+    onElementsChangeRef,
     positionRef,
     zoomRef,
   } = usePanZoom();
@@ -67,7 +67,7 @@ const useElementAutoMoveAtEdge: UseElementAutoMoveAtEdge = () => {
           y: currentElement.position.y - addPosition.y / zoomRef.current,
           zoom: zoomRef.current,
         }),
-        onElementsChange,
+        onElementsChange: onElementsChangeRef.current,
       });
     }, ELEMENT_AUTO_MOVE_SPEED);
 
