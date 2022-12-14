@@ -36,6 +36,8 @@ const useMove: UseMove = () => {
     if (loading) return undefined;
 
     const mousedown = (e: MouseEvent) => {
+      if (e.button) return;
+
       const position = containerMouseDownPosition(e);
       const stop = stopEventPropagation();
 
