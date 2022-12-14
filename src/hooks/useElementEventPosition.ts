@@ -1,12 +1,15 @@
-import { RefObject } from 'react'
+import { RefObject } from 'react';
 
-import { Position } from 'types'
+import { Position } from 'types';
 import { usePanZoom } from 'context';
-import getScrollOffset from 'helpers/getScrollOffset'
+import getScrollOffset from 'helpers/getScrollOffset';
 import positionFromEvent from 'helpers/positionFromEvent';
 import produceElementPosition from 'helpers/produceElementPosition';
 
-type useElementMouseDownPositionThunk = (e: MouseEvent | TouchEvent, elementRef: RefObject<HTMLDivElement>) => Position
+type useElementMouseDownPositionThunk = (
+  e: MouseEvent | TouchEvent,
+  elementRef: RefObject<HTMLDivElement>,
+) => Position
 
 export const useElementMouseDownPosition = (): useElementMouseDownPositionThunk => {
   const { childRef, zoomRef } = usePanZoom();
@@ -15,11 +18,11 @@ export const useElementMouseDownPosition = (): useElementMouseDownPositionThunk 
     const eventPosition = positionFromEvent(e);
     const parent = (childRef.current.parentNode as HTMLDivElement).getBoundingClientRect();
     const rect = elementRef.current.getBoundingClientRect();
-    const scroll = getScrollOffset(childRef)
+    const scroll = getScrollOffset(childRef);
 
     return {
-      x: (eventPosition.clientX - rect.left + parent.left  + scroll.x) / zoomRef.current,
-      y: (eventPosition.clientY - rect.top + parent.top  + scroll.y) / zoomRef.current,
+      x: (eventPosition.clientX - rect.left + parent.left + scroll.x) / zoomRef.current,
+      y: (eventPosition.clientY - rect.top + parent.top + scroll.y) / zoomRef.current,
     };
   };
 };
@@ -34,13 +37,13 @@ export const useElementMouseMovePosition = (): UseElementMouseMovePosition => {
   const { childRef, positionRef, zoomRef } = usePanZoom();
   return (e, from, elementRef) => {
     const eventPosition = positionFromEvent(e);
-    const scroll = getScrollOffset(childRef)
+    const scroll = getScrollOffset(childRef);
 
     return produceElementPosition({
       element: elementRef.current,
       container: childRef.current,
-      x: (eventPosition.clientX - positionRef.current.x  + scroll.x) / zoomRef.current - from.x,
-      y: (eventPosition.clientY - positionRef.current.y  + scroll.y) / zoomRef.current - from.y,
+      x: (eventPosition.clientX - positionRef.current.x + scroll.x) / zoomRef.current - from.x,
+      y: (eventPosition.clientY - positionRef.current.y + scroll.y) / zoomRef.current - from.y,
       zoom: zoomRef.current,
     });
   };

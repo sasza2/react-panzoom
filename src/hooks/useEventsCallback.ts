@@ -1,5 +1,5 @@
 import { usePanZoom } from 'context';
-import positionClone from 'helpers/positionClone'
+import positionClone from 'helpers/positionClone';
 
 type ApiCallback = (...args: unknown[]) => unknown
 
@@ -31,7 +31,10 @@ const useEventsCallback: UseEventsCallback = () => {
     if (zoom && onContainerZoomChange) onContainerZoomChange(eventValue);
   };
 
-  const withDispatch = (apiCallback: ApiCallback, options: DispatchOptions) => (...values: unknown[]) => {
+  const withDispatch = (
+    apiCallback: ApiCallback,
+    options: DispatchOptions,
+  ) => (...values: unknown[]) => {
     const result = apiCallback(...values);
     dispatchEvents(options);
     return result;

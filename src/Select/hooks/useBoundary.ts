@@ -2,11 +2,11 @@ import {
   useEffect, useLayoutEffect, useRef, useState,
 } from 'react';
 
-import { Position } from 'types'
+import { Position } from 'types';
 import { usePanZoom } from 'context';
 import { onMouseUp, onMouseMove } from 'helpers/eventListener';
 import useContainerMouseDownPosition from 'hooks/useContainerMouseDownPosition';
-import { Boundary } from '../context/SelectContext'
+import { Boundary } from '../context/SelectContext';
 import { useSelect } from '../context';
 
 type UseBoundary = () => {

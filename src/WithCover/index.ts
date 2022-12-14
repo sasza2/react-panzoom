@@ -1,1 +1,1 @@
-export { default } from './WithCover'
+export { default } from './WithCover';
