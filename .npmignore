@@ -1,7 +1,6 @@
-/.storybook
+/build
 /docs
 /src
-/storybook-static
 .eslintrc
 test.setup.js
 package-lock.json
