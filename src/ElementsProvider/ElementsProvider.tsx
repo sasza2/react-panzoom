@@ -21,7 +21,7 @@ const ElementsAutoMove: React.FC = () => {
   return null;
 };
 
-const Elements: React.FC<PropsWithChildren> = ({
+const ElementsProvider: React.FC<PropsWithChildren> = ({
   children,
 }) => {
   const [elementsInMove, setElementsInMove] = useState<ElementsInMove>(null);
@@ -42,4 +42,4 @@ const Elements: React.FC<PropsWithChildren> = ({
   );
 };
 
-export default Elements;
+export default ElementsProvider;
