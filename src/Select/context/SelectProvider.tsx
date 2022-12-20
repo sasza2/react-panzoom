@@ -1,9 +1,9 @@
-import React, { useRef, useState } from 'react';
+import React, { PropsWithChildren, useRef, useState } from 'react';
 
 import { Position } from 'types';
 import SelectContext, { SelectContextType } from './SelectContext';
 
-const SelectProvider: React.FC = ({
+const SelectProvider: React.FC<PropsWithChildren> = ({
   children,
 }) => {
   const expandingRef = useRef<HTMLDivElement>();

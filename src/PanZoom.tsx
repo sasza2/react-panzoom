@@ -1,4 +1,4 @@
-import React, { forwardRef, useMemo } from 'react';
+import React, { PropsWithChildren, forwardRef, useMemo } from 'react';
 
 import { PanZoomDefaultProps } from 'types';
 import useApi from './hooks/useApi';
@@ -12,7 +12,7 @@ import {
 import ElementsProvider from './ElementsProvider';
 import PanZoomProvider, { usePanZoom } from './context';
 
-export const PanZoom: React.FC = ({
+export const PanZoom: React.FC<PropsWithChildren> = ({
   children,
 }) => {
   const {

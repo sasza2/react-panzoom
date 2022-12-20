@@ -1,12 +1,14 @@
-import React, { forwardRef, useLayoutEffect, useState } from 'react';
+import React, {
+  PropsWithChildren, forwardRef, useLayoutEffect, useState,
+} from 'react';
 
 import { PanZoomWithCoverProps, Size } from 'types';
-import { ZOOM_INITIAL, ZOOM_MAX_DEFAULT } from 'consts';
-import { CLASS_NAME } from 'styles';
-import ElementsProvider from '../ElementsProvider';
-import PanZoomProvider, { usePanZoom } from '../context';
+import { ZOOM_INITIAL, ZOOM_MAX_DEFAULT } from '@/consts';
+import { CLASS_NAME } from '@/styles';
+import ElementsProvider from '@/ElementsProvider';
+import PanZoomProvider, { usePanZoom } from '@/context';
 import { PanZoom } from '../PanZoom';
-import produceStyle from '../helpers/produceStyle';
+import produceStyle from '@/helpers/produceStyle';
 
 type WithCoverProps = {
   cover: string,
@@ -15,7 +17,7 @@ type WithCoverProps = {
   setSize: (size: Size) => void,
 }
 
-const LoadCover: React.FC<WithCoverProps> = ({
+const LoadCover: React.FC<PropsWithChildren<WithCoverProps>> = ({
   children,
   cover,
   onCoverLoad,

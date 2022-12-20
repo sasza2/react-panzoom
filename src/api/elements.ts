@@ -1,5 +1,5 @@
 import { Elements, Position } from 'types';
-import produceStyle from 'helpers/produceStyle';
+import produceStyle from '@/helpers/produceStyle';
 
 type GetElements = ({ elementsRef }: { elementsRef: Elements }) => () => Elements['current']
 

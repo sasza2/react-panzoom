@@ -1,7 +1,7 @@
 import { MutableRefObject } from 'react';
 
 import { Position, Zoom } from 'types';
-import produceStyle from 'helpers/produceStyle';
+import produceStyle from '@/helpers/produceStyle';
 
 type Reset = (
   props: {

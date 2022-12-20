@@ -3,15 +3,15 @@ import React, {
 } from 'react';
 
 import { ElementsInMove, ElementProps } from 'types';
-import { usePanZoom } from 'context';
-import { ELEMENT_STYLE, ELEMENT_STYLE_DISABLED } from 'styles';
-import { useElements } from 'ElementsProvider';
-import { onMouseDown, onMouseUp as onMouseUpListener, onMouseMove } from 'helpers/eventListener';
-import positionFromEvent from 'helpers/positionFromEvent';
-import produceStyle from 'helpers/produceStyle';
-import stopEventPropagation from 'helpers/stopEventPropagation';
-import updateFamilyOfElementsPosition from 'helpers/updateFamilyOfElementsPosition';
-import { useElementMouseDownPosition, useElementMouseMovePosition } from 'hooks/useElementEventPosition';
+import { usePanZoom } from '@/context';
+import { ELEMENT_STYLE, ELEMENT_STYLE_DISABLED } from '@/styles';
+import { useElements } from '@/ElementsProvider';
+import { onMouseDown, onMouseUp as onMouseUpListener, onMouseMove } from '@/helpers/eventListener';
+import positionFromEvent from '@/helpers/positionFromEvent';
+import produceStyle from '@/helpers/produceStyle';
+import stopEventPropagation from '@/helpers/stopEventPropagation';
+import updateFamilyOfElementsPosition from '@/helpers/updateFamilyOfElementsPosition';
+import { useElementMouseDownPosition, useElementMouseMovePosition } from '@/hooks/useElementEventPosition';
 
 let lastZIndex = 2;
 

@@ -1,8 +1,8 @@
 import { MutableRefObject } from 'react';
 
 import { Position, Zoom } from 'types';
-import produceStyle from 'helpers/produceStyle';
-import zoomRound from 'helpers/zoomRound';
+import produceStyle from '@/helpers/produceStyle';
+import zoomRound from '@/helpers/zoomRound';
 
 type GetZoom = (props: { zoomRef: Zoom }) => () => number
 

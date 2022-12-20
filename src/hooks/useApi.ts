@@ -1,15 +1,15 @@
 import { useImperativeHandle } from 'react';
 
 import { API } from 'types';
-import { usePanZoom } from 'context';
-import { useElements } from 'ElementsProvider';
-import { getElements, updateElementPosition } from 'api/elements';
-import move from 'api/move';
-import { getPosition, setPosition } from 'api/position';
-import reset from 'api/reset';
+import { usePanZoom } from '@/context';
+import { useElements } from '@/ElementsProvider';
+import { getElements, updateElementPosition } from '@/api/elements';
+import move from '@/api/move';
+import { getPosition, setPosition } from '@/api/position';
+import reset from '@/api/reset';
 import {
   getZoom, setZoom, zoomIn, zoomOut,
-} from 'api/zoom';
+} from '@/api/zoom';
 import useEventsCallback from './useEventsCallback';
 
 const useApi = (): void => {

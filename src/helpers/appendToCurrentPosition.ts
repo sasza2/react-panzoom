@@ -1,8 +1,8 @@
 import { MutableRefObject } from 'react';
 
 import { Position, Zoom } from 'types';
-import produceStyle from 'helpers/produceStyle';
-import { distanceToRightEdge, distanceToBottomEdge } from 'helpers/isEdgeVisible';
+import produceStyle from '@/helpers/produceStyle';
+import { distanceToRightEdge, distanceToBottomEdge } from '@/helpers/isEdgeVisible';
 
 const hasScroll = (node: HTMLDivElement) => node.clientHeight < node.scrollHeight;
 

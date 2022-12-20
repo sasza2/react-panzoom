@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 
-import { ELEMENT_AUTO_MOVE_SPEED, ELEMENT_AUTO_MOVE_STEP } from 'consts';
-import { usePanZoom } from 'context';
-import { useElements } from 'ElementsProvider';
-import appendToCurrentPosition from 'helpers/appendToCurrentPosition';
-import isCursorOnEdge from 'helpers/isCursorOnEdge';
-import isEdgeVisible from 'helpers/isEdgeVisible';
-import produceElementPosition from 'helpers/produceElementPosition';
-import updateFamilyOfElementsPosition from 'helpers/updateFamilyOfElementsPosition';
+import { ELEMENT_AUTO_MOVE_SPEED, ELEMENT_AUTO_MOVE_STEP } from '@/consts';
+import { usePanZoom } from '@/context';
+import { useElements } from '@/ElementsProvider';
+import appendToCurrentPosition from '@/helpers/appendToCurrentPosition';
+import isCursorOnEdge from '@/helpers/isCursorOnEdge';
+import isEdgeVisible from '@/helpers/isEdgeVisible';
+import produceElementPosition from '@/helpers/produceElementPosition';
+import updateFamilyOfElementsPosition from '@/helpers/updateFamilyOfElementsPosition';
 
 type UseElementAutoMoveAtEdge = () => void
 

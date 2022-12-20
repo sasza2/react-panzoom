@@ -1,9 +1,9 @@
 import React, {
-  createContext, MutableRefObject, useContext, useRef, useState,
+  createContext, MutableRefObject, PropsWithChildren, useContext, useRef, useState,
 } from 'react';
 
 import { ClientPosition, Elements, ElementsInMove } from 'types';
-import useElementAutoMoveAtEdge from 'hooks/useElementAutoMoveAtEdge';
+import useElementAutoMoveAtEdge from '@/hooks/useElementAutoMoveAtEdge';
 
 type ElementsContextProps = {
   elementsInMove: ElementsInMove,
@@ -21,7 +21,7 @@ const ElementsAutoMove: React.FC = () => {
   return null;
 };
 
-const Elements: React.FC = ({
+const Elements: React.FC<PropsWithChildren> = ({
   children,
 }) => {
   const [elementsInMove, setElementsInMove] = useState<ElementsInMove>(null);

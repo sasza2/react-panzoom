@@ -1,6 +1,6 @@
 import { MutableRefObject } from 'react';
 
-import { CURSOR_ON_EDGE_MARGIN } from 'consts';
+import { CURSOR_ON_EDGE_MARGIN } from '@/consts';
 import { ClientPosition } from 'types';
 
 type Edges = {

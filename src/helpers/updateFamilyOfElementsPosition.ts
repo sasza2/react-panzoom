@@ -1,7 +1,7 @@
 import {
   Element, Elements, ElementsInMove, OnElementsChange, Position,
 } from 'types';
-import produceStyle from 'helpers/produceStyle';
+import produceStyle from '@/helpers/produceStyle';
 
 type FindMin = () => (
   (currentPositionValue: number, nextPositionValue: number) => void

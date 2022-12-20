@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 
-import { SELECT_STYLE, SELECT_BOX_STYLE } from 'styles';
+import { SELECT_STYLE, SELECT_BOX_STYLE } from '@/styles';
 import useBoundary from './hooks/useBoundary';
 import useBoundaryMove from './hooks/useBoundaryMove';
 import useGrabElements from './hooks/useGrabElements';

@@ -2,10 +2,9 @@
 /docs
 /src
 /storybook-static
-.babelrc
 .eslintrc
 jest.config.js
 package-lock.json
 tsconfig.eslint.json
 tsconfig.json
-webpack.config.js
+vite.config.js

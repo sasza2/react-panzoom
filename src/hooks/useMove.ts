@@ -1,13 +1,13 @@
 import { useEffect, useState, MutableRefObject } from 'react';
 
 import { Position } from 'types';
-import { usePanZoom } from 'context';
-import { GRABBING_CLASS_NAME } from 'styles';
-import { onMouseDown, onMouseUp, onMouseMove } from 'helpers/eventListener';
-import positionFromEvent from 'helpers/positionFromEvent';
-import produceBounding from 'helpers/produceBounding';
-import produceStyle from 'helpers/produceStyle';
-import stopEventPropagation from 'helpers/stopEventPropagation';
+import { usePanZoom } from '@/context';
+import { GRABBING_CLASS_NAME } from '@/styles';
+import { onMouseDown, onMouseUp, onMouseMove } from '@/helpers/eventListener';
+import positionFromEvent from '@/helpers/positionFromEvent';
+import produceBounding from '@/helpers/produceBounding';
+import produceStyle from '@/helpers/produceStyle';
+import stopEventPropagation from '@/helpers/stopEventPropagation';
 import useContainerMouseDownPosition from './useContainerMouseDownPosition';
 
 type UseMove = () => MutableRefObject<Position>

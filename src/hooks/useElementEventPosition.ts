@@ -1,10 +1,10 @@
 import { RefObject } from 'react';
 
 import { Position } from 'types';
-import { usePanZoom } from 'context';
-import getScrollOffset from 'helpers/getScrollOffset';
-import positionFromEvent from 'helpers/positionFromEvent';
-import produceElementPosition from 'helpers/produceElementPosition';
+import { usePanZoom } from '@/context';
+import getScrollOffset from '@/helpers/getScrollOffset';
+import positionFromEvent from '@/helpers/positionFromEvent';
+import produceElementPosition from '@/helpers/produceElementPosition';
 
 type useElementMouseDownPositionThunk = (
   e: MouseEvent | TouchEvent,

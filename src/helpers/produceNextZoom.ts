@@ -1,4 +1,4 @@
-import { ZOOM_DESKTOP_DEFAULT_STEP, ZOOM_NON_DESKTOP_DEFAULT_STEP } from 'consts';
+import { ZOOM_DESKTOP_DEFAULT_STEP, ZOOM_NON_DESKTOP_DEFAULT_STEP } from '@/consts';
 import { Zoom, ZoomEvent } from 'types';
 import zoomRound from './zoomRound';
 

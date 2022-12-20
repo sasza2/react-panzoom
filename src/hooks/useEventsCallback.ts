@@ -1,5 +1,5 @@
-import { usePanZoom } from 'context';
-import positionClone from 'helpers/positionClone';
+import { usePanZoom } from '@/context';
+import positionClone from '@/helpers/positionClone';
 
 type ApiCallback = (...args: unknown[]) => unknown
 

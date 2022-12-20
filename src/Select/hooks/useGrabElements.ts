@@ -1,9 +1,9 @@
 import { useLayoutEffect, useRef } from 'react';
 
 import { Position } from 'types';
-import { usePanZoom } from 'context';
-import { useElements } from 'ElementsProvider';
-import produceElementPosition from 'helpers/produceElementPosition';
+import { usePanZoom } from '@/context';
+import { useElements } from '@/ElementsProvider';
+import produceElementPosition from '@/helpers/produceElementPosition';
 import { MoveRef } from '../context/SelectContext';
 import { useSelect } from '../context';
 import collectElements from '../helpers/collectElements';

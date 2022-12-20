@@ -1,8 +1,8 @@
 import { MutableRefObject } from 'react';
 
 import { Position, Zoom } from 'types';
-import positionClone from 'helpers/positionClone';
-import produceStyle from 'helpers/produceStyle';
+import positionClone from '@/helpers/positionClone';
+import produceStyle from '@/helpers/produceStyle';
 
 type Move = (
   props: {
