@@ -96,7 +96,8 @@ const measureBoundary = ({ boundary, parentSize, childSize }: MeasureBoundaryPro
   return directions.reduce((obj, direction) => {
     const passedValue = boundary === true ? undefined : boundary[direction];
     const nextDirectionValue = lineToVariable(
-      passedValue === undefined ? defaults[direction] : passedValue, variables,
+      passedValue === undefined ? defaults[direction] : passedValue,
+      variables,
     );
     return {
       ...obj,

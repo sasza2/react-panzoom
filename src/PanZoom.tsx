@@ -4,7 +4,7 @@ import { PanZoomDefaultProps } from 'types';
 import useApi from './hooks/useApi';
 import useMove from './hooks/useMove';
 import useZoom from './hooks/useZoom';
-import produceStyle from './helpers/produceStyle'
+import produceStyle from './helpers/produceStyle';
 import Select from './Select';
 import {
   CLASS_NAME, PARENT_STYLE, CHILD_STYLE, CHILD_DISABLED_STYLE,

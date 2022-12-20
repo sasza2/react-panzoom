@@ -64,7 +64,6 @@ const isEdgeBottomVisible = (
     && distanceToBottomEdge(childRef, positionRef) < 0;
 };
 
-
 const isEdgeLeftVisible = (
   childRef: MutableRefObject<HTMLDivElement>,
   positionRef: MutableRefObject<Position>,

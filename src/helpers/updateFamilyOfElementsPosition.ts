@@ -28,8 +28,8 @@ const updateFamilyOfElementsPosition: UpdateFamilyOfElementsPosition = ({
     let value: number | null = null;
     const func = (currentPositionValue: number, nextPositionValue: number) => {
       if (value === null || Math.abs(currentPositionValue - nextPositionValue) < Math.abs(value)) {
-        // eslint-disable-next-line no-multi-assign
-        func.value = value = currentPositionValue - nextPositionValue;
+        value = currentPositionValue - nextPositionValue;
+        func.value = value;
       }
     };
     func.value = value;

@@ -41,9 +41,7 @@ const useMove: UseMove = () => {
       const position = containerMouseDownPosition(e);
       const stop = stopEventPropagation();
 
-      // eslint-disable-next-line no-undef
       document.body.style.userSelect = 'none';
-      // eslint-disable-next-line no-undef
       document.body.classList.add(GRABBING_CLASS_NAME);
 
       if (onContainerClick) {
@@ -60,9 +58,7 @@ const useMove: UseMove = () => {
     };
 
     const mouseup = () => {
-      // eslint-disable-next-line no-undef
       document.body.style.userSelect = null;
-      // eslint-disable-next-line no-undef
       document.body.classList.remove(GRABBING_CLASS_NAME);
       setMoving(null);
     };
