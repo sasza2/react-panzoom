@@ -84,7 +84,7 @@ export type API = {
   getElements: () => Elements['current'],
   updateElementPosition: (id: string | number, position: Position) => void,
   getPosition: () => Position,
-  setPosition: (position: Position) => void,
+  setPosition: (x: number, y: number) => void,
   getZoom: () => number,
   setZoom: (zoom: number) => void,
   zoomIn: (zoom: number) => void,
@@ -116,8 +116,8 @@ export type ElementProps = {
   id: ElementId,
   onClick?: ElementOnClick,
   onMouseUp?: ElementOnMouseUp,
-  x: number,
-  y: number,
+  x?: number,
+  y?: number,
 }
 
 export type PanZoomDefaultProps = {
