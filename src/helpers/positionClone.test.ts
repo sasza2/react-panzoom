@@ -1,6 +1,8 @@
+import { expect, it } from 'vitest';
+
 import positionClone from './positionClone';
 
-test('helpers/positionClone', () => {
+it('helpers/positionClone', () => {
   const positionRef = {
     current: { x: 50, y: 100 },
   };

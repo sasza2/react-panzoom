@@ -3,7 +3,7 @@
 /src
 /storybook-static
 .eslintrc
-jest.config.js
+test.setup.js
 package-lock.json
 tsconfig.eslint.json
 tsconfig.json
