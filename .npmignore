@@ -2,8 +2,8 @@
 /docs
 /src
 .eslintrc
+pnpm-lock.yaml
 test.setup.js
-package-lock.json
 tsconfig.eslint.json
 tsconfig.json
 vite.config.js
