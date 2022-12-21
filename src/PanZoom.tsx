@@ -4,6 +4,7 @@ import { PanZoomDefaultProps } from 'types';
 import useApi from './hooks/useApi';
 import useMove from './hooks/useMove';
 import useZoom from './hooks/useZoom';
+import produceStyle from './helpers/produceStyle'
 import Select from './Select';
 import {
   CLASS_NAME, PARENT_STYLE, CHILD_STYLE, CHILD_DISABLED_STYLE,
@@ -21,6 +22,7 @@ export const PanZoom: React.FC = ({
     height,
     width,
     selecting,
+    positionRef,
     childRef,
     setLoading,
     zoomRef,
@@ -52,7 +54,10 @@ export const PanZoom: React.FC = ({
       ...CHILD_STYLE,
       height,
       width,
-      transform: `scale(${zoomRef.current})`,
+      transform: produceStyle({
+        position: positionRef.current,
+        zoom: zoomRef.current,
+      }),
     };
 
     if (disabledUserSelect) style = { ...style, ...CHILD_DISABLED_STYLE };
