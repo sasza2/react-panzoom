@@ -1,7 +1,10 @@
 import React, { PropsWithChildren, useRef, useState } from 'react';
 
 import {
-  ZOOM_INITIAL, ZOOM_MIN_DEFAULT, ZOOM_MAX_DEFAULT, ZOOM_SPEED_DEFAULT,
+  ZOOM_INITIAL,
+  ZOOM_MIN_DEFAULT,
+  ZOOM_MAX_DEFAULT,
+  ZOOM_SPEED_DEFAULT,
 } from '@/consts';
 import { PanZoomProps, Position, Zoom } from 'types';
 import PanZoomContext from './PanZoomContext';

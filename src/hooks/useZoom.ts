@@ -49,7 +49,7 @@ const useZoom = (): Zoom => {
   useEffect(() => {
     if (loading || disabled || disabledZoom) return undefined;
 
-    const isMobile = ('ontouchstart' in window);
+    const isMobile = 'ontouchstart' in window;
 
     const [touchEventToZoom, resetTouchEvent] = touchEventToZoomInit();
     let blockTimer: ReturnType<typeof setTimeout> = null;

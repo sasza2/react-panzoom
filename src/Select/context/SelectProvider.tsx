@@ -3,9 +3,7 @@ import React, { PropsWithChildren, useRef, useState } from 'react';
 import { Position } from 'types';
 import SelectContext, { SelectContextType } from './SelectContext';
 
-const SelectProvider: React.FC<PropsWithChildren> = ({
-  children,
-}) => {
+const SelectProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const expandingRef = useRef<HTMLDivElement>();
   const movingRef = useRef<HTMLDivElement>();
   const selectRef = useRef<HTMLDivElement>();

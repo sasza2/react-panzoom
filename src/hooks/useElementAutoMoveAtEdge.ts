@@ -9,7 +9,7 @@ import isEdgeVisible from '@/helpers/isEdgeVisible';
 import produceElementPosition from '@/helpers/produceElementPosition';
 import updateFamilyOfElementsPosition from '@/helpers/updateFamilyOfElementsPosition';
 
-type UseElementAutoMoveAtEdge = () => void
+type UseElementAutoMoveAtEdge = () => void;
 
 const useElementAutoMoveAtEdge: UseElementAutoMoveAtEdge = () => {
   const {
@@ -20,11 +20,7 @@ const useElementAutoMoveAtEdge: UseElementAutoMoveAtEdge = () => {
     zoomRef,
   } = usePanZoom();
 
-  const {
-    elementsRef,
-    elementsInMove,
-    lastElementMouseMoveEventRef,
-  } = useElements();
+  const { elementsRef, elementsInMove, lastElementMouseMoveEventRef } = useElements();
 
   useEffect(() => {
     if (disabledElements || !elementsInMove) return undefined;

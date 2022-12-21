@@ -4,17 +4,13 @@ import { Position, Zoom } from 'types';
 import positionClone from '@/helpers/positionClone';
 import produceStyle from '@/helpers/produceStyle';
 
-type Move = (
-  props: {
-    childRef: MutableRefObject<HTMLDivElement>,
-    positionRef: MutableRefObject<Position>,
-    zoomRef: Zoom,
-  }
-) => (x: number, y: number) => Position
+type Move = (props: {
+  childRef: MutableRefObject<HTMLDivElement>;
+  positionRef: MutableRefObject<Position>;
+  zoomRef: Zoom;
+}) => (x: number, y: number) => Position;
 
-const move: Move = ({
-  childRef, positionRef, zoomRef,
-}) => (x, y) => {
+const move: Move = ({ childRef, positionRef, zoomRef }) => (x, y) => {
   const ref = childRef;
   const position = positionRef;
 

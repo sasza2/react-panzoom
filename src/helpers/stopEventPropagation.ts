@@ -1,4 +1,4 @@
-type StopEventPropagation = () => (() => void) & { done: boolean }
+type StopEventPropagation = () => (() => void) & { done: boolean };
 
 const stopEventPropagation: StopEventPropagation = () => {
   const cb = () => {

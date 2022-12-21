@@ -10,9 +10,9 @@ import { Boundary } from '../context/SelectContext';
 import { useSelect } from '../context';
 
 type UseBoundary = () => {
-  expanding: Position | null,
-  boundary: Boundary,
-}
+  expanding: Position | null;
+  boundary: Boundary;
+};
 
 const useBoundary: UseBoundary = () => {
   const [expanding, setExpanding] = useState<Position | null>(null);

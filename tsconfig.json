@@ -12,9 +12,9 @@
     "outDir": "./dist/",
     "paths": {
       "@/*": ["src/*"],
-      "types": ["types/types"],
+      "types": ["types/types"]
     },
-    "rootDirs": [ "src", "types" ],
-    "target": "es5",
-  },
+    "rootDirs": ["src", "types"],
+    "target": "es5"
+  }
 }

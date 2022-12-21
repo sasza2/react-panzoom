@@ -29,16 +29,12 @@ it('api/position/set', () => {
 
   expect(positionRef.current).toStrictEqual({ x: 200, y: 300 });
   expect(zoomRef.current).toBe(1.1);
-  expect(childRef.current.style.transform).toBe(
-    'translate(200px, 300px) scale(1.1)'
-  );
+  expect(childRef.current.style.transform).toBe('translate(200px, 300px) scale(1.1)');
 
   // To (600, 100)
   setPosition({ childRef, positionRef, zoomRef })(600, 100);
 
   expect(positionRef.current).toStrictEqual({ x: 600, y: 100 });
   expect(zoomRef.current).toBe(1.1);
-  expect(childRef.current.style.transform).toBe(
-    'translate(600px, 100px) scale(1.1)'
-  );
+  expect(childRef.current.style.transform).toBe('translate(600px, 100px) scale(1.1)');
 });

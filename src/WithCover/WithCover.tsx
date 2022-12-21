@@ -11,11 +11,11 @@ import produceStyle from '@/helpers/produceStyle';
 import { PanZoom } from '../PanZoom';
 
 type WithCoverProps = {
-  cover: string,
-  onCoverLoad?: () => void,
-  setScale: (scale: number) => void,
-  setSize: (size: Size) => void,
-}
+  cover: string;
+  onCoverLoad?: () => void;
+  setScale: (scale: number) => void;
+  setSize: (size: Size) => void;
+};
 
 const LoadCover: React.FC<PropsWithChildren<WithCoverProps>> = ({
   children,
@@ -89,12 +89,7 @@ const PanZoomWithCoverContext = (
       zoomMax={zoomMax * scale}
     >
       <ElementsProvider>
-        <LoadCover
-          cover={cover}
-          onCoverLoad={onCoverLoad}
-          setScale={setScale}
-          setSize={setSize}
-        >
+        <LoadCover cover={cover} onCoverLoad={onCoverLoad} setScale={setScale} setSize={setSize}>
           <PanZoom>{children}</PanZoom>
         </LoadCover>
       </ElementsProvider>

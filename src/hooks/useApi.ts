@@ -14,10 +14,7 @@ import useEventsCallback from './useEventsCallback';
 
 const useApi = (): void => {
   const {
-    apiRef,
-    childRef,
-    positionRef,
-    zoomRef,
+    apiRef, childRef, positionRef, zoomRef,
   } = usePanZoom();
 
   const { elementsRef } = useElements();
@@ -27,31 +24,58 @@ const useApi = (): void => {
   if (!apiRef) return;
 
   const apiExternal = apiRef;
-  useImperativeHandle(apiExternal, () => ({
-    move: withEventPosition(move({
-      childRef, positionRef, zoomRef,
-    })),
-    getElements: getElements({ elementsRef }),
-    updateElementPosition: updateElementPosition({ elementsRef }),
-    getPosition: getPosition({ positionRef }),
-    setPosition: withEventPosition(setPosition({
-      childRef, positionRef, zoomRef,
-    })),
-    getZoom: getZoom({ zoomRef }),
-    setZoom: withEventZoom(setZoom({
-      childRef, positionRef, zoomRef,
-    })),
-    zoomIn: withEventZoom(zoomIn({
-      childRef, positionRef, zoomRef,
-    })),
-    zoomOut: withEventZoom(zoomOut({
-      childRef, positionRef, zoomRef,
-    })),
-    ref: () => childRef,
-    reset: withEventAll(reset({
-      childRef, positionRef, zoomRef,
-    })),
-  }) as API);
+  useImperativeHandle(
+    apiExternal,
+    () => ({
+      move: withEventPosition(
+        move({
+          childRef,
+          positionRef,
+          zoomRef,
+        }),
+      ),
+      getElements: getElements({ elementsRef }),
+      updateElementPosition: updateElementPosition({ elementsRef }),
+      getPosition: getPosition({ positionRef }),
+      setPosition: withEventPosition(
+        setPosition({
+          childRef,
+          positionRef,
+          zoomRef,
+        }),
+      ),
+      getZoom: getZoom({ zoomRef }),
+      setZoom: withEventZoom(
+        setZoom({
+          childRef,
+          positionRef,
+          zoomRef,
+        }),
+      ),
+      zoomIn: withEventZoom(
+        zoomIn({
+          childRef,
+          positionRef,
+          zoomRef,
+        }),
+      ),
+      zoomOut: withEventZoom(
+        zoomOut({
+          childRef,
+          positionRef,
+          zoomRef,
+        }),
+      ),
+      ref: () => childRef,
+      reset: withEventAll(
+        reset({
+          childRef,
+          positionRef,
+          zoomRef,
+        }),
+      ),
+    } as API),
+  );
 };
 
 export default useApi;

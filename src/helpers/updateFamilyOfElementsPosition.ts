@@ -1,20 +1,27 @@
 import {
-  Element, Elements, ElementsInMove, OnElementsChange, Position,
+  Element,
+  Elements,
+  ElementsInMove,
+  OnElementsChange,
+  Position,
 } from 'types';
 import produceStyle from '@/helpers/produceStyle';
 
-type FindMin = () => (
-  (currentPositionValue: number, nextPositionValue: number) => void
-) & { value: number }
+type FindMin = () => ((
+  currentPositionValue: number,
+  nextPositionValue: number
+) => void) & {
+  value: number;
+};
 
 type UpdateFamilyOfElementsPositionProps = {
-  elementsRef: Elements,
-  elementsInMove: ElementsInMove,
-  produceNextPosition: (from: Position, currentElement: Element) => Position
-  onElementsChange?: OnElementsChange,
-}
+  elementsRef: Elements;
+  elementsInMove: ElementsInMove;
+  produceNextPosition: (from: Position, currentElement: Element) => Position;
+  onElementsChange?: OnElementsChange;
+};
 
-type UpdateFamilyOfElementsPosition = (props: UpdateFamilyOfElementsPositionProps) => void
+type UpdateFamilyOfElementsPosition = (props: UpdateFamilyOfElementsPositionProps) => void;
 
 const updateFamilyOfElementsPosition: UpdateFamilyOfElementsPosition = ({
   elementsRef,
@@ -27,10 +34,15 @@ const updateFamilyOfElementsPosition: UpdateFamilyOfElementsPosition = ({
   const findMinDiffBetweenPositions: FindMin = () => {
     let value: number | null = null;
     const func = (currentPositionValue: number, nextPositionValue: number) => {
-      if (value === null || Math.abs(currentPositionValue - nextPositionValue) < Math.abs(value)) {
-        value = currentPositionValue - nextPositionValue;
-        func.value = value;
+      if (
+        value !== null
+        && Math.abs(currentPositionValue - nextPositionValue) >= Math.abs(value)
+      ) {
+        return;
       }
+
+      value = currentPositionValue - nextPositionValue;
+      func.value = value;
     };
     func.value = value;
     return func;

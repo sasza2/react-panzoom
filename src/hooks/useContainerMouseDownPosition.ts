@@ -2,7 +2,9 @@ import { Position } from 'types';
 import { usePanZoom } from '@/context';
 import positionFromEvent from '@/helpers/positionFromEvent';
 
-const useContainerMouseDownPosition = (): (e: MouseEvent | TouchEvent) => Position => {
+const useContainerMouseDownPosition = (): ((
+  e: MouseEvent | TouchEvent
+) => Position) => {
   const { childRef, positionRef } = usePanZoom();
 
   return (e: MouseEvent | TouchEvent): Position => {

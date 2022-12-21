@@ -44,13 +44,7 @@ export type ClientPosition = {
 
 export type OnElementsChange = (elements: Record<string, Position>) => unknown;
 
-type OnContainerChange = ({
-  position,
-  zoom,
-}: {
-  position: Position;
-  zoom: number;
-}) => unknown;
+type OnContainerChange = ({ position, zoom }: { position: Position; zoom: number }) => unknown;
 
 type PanZoomCommon = {
   apiRef?: MutableRefObject<API>;

@@ -10,7 +10,7 @@ import produceStyle from '@/helpers/produceStyle';
 import stopEventPropagation from '@/helpers/stopEventPropagation';
 import useContainerMouseDownPosition from './useContainerMouseDownPosition';
 
-type UseMove = () => MutableRefObject<Position>
+type UseMove = () => MutableRefObject<Position>;
 
 const useMove: UseMove = () => {
   const [moving, setMoving] = useState<Position | null>(null);

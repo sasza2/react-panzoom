@@ -5,15 +5,15 @@ import {
 } from 'types';
 
 export type PanZoomContextProps = {
-  blockMovingRef: MutableRefObject<boolean>,
-  childRef: MutableRefObject<HTMLDivElement>,
-  loading: boolean,
-  onElementsChangeRef: MutableRefObject<OnElementsChange>,
-  positionRef: MutableRefObject<Position>,
-  setLoading: (loading: boolean) => void,
-  zoomRef: Zoom,
-  zoomSpeed: number,
-} & PanZoomProps
+  blockMovingRef: MutableRefObject<boolean>;
+  childRef: MutableRefObject<HTMLDivElement>;
+  loading: boolean;
+  onElementsChangeRef: MutableRefObject<OnElementsChange>;
+  positionRef: MutableRefObject<Position>;
+  setLoading: (loading: boolean) => void;
+  zoomRef: Zoom;
+  zoomSpeed: number;
+} & PanZoomProps;
 
 const PanZoomContext = createContext<PanZoomContextProps>({} as PanZoomContextProps);
 

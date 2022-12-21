@@ -38,16 +38,18 @@ export const cover = () => {
   useEffect(() => {
     if (timer) return;
 
-    setTimer(setTimeout(() => {
-      setTimer(null);
+    setTimer(
+      setTimeout(() => {
+        setTimer(null);
 
-      const { pin1, pin2 } = elements;
+        const { pin1, pin2 } = elements;
 
-      const a = Math.abs(pin1.x - pin2.x);
-      const b = Math.abs(pin1.y - pin2.y);
+        const a = Math.abs(pin1.x - pin2.x);
+        const b = Math.abs(pin1.y - pin2.y);
 
-      setDistance(Math.sqrt(a * a + b * b) * PIXEL_TO_METER);
-    }, DISTANCE_THROTTLE_TIMEOUT));
+        setDistance(Math.sqrt(a * a + b * b) * PIXEL_TO_METER);
+      }, DISTANCE_THROTTLE_TIMEOUT),
+    );
   }, [elements]);
 
   useEffect(() => {
@@ -106,7 +108,10 @@ export const cover = () => {
           >
             <Pin />
           </Element>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox={`0 0 ${size.width} ${size.height}`}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox={`0 0 ${size.width} ${size.height}`}
+          >
             <line
               {...line}
               stroke="black"

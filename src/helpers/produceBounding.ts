@@ -2,19 +2,22 @@ import { Boundary, BoundaryProp, Position } from 'types';
 import lineToVariable from './lineToVariable';
 
 type Size = {
-  width: number,
-  height: number,
-}
+  width: number;
+  height: number;
+};
 
 type PositionVerticalProps = {
-  boundary: Boundary,
-  y: number,
-  parentSize: Size,
-  childSize: Size,
-}
+  boundary: Boundary;
+  y: number;
+  parentSize: Size;
+  childSize: Size;
+};
 
 const positionVertical = ({
-  boundary, y, parentSize, childSize,
+  boundary,
+  y,
+  parentSize,
+  childSize,
 }: PositionVerticalProps): number => {
   const diff = Math.max(childSize.height - parentSize.height, 0); // px
   if (boundary.top === undefined && boundary.bottom === undefined) return y;
@@ -35,14 +38,17 @@ const positionVertical = ({
 };
 
 type PositionHorizontalProps = {
-  boundary: Boundary,
-  x: number,
-  parentSize: Size,
-  childSize: Size,
-}
+  boundary: Boundary;
+  x: number;
+  parentSize: Size;
+  childSize: Size;
+};
 
 const positionHorizontal = ({
-  boundary, x, parentSize, childSize,
+  boundary,
+  x,
+  parentSize,
+  childSize,
 }: PositionHorizontalProps): number => {
   const diff = Math.max(childSize.width - parentSize.width, 0); // px
   if (boundary.left === undefined && boundary.right === undefined) return x;
@@ -63,12 +69,16 @@ const positionHorizontal = ({
 };
 
 type MeasureBoundaryProps = {
-  boundary: BoundaryProp,
-  parentSize: Size,
-  childSize: Size,
-}
+  boundary: BoundaryProp;
+  parentSize: Size;
+  childSize: Size;
+};
 
-const measureBoundary = ({ boundary, parentSize, childSize }: MeasureBoundaryProps): Boundary => {
+const measureBoundary = ({
+  boundary,
+  parentSize,
+  childSize,
+}: MeasureBoundaryProps): Boundary => {
   if (!boundary) {
     return {
       top: undefined,
@@ -107,23 +117,33 @@ const measureBoundary = ({ boundary, parentSize, childSize }: MeasureBoundaryPro
 };
 
 type ProduceBoundingProps = {
-  boundary: BoundaryProp,
-  x: number,
-  y: number,
-  parentSize: Size,
-  childSize: Size,
-}
+  boundary: BoundaryProp;
+  x: number;
+  y: number;
+  parentSize: Size;
+  childSize: Size;
+};
 
 const produceBounding = ({
-  boundary, x, y, parentSize, childSize,
+  boundary,
+  x,
+  y,
+  parentSize,
+  childSize,
 }: ProduceBoundingProps): Position => {
   const boundaryNext = measureBoundary({ boundary, parentSize, childSize });
   const nextPosition: Partial<Position> = {};
   nextPosition.x = positionHorizontal({
-    boundary: boundaryNext, x, parentSize, childSize,
+    boundary: boundaryNext,
+    x,
+    parentSize,
+    childSize,
   });
   nextPosition.y = positionVertical({
-    boundary: boundaryNext, y, parentSize, childSize,
+    boundary: boundaryNext,
+    y,
+    parentSize,
+    childSize,
   });
   return nextPosition as Position;
 };

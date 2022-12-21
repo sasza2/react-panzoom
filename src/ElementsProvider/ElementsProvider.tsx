@@ -1,16 +1,21 @@
 import React, {
-  createContext, MutableRefObject, PropsWithChildren, useContext, useRef, useState,
+  createContext,
+  MutableRefObject,
+  PropsWithChildren,
+  useContext,
+  useRef,
+  useState,
 } from 'react';
 
 import { ClientPosition, Elements, ElementsInMove } from 'types';
 import useElementAutoMoveAtEdge from '@/hooks/useElementAutoMoveAtEdge';
 
 type ElementsContextProps = {
-  elementsInMove: ElementsInMove,
-  elementsRef: Elements,
-  lastElementMouseMoveEventRef: MutableRefObject<ClientPosition>,
-  setElementsInMove: (elementsInMove: ElementsInMove) => void,
-}
+  elementsInMove: ElementsInMove;
+  elementsRef: Elements;
+  lastElementMouseMoveEventRef: MutableRefObject<ClientPosition>;
+  setElementsInMove: (elementsInMove: ElementsInMove) => void;
+};
 
 const ElementsContext = createContext<ElementsContextProps>({} as ElementsContextProps);
 
@@ -21,20 +26,19 @@ const ElementsAutoMove: React.FC = () => {
   return null;
 };
 
-const ElementsProvider: React.FC<PropsWithChildren> = ({
-  children,
-}) => {
+const ElementsProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [elementsInMove, setElementsInMove] = useState<ElementsInMove>(null);
   const elementsRef: Elements = useRef({});
   const lastElementMouseMoveEventRef = useRef<ClientPosition>();
 
   return (
-    <ElementsContext.Provider value={{
-      elementsInMove,
-      elementsRef,
-      lastElementMouseMoveEventRef,
-      setElementsInMove,
-    }}
+    <ElementsContext.Provider
+      value={{
+        elementsInMove,
+        elementsRef,
+        lastElementMouseMoveEventRef,
+        setElementsInMove,
+      }}
     >
       {children}
       <ElementsAutoMove />

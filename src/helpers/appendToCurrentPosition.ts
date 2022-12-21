@@ -21,9 +21,11 @@ const moveScroll = (
   };
 
   const blockHorizontal = parentRect.right > 0
-    && parentRect.right < window.innerWidth && toAdd.x < 0;
+    && parentRect.right < window.innerWidth
+    && toAdd.x < 0;
   const blockVertical = parentRect.bottom > 0
-    && parentRect.bottom < window.innerHeight && toAdd.y < 0;
+    && parentRect.bottom < window.innerHeight
+    && toAdd.y < 0;
 
   if (blockHorizontal && blockVertical) return toAdd;
 
@@ -49,11 +51,11 @@ const moveScroll = (
 };
 
 type AppendToCurrentPositionProps = {
-  childRef: MutableRefObject<HTMLDivElement>,
-  positionRef: MutableRefObject<Position>,
-  addPosition: Position,
-  zoomRef: Zoom,
-}
+  childRef: MutableRefObject<HTMLDivElement>;
+  positionRef: MutableRefObject<Position>;
+  addPosition: Position;
+  zoomRef: Zoom;
+};
 
 const appendToCurrentPosition = ({
   childRef,

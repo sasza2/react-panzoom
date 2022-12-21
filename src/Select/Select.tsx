@@ -24,16 +24,10 @@ const Select = () => {
 
   return (
     <div ref={selectRef} style={SELECT_STYLE}>
-      {
-        expanding && !boundary && (
-          <div ref={expandingRef} style={SELECT_BOX_STYLE} />
-        )
-      }
-      {
-        boundary && (
-          <div ref={movingRef} style={boundaryStyle} />
-        )
-      }
+      {expanding && !boundary && (
+        <div ref={expandingRef} style={SELECT_BOX_STYLE} />
+      )}
+      {boundary && <div ref={movingRef} style={boundaryStyle} />}
     </div>
   );
 };

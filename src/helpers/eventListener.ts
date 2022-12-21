@@ -1,10 +1,18 @@
 import isEventMobileZoom from './isEventMobileZoom';
 
-type EventNames = Array<'mousedown' | 'mouseup' | 'touchstart' | 'touchend' | 'touchcancel' | 'mousemove' | 'touchmove'>
+type EventNames = Array<
+  | 'mousedown'
+  | 'mouseup'
+  | 'touchstart'
+  | 'touchend'
+  | 'touchcancel'
+  | 'mousemove'
+  | 'touchmove'
+>;
 
-type Callback = (e: MouseEvent) => void
+type Callback = (e: MouseEvent) => void;
 
-type EventListenerClean = () => void
+type EventListenerClean = () => void;
 
 const eventListener = (
   node: Window | HTMLDivElement,
@@ -22,9 +30,10 @@ const eventListener = (
   };
 };
 
-export const onMouseDown = (node: HTMLDivElement, callback: Callback): EventListenerClean => (
-  eventListener(node, ['mousedown', 'touchstart'], callback)
-);
+export const onMouseDown = (
+  node: HTMLDivElement,
+  callback: Callback,
+): EventListenerClean => eventListener(node, ['mousedown', 'touchstart'], callback);
 
 export const onMouseUp = (
   node: Window | HTMLDivElement,

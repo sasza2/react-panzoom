@@ -4,7 +4,7 @@ import { Position } from 'types';
 
 const getScrollOffset = (childRef: MutableRefObject<HTMLDivElement>): Position => {
   const parent: HTMLDivElement = childRef.current.parentNode as HTMLDivElement;
-  let node = (parent.parentNode as HTMLDivElement);
+  let node = parent.parentNode as HTMLDivElement;
 
   const scroll = {
     x: 0,

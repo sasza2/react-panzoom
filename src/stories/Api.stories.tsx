@@ -13,7 +13,8 @@ export const API = () => {
   const elementsChangeRef = useRef();
 
   type WriteToTextarea = (
-    ref: React.MutableRefObject<HTMLTextAreaElement>) => (value: object) => void;
+    ref: React.MutableRefObject<HTMLTextAreaElement>
+  ) => (value: object) => void;
 
   const writeToTextarea: WriteToTextarea = (ref) => (value) => {
     const { current } = ref;
