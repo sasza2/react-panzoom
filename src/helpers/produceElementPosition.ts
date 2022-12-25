@@ -1,15 +1,19 @@
 import { Position } from 'types';
 
 type ProduceElementPositionProps = {
-  element: HTMLElement,
-  container: HTMLDivElement,
-  x: number,
-  y: number,
-  zoom: number,
-}
+  element: HTMLElement;
+  container: HTMLDivElement;
+  x: number;
+  y: number;
+  zoom: number;
+};
 
 const produceElementPosition = ({
-  element, container, x, y, zoom,
+  element,
+  container,
+  x,
+  y,
+  zoom,
 }: ProduceElementPositionProps): Position => {
   const elementRect = element.getBoundingClientRect();
   const containerRect = container.getBoundingClientRect();

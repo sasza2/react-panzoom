@@ -1,6 +1,14 @@
-const VARIABLES_LIST = ['containerWidth', 'containerHeight', 'childWidth', 'childHeight'];
+const VARIABLES_LIST = [
+  'containerWidth',
+  'containerHeight',
+  'childWidth',
+  'childHeight',
+];
 
-const lineToVariable = (str: string | number, variables: Record<string, number> = {}): number => {
+const lineToVariable = (
+  str: string | number,
+  variables: Record<string, number> = {},
+): number => {
   if (typeof str === 'number') return str;
   if (!Number.isNaN(parseInt(str, 10))) return str as unknown as number;
 

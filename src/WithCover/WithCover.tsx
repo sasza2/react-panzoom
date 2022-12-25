@@ -1,21 +1,23 @@
-import React, { forwardRef, useLayoutEffect, useState } from 'react';
+import React, {
+  PropsWithChildren, forwardRef, useLayoutEffect, useState,
+} from 'react';
 
 import { PanZoomWithCoverProps, Size } from 'types';
-import { ZOOM_INITIAL, ZOOM_MAX_DEFAULT } from 'consts';
-import { CLASS_NAME } from 'styles';
-import ElementsProvider from '../ElementsProvider';
-import PanZoomProvider, { usePanZoom } from '../context';
+import { ZOOM_INITIAL, ZOOM_MAX_DEFAULT } from '@/consts';
+import { CLASS_NAME } from '@/styles';
+import ElementsProvider from '@/ElementsProvider';
+import PanZoomProvider, { usePanZoom } from '@/context';
+import produceStyle from '@/helpers/produceStyle';
 import { PanZoom } from '../PanZoom';
-import produceStyle from '../helpers/produceStyle';
 
 type WithCoverProps = {
-  cover: string,
-  onCoverLoad?: () => void,
-  setScale: (scale: number) => void,
-  setSize: (size: Size) => void,
-}
+  cover: string;
+  onCoverLoad?: () => void;
+  setScale: (scale: number) => void;
+  setSize: (size: Size) => void;
+};
 
-const LoadCover: React.FC<WithCoverProps> = ({
+const LoadCover: React.FC<PropsWithChildren<WithCoverProps>> = ({
   children,
   cover,
   onCoverLoad,
@@ -75,30 +77,23 @@ const PanZoomWithCoverContext = (
   const [size, setSize] = useState<Size>({ width: '100%', height: '100%' });
 
   return (
-    <>
-      <PanZoomProvider
-        apiRef={apiRef}
-        {...props}
-        boundary
-        className={`${className || ''} ${CLASS_NAME}-with-cover`}
-        width={size.width}
-        height={size.height}
-        zoomInitial={scale}
-        zoomMin={scale}
-        zoomMax={zoomMax * scale}
-      >
-        <ElementsProvider>
-          <LoadCover
-            cover={cover}
-            onCoverLoad={onCoverLoad}
-            setScale={setScale}
-            setSize={setSize}
-          >
-            <PanZoom>{children}</PanZoom>
-          </LoadCover>
-        </ElementsProvider>
-      </PanZoomProvider>
-    </>
+    <PanZoomProvider
+      apiRef={apiRef}
+      {...props}
+      boundary
+      className={`${className || ''} ${CLASS_NAME}-with-cover`}
+      width={size.width}
+      height={size.height}
+      zoomInitial={scale}
+      zoomMin={scale}
+      zoomMax={zoomMax * scale}
+    >
+      <ElementsProvider>
+        <LoadCover cover={cover} onCoverLoad={onCoverLoad} setScale={setScale} setSize={setSize}>
+          <PanZoom>{children}</PanZoom>
+        </LoadCover>
+      </ElementsProvider>
+    </PanZoomProvider>
   );
 };
 

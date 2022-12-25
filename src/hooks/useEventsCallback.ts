@@ -1,15 +1,15 @@
-import { usePanZoom } from 'context';
-import positionClone from 'helpers/positionClone';
+import { usePanZoom } from '@/context';
+import positionClone from '@/helpers/positionClone';
 
-type ApiCallback = (...args: unknown[]) => unknown
+type ApiCallback = (...args: unknown[]) => unknown;
 
-type DispatchOptions = { position: boolean, zoom: boolean }
+type DispatchOptions = { position: boolean; zoom: boolean };
 
 type UseEventsCallback = () => {
-  withEventAll: ApiCallback,
-  withEventPosition: ApiCallback,
-  withEventZoom: ApiCallback,
-}
+  withEventAll: ApiCallback;
+  withEventPosition: ApiCallback;
+  withEventZoom: ApiCallback;
+};
 
 const useEventsCallback: UseEventsCallback = () => {
   const {

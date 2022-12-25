@@ -1,16 +1,16 @@
 import { useEffect, useState, MutableRefObject } from 'react';
 
 import { Position } from 'types';
-import { usePanZoom } from 'context';
-import { GRABBING_CLASS_NAME } from 'styles';
-import { onMouseDown, onMouseUp, onMouseMove } from 'helpers/eventListener';
-import positionFromEvent from 'helpers/positionFromEvent';
-import produceBounding from 'helpers/produceBounding';
-import produceStyle from 'helpers/produceStyle';
-import stopEventPropagation from 'helpers/stopEventPropagation';
+import { usePanZoom } from '@/context';
+import { GRABBING_CLASS_NAME } from '@/styles';
+import { onMouseDown, onMouseUp, onMouseMove } from '@/helpers/eventListener';
+import positionFromEvent from '@/helpers/positionFromEvent';
+import produceBounding from '@/helpers/produceBounding';
+import produceStyle from '@/helpers/produceStyle';
+import stopEventPropagation from '@/helpers/stopEventPropagation';
 import useContainerMouseDownPosition from './useContainerMouseDownPosition';
 
-type UseMove = () => MutableRefObject<Position>
+type UseMove = () => MutableRefObject<Position>;
 
 const useMove: UseMove = () => {
   const [moving, setMoving] = useState<Position | null>(null);
@@ -41,9 +41,7 @@ const useMove: UseMove = () => {
       const position = containerMouseDownPosition(e);
       const stop = stopEventPropagation();
 
-      // eslint-disable-next-line no-undef
       document.body.style.userSelect = 'none';
-      // eslint-disable-next-line no-undef
       document.body.classList.add(GRABBING_CLASS_NAME);
 
       if (onContainerClick) {
@@ -60,9 +58,7 @@ const useMove: UseMove = () => {
     };
 
     const mouseup = () => {
-      // eslint-disable-next-line no-undef
       document.body.style.userSelect = null;
-      // eslint-disable-next-line no-undef
       document.body.classList.remove(GRABBING_CLASS_NAME);
       setMoving(null);
     };

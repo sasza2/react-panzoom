@@ -29,9 +29,11 @@ const isEdgeRightVisible = (
 
   const positionX = positionRef.current.x + childRect.width;
 
-  return positionX + parentRect.left > 0
+  return (
+    positionX + parentRect.left > 0
     && positionX >= 0
-    && distanceToRightEdge(childRef, positionRef) < 0;
+    && distanceToRightEdge(childRef, positionRef) < 0
+  );
 };
 
 export const distanceToBottomEdge = (
@@ -59,11 +61,12 @@ const isEdgeBottomVisible = (
 
   const positionY = positionRef.current.y + childRect.height;
 
-  return positionY + parentRect.top > 0
+  return (
+    positionY + parentRect.top > 0
     && positionY >= 0
-    && distanceToBottomEdge(childRef, positionRef) < 0;
+    && distanceToBottomEdge(childRef, positionRef) < 0
+  );
 };
-
 
 const isEdgeLeftVisible = (
   childRef: MutableRefObject<HTMLDivElement>,
@@ -73,9 +76,11 @@ const isEdgeLeftVisible = (
   const parentRect = (childRef.current.parentNode as HTMLDivElement).getBoundingClientRect();
   const [visibleWidth] = getParentVisibleSize(childRef);
 
-  return positionRef.current.x + parentRect.left > 0
+  return (
+    positionRef.current.x + parentRect.left > 0
     && positionRef.current.x >= 0
-    && positionRef.current.x < visibleWidth + scroll.x;
+    && positionRef.current.x < visibleWidth + scroll.x
+  );
 };
 
 const isEdgeTopVisible = (
@@ -86,9 +91,11 @@ const isEdgeTopVisible = (
   const parentRect = (childRef.current.parentNode as HTMLDivElement).getBoundingClientRect();
   const [, visibleHeight] = getParentVisibleSize(childRef);
 
-  return positionRef.current.y + parentRect.top > 0
+  return (
+    positionRef.current.y + parentRect.top > 0
     && positionRef.current.y >= 0
-    && positionRef.current.y < visibleHeight + scroll.y;
+    && positionRef.current.y < visibleHeight + scroll.y
+  );
 };
 
 export default {

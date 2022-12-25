@@ -3,16 +3,16 @@ import {
 } from 'react';
 
 import { Position } from 'types';
-import { usePanZoom } from 'context';
-import { onMouseUp, onMouseMove } from 'helpers/eventListener';
-import useContainerMouseDownPosition from 'hooks/useContainerMouseDownPosition';
+import { usePanZoom } from '@/context';
+import { onMouseUp, onMouseMove } from '@/helpers/eventListener';
+import useContainerMouseDownPosition from '@/hooks/useContainerMouseDownPosition';
 import { Boundary } from '../context/SelectContext';
 import { useSelect } from '../context';
 
 type UseBoundary = () => {
-  expanding: Position | null,
-  boundary: Boundary,
-}
+  expanding: Position | null;
+  boundary: Boundary;
+};
 
 const useBoundary: UseBoundary = () => {
   const [expanding, setExpanding] = useState<Position | null>(null);

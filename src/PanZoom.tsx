@@ -1,20 +1,21 @@
-import React, { forwardRef, useMemo } from 'react';
+import React, { PropsWithChildren, forwardRef, useMemo } from 'react';
 
 import { PanZoomDefaultProps } from 'types';
 import useApi from './hooks/useApi';
 import useMove from './hooks/useMove';
 import useZoom from './hooks/useZoom';
-import produceStyle from './helpers/produceStyle'
+import produceStyle from './helpers/produceStyle';
 import Select from './Select';
 import {
-  CLASS_NAME, PARENT_STYLE, CHILD_STYLE, CHILD_DISABLED_STYLE,
+  CLASS_NAME,
+  PARENT_STYLE,
+  CHILD_STYLE,
+  CHILD_DISABLED_STYLE,
 } from './styles';
 import ElementsProvider from './ElementsProvider';
 import PanZoomProvider, { usePanZoom } from './context';
 
-export const PanZoom: React.FC = ({
-  children,
-}) => {
+export const PanZoom: React.FC<PropsWithChildren> = ({ children }) => {
   const {
     className,
     disabled,
@@ -73,7 +74,12 @@ export const PanZoom: React.FC = ({
 
   return (
     <div className={classNameMemo} style={PARENT_STYLE}>
-      <div draggable={false} className={classNameChildMemo} ref={createRef} style={childStyle}>
+      <div
+        draggable={false}
+        className={classNameChildMemo}
+        ref={createRef}
+        style={childStyle}
+      >
         {children}
         {selecting && <Select />}
       </div>

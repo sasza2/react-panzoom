@@ -1,15 +1,17 @@
-import { createRef } from 'react';
+import { MutableRefObject, createRef } from 'react';
+import { expect, it } from 'vitest';
 
 import move from './move';
+import { Position, Zoom } from 'types';
 
-test('api/move', () => {
-  const childRef = createRef();
-  childRef.current = { style: {} };
+it('api/move', () => {
+  const childRef = createRef() as MutableRefObject<HTMLDivElement>;
+  childRef.current = { style: {} } as HTMLDivElement;
 
-  const positionRef = createRef();
+  const positionRef = createRef() as MutableRefObject<Position>;
   positionRef.current = { x: 250, y: 400 };
 
-  const zoomRef = createRef();
+  const zoomRef = createRef() as Zoom;
   zoomRef.current = 1.1;
 
   // Move (40, -30)

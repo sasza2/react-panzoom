@@ -2,7 +2,7 @@
   "name": "@sasza/react-panzoom",
   "version": "1.6.5",
   "description": "React component for pan and zoom with possibility to moving and selecting elements inside",
-  "main": "dist/main.js",
+  "main": "dist/main.umd.cjs",
   "keywords": [
     "react",
     "pan",
@@ -13,12 +13,12 @@
     "selecting"
   ],
   "types": "types/index.d.ts",
+  "type": "module",
   "scripts": {
-    "build": "webpack --mode=production",
-    "lint": "eslint src --fix --ext .ts,.tsx",
-    "storybook": "start-storybook",
-    "storybook-build": "build-storybook",
-    "test": "jest"
+    "build": "tsc && vite build",
+    "dev": "ladle serve",
+    "lint": "eslint src --fix",
+    "test": "vitest"
   },
   "repository": {
     "type": "git",
@@ -36,37 +36,22 @@
     "[module-name]": false
   },
   "devDependencies": {
-    "@babel/core": "^7.9.0",
-    "@babel/plugin-proposal-object-rest-spread": "^7.9.5",
-    "@babel/preset-env": "^7.9.5",
-    "@babel/preset-react": "^7.9.4",
-    "@babel/preset-typescript": "^7.18.6",
-    "@storybook/addon-knobs": "^5.3.18",
-    "@storybook/react": "^5.3.18",
-    "@testing-library/jest-dom": "^5.5.0",
-    "@testing-library/react": "^10.0.2",
-    "@types/jest": "^26.0.15",
-    "@types/lodash": "^4.14.185",
-    "@types/react": "^17.0.0",
-    "@typescript-eslint/eslint-plugin": "^4.11.1",
-    "@typescript-eslint/parser": "^4.11.1",
-    "babel-eslint": "^10.1.0",
-    "babel-loader": "^8.1.0",
-    "eslint": "^6.8.0",
-    "eslint-config-airbnb": "^18.1.0",
-    "eslint-import-resolver-webpack": "^0.13.2",
-    "eslint-plugin-import": "^2.20.2",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.19.0",
-    "jest": "^26.4.4",
-    "react": "16.9.0",
-    "ts-jest": "^26.4.4",
-    "ts-loader": "~8.0.11",
-    "typescript": "~4.1.2",
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10"
+    "@ladle/react": "^2.4.5",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "12.1.4",
+    "@types/react": "^18.0.26",
+    "@typescript-eslint/eslint-plugin": "^5.47.0",
+    "eslint": "^8.30.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-import-resolver-alias": "^1.1.2",
+    "jsdom": "^20.0.3",
+    "react": "16.14.0",
+    "react-dom": "16.14.0",
+    "typescript": "^4.9.4",
+    "vite": "^4.0.3",
+    "vitest": "^0.26.2"
   },
   "peerDependencies": {
-    "react": ">=16.9.0"
+    "react": ">=16.14.0"
   }
 }

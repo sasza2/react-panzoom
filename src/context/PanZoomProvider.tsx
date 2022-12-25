@@ -1,12 +1,15 @@
-import React, { useRef, useState } from 'react';
+import React, { PropsWithChildren, useRef, useState } from 'react';
 
 import {
-  ZOOM_INITIAL, ZOOM_MIN_DEFAULT, ZOOM_MAX_DEFAULT, ZOOM_SPEED_DEFAULT,
-} from 'consts';
+  ZOOM_INITIAL,
+  ZOOM_MIN_DEFAULT,
+  ZOOM_MAX_DEFAULT,
+  ZOOM_SPEED_DEFAULT,
+} from '@/consts';
 import { PanZoomProps, Position, Zoom } from 'types';
 import PanZoomContext from './PanZoomContext';
 
-const PanZoomProvider: React.FC<PanZoomProps> = ({
+const PanZoomProvider: React.FC<PropsWithChildren<PanZoomProps>> = ({
   children,
   height = '100%',
   width = '100%',

@@ -1,14 +1,14 @@
 import { MutableRefObject } from 'react';
 
-import { CURSOR_ON_EDGE_MARGIN } from 'consts';
+import { CURSOR_ON_EDGE_MARGIN } from '@/consts';
 import { ClientPosition } from 'types';
 
 type Edges = {
-  top: boolean,
-  bottom: boolean,
-  left: boolean,
-  right: boolean,
-}
+  top: boolean;
+  bottom: boolean;
+  left: boolean;
+  right: boolean;
+};
 
 const isCursorOnEdge = (childRef: MutableRefObject<HTMLDivElement>, e: ClientPosition): Edges => {
   const childRect = childRef.current.getBoundingClientRect();

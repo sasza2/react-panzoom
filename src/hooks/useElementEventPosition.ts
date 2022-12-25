@@ -1,15 +1,15 @@
 import { RefObject } from 'react';
 
 import { Position } from 'types';
-import { usePanZoom } from 'context';
-import getScrollOffset from 'helpers/getScrollOffset';
-import positionFromEvent from 'helpers/positionFromEvent';
-import produceElementPosition from 'helpers/produceElementPosition';
+import { usePanZoom } from '@/context';
+import getScrollOffset from '@/helpers/getScrollOffset';
+import positionFromEvent from '@/helpers/positionFromEvent';
+import produceElementPosition from '@/helpers/produceElementPosition';
 
 type useElementMouseDownPositionThunk = (
   e: MouseEvent | TouchEvent,
-  elementRef: RefObject<HTMLDivElement>,
-) => Position
+  elementRef: RefObject<HTMLDivElement>
+) => Position;
 
 export const useElementMouseDownPosition = (): useElementMouseDownPositionThunk => {
   const { childRef, zoomRef } = usePanZoom();
@@ -30,8 +30,8 @@ export const useElementMouseDownPosition = (): useElementMouseDownPositionThunk 
 type UseElementMouseMovePosition = (
   e: MouseEvent | TouchEvent,
   from: Position,
-  elementRef: RefObject<HTMLDivElement>,
-) => Position
+  elementRef: RefObject<HTMLDivElement>
+) => Position;
 
 export const useElementMouseMovePosition = (): UseElementMouseMovePosition => {
   const { childRef, positionRef, zoomRef } = usePanZoom();
