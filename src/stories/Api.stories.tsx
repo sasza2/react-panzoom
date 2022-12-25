@@ -5,16 +5,16 @@ import PanZoom, { Element } from '..';
 
 export default { title: 'API' };
 
+type WriteToTextarea = (
+  ref: React.MutableRefObject<HTMLTextAreaElement>
+) => (value: object) => void;
+
 export const API = () => {
   const panZoomRef = useRef<APIType>();
   const containerChangeRef = useRef<HTMLTextAreaElement>();
   const containerPositionChangeRef = useRef();
   const containerZoomChangeRef = useRef();
   const elementsChangeRef = useRef();
-
-  type WriteToTextarea = (
-    ref: React.MutableRefObject<HTMLTextAreaElement>
-  ) => (value: object) => void;
 
   const writeToTextarea: WriteToTextarea = (ref) => (value) => {
     const { current } = ref;

@@ -68,6 +68,8 @@ export const PanZoom: React.FC<PropsWithChildren> = ({ children }) => {
   }, [className, disabledUserSelect, height, width, selecting]);
 
   const createRef = (node: HTMLDivElement) => {
+    if (childRef.current) return;
+
     childRef.current = node;
     setLoading(false);
   };

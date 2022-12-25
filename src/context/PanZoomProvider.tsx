@@ -21,7 +21,7 @@ const PanZoomProvider: React.FC<PropsWithChildren<PanZoomProps>> = ({
   ...props
 }) => {
   const [loading, setLoading] = useState(true);
-  const childRef = useRef();
+  const childRef = useRef<HTMLDivElement>(null);
   const blockMovingRef = useRef<boolean>(false);
   const onElementsChangeRef = useRef<typeof onElementsChange>();
   onElementsChangeRef.current = onElementsChange;
