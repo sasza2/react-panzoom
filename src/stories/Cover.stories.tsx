@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import { API, Position, Size } from 'types';
+import { API, OnElementsChange, Position } from 'types';
 import { PanZoomWithCover, Element } from '..';
+
 import styles from './Cover.module.css';
 
 export default {
@@ -19,9 +20,9 @@ const DISTANCE_THROTTLE_TIMEOUT = 200; // ms
 
 const Pin = () => (
   <svg
+    className={styles.pin}
     viewBox="0 0 24 24"
     xmlns="http://www.w3.org/2000/svg"
-    className={styles.pin}
   >
     <path d="M12 10c-1.104 0-2-.896-2-2s.896-2 2-2 2 .896 2 2-.896 2-2 2m0-5c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3m-7 2.602c0-3.517 3.271-6.602 7-6.602s7 3.085 7 6.602c0 3.455-2.563 7.543-7 14.527-4.489-7.073-7-11.072-7-14.527m7-7.602c-4.198 0-8 3.403-8 7.602 0 4.198 3.469 9.21 8 16.398 4.531-7.188 8-12.2 8-16.398 0-4.199-3.801-7.602-8-7.602" />
   </svg>
@@ -29,49 +30,61 @@ const Pin = () => (
 
 export const cover = () => {
   const [distance, setDistance] = useState<number>(null);
-  const [timer, setTimer] = useState<NodeJS.Timeout>(null);
+  const distanceThrottleRef = useRef<ReturnType<typeof setTimeout>>(null);
   const panZoomRef = useRef<API>();
-  const [size, setSize] = useState<Size>({ width: 0, height: 0 });
-  const [line, setLine] = useState<React.SVGAttributes<SVGLineElement>>();
-  const [elements, setElements] = useState(PINS_INITIAL);
+  const svgLineRef = useRef<SVGSVGElement>(null);
+  const pathRef = useRef<SVGPathElement>(null);
+  const elementsRef = useRef(PINS_INITIAL);
 
-  useEffect(() => {
-    if (timer) return;
+  useEffect(() => () => {
+    clearTimeout(distanceThrottleRef.current);
+  }, []);
 
-    setTimer(
-      setTimeout(() => {
-        setTimer(null);
+  const calculateDistance = () => {
+    if (distanceThrottleRef.current) return;
 
-        const { pin1, pin2 } = elements;
+    distanceThrottleRef.current = setTimeout(() => {
+      const { pin1, pin2 } = elementsRef.current;
+      const a = Math.abs(pin1.x - pin2.x);
+      const b = Math.abs(pin1.y - pin2.y);
 
-        const a = Math.abs(pin1.x - pin2.x);
-        const b = Math.abs(pin1.y - pin2.y);
+      setDistance(Math.sqrt(a * a + b * b) * PIXEL_TO_METER);
 
-        setDistance(Math.sqrt(a * a + b * b) * PIXEL_TO_METER);
-      }, DISTANCE_THROTTLE_TIMEOUT),
-    );
-  }, [elements]);
+      distanceThrottleRef.current = null;
+    }, DISTANCE_THROTTLE_TIMEOUT);
+  };
 
-  useEffect(() => {
+  const updateViewBox = () => {
     const { width, height } = panZoomRef.current.ref().current.getBoundingClientRect();
-    setSize({ width, height });
-  }, [panZoomRef.current]);
+    svgLineRef.current.setAttribute('viewBox', `0 0 ${width} ${height}`);
+  };
 
-  useEffect(() => {
-    if (!panZoomRef.current) return;
+  const generateLinePoint = (position: Position) => {
     const zoom = panZoomRef.current.getZoom();
-    const { pin1, pin2 } = elements;
+    return `${(position.x + PIN_HALF_WIDTH) * zoom} ${(position.y + PIN_SIZE) * zoom}`;
+  };
 
-    setLine({
-      x1: zoom * (pin1.x + PIN_HALF_WIDTH),
-      y1: zoom * (pin1.y + PIN_SIZE),
-      x2: zoom * (pin2.x + PIN_HALF_WIDTH),
-      y2: zoom * (pin2.y + PIN_SIZE),
-    });
-  }, [panZoomRef.current, elements]);
+  const updateLinePath = () => {
+    const { pin1, pin2 } = elementsRef.current;
+    const line = `M ${generateLinePoint(pin1)} ${generateLinePoint(pin2)}`;
+    pathRef.current.setAttribute('d', line);
+  };
 
-  const onElementsChange = (els: Record<string, Position>) => {
-    setElements((prevElements) => ({ ...prevElements, ...els }));
+  const onCoverLoad = () => {
+    updateViewBox();
+    updateLinePath();
+    calculateDistance();
+  };
+
+  const onElementsChange: OnElementsChange = (elements) => {
+    elementsRef.current = {
+      ...elementsRef.current,
+      ...elements,
+    };
+
+    updateViewBox();
+    updateLinePath();
+    calculateDistance();
   };
 
   return (
@@ -85,6 +98,7 @@ export const cover = () => {
         <PanZoomWithCover
           apiRef={panZoomRef}
           cover="https://raw.githubusercontent.com/sasza2/react-panzoom/master/docs/openstreetmap.jpg"
+          onCoverLoad={onCoverLoad}
           onElementsChange={onElementsChange}
         >
           <Element id="authors">
@@ -92,32 +106,17 @@ export const cover = () => {
             {' '}
             <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>
           </Element>
-          <Element
-            className="pin"
-            id="pin1"
-            x={PINS_INITIAL.pin1.x}
-            y={PINS_INITIAL.pin1.y}
-          >
+          <Element className="pin" id="pin1" x={PINS_INITIAL.pin1.x} y={PINS_INITIAL.pin1.y}>
             <Pin />
           </Element>
-          <Element
-            className="pin"
-            id="pin2"
-            x={PINS_INITIAL.pin2.x}
-            y={PINS_INITIAL.pin2.y}
-          >
+          <Element className="pin" id="pin2" x={PINS_INITIAL.pin2.x} y={PINS_INITIAL.pin2.y}>
             <Pin />
           </Element>
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            viewBox={`0 0 ${size.width} ${size.height}`}
+            ref={svgLineRef}
           >
-            <line
-              {...line}
-              stroke="black"
-              strokeDasharray="4 4 4"
-              strokeWidth="2"
-            />
+            <path ref={pathRef} stroke="black" strokeDasharray="0 4 0" strokeWidth="calc(1/var(--zoom))" />
           </svg>
         </PanZoomWithCover>
       </div>

@@ -6,7 +6,7 @@ import PanZoom, { Element } from '..';
 export default { title: 'Puzzles' };
 
 export const puzzles = () => {
-  const timeRef = useRef<NodeJS.Timeout>();
+  const timeRef = useRef<ReturnType<typeof setTimeout>>();
   const [connected, setConnected] = useState(false);
   const [puzzleExists, setPuzzleExists] = useState(true);
 
