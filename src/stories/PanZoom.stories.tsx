@@ -119,7 +119,7 @@ rectangles.args = {
   height: 2000,
   containerWidth: '90%',
   marginTop: 200,
-  marginBottom: 2000,
+  marginBottom: 200,
   marginLeft: 20,
   marginRight: 20,
   containerHeight: 400,
