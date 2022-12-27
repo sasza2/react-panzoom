@@ -2,6 +2,7 @@ import { RefObject } from 'react';
 
 import { Position } from 'types';
 import { usePanZoom } from '@/context';
+import getBoundingClientRect from '@/helpers/getBoundingClientRect';
 import getScrollOffset from '@/helpers/getScrollOffset';
 import positionFromEvent from '@/helpers/positionFromEvent';
 import produceElementPosition from '@/helpers/produceElementPosition';
@@ -16,8 +17,8 @@ export const useElementMouseDownPosition = (): useElementMouseDownPositionThunk 
 
   return (e, elementRef) => {
     const eventPosition = positionFromEvent(e);
-    const parent = (childRef.current.parentNode as HTMLDivElement).getBoundingClientRect();
-    const rect = elementRef.current.getBoundingClientRect();
+    const parent = getBoundingClientRect(childRef.current.parentNode as HTMLDivElement);
+    const rect = getBoundingClientRect(elementRef.current);
     const scroll = getScrollOffset(childRef);
 
     return {

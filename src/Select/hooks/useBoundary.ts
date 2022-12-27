@@ -5,6 +5,7 @@ import {
 import { Position } from 'types';
 import { usePanZoom } from '@/context';
 import { onMouseUp, onMouseMove } from '@/helpers/eventListener';
+import getBoundingClientRect from '@/helpers/getBoundingClientRect';
 import useContainerMouseDownPosition from '@/hooks/useContainerMouseDownPosition';
 import { Boundary } from '../context/SelectContext';
 import { useSelect } from '../context';
@@ -24,7 +25,7 @@ const useBoundary: UseBoundary = () => {
   const containerMouseDownPosition = useContainerMouseDownPosition();
 
   const mouseEvent = (e: MouseEvent, positionStart: Position) => {
-    const containerSize = childRef.current.getBoundingClientRect();
+    const containerSize = getBoundingClientRect(childRef.current);
     const position = containerMouseDownPosition(e);
 
     if (position.x < 0) position.x = 0;

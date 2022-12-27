@@ -117,11 +117,11 @@ export const rectangles: Story<{
 rectangles.args = {
   width: 2900,
   height: 2000,
-  containerWidth: 2500,
+  containerWidth: '90%',
   marginTop: 200,
   marginBottom: 2000,
-  marginLeft: 200,
-  marginRight: 250,
+  marginLeft: 20,
+  marginRight: 20,
   containerHeight: 400,
 };
 rectangles.argTypes = {

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 import { API, OnElementsChange, Position } from 'types';
+import getBoundingClientRect from '@/helpers/getBoundingClientRect';
 import { PanZoomWithCover, Element } from '..';
 
 import styles from './Cover.module.css';
@@ -55,7 +56,7 @@ export const cover = () => {
   };
 
   const updateViewBox = () => {
-    const { width, height } = panZoomRef.current.ref().current.getBoundingClientRect();
+    const { width, height } = getBoundingClientRect(panZoomRef.current.ref().current);
     svgLineRef.current.setAttribute('viewBox', `0 0 ${width} ${height}`);
   };
 

@@ -7,6 +7,7 @@ import {
 } from '@/consts';
 import { Zoom, ZoomEvent } from 'types';
 import { usePanZoom } from '@/context';
+import getBoundingClientRect from '@/helpers/getBoundingClientRect';
 import isEventMobileZoom from '@/helpers/isEventMobileZoom';
 import produceStyle from '@/helpers/produceStyle';
 import produceBounding from '@/helpers/produceBounding';
@@ -55,8 +56,8 @@ const useZoom = (): Zoom => {
     let blockTimer: ReturnType<typeof setTimeout> = null;
 
     const wheelFunc = (e: ZoomEvent) => {
-      const parentRect = (panZoomRef.parentNode as HTMLDivElement).getBoundingClientRect();
-      const childRect = panZoomRef.getBoundingClientRect();
+      const parentRect = getBoundingClientRect(panZoomRef.parentNode as HTMLDivElement);
+      const childRect = getBoundingClientRect(panZoomRef);
 
       if (isMobile) {
         clearTimeout(blockTimer);
