@@ -7,6 +7,7 @@ import { ZOOM_INITIAL, ZOOM_MAX_DEFAULT } from '@/consts';
 import { CLASS_NAME } from '@/styles';
 import ElementsProvider from '@/ElementsProvider';
 import PanZoomProvider, { usePanZoom } from '@/context';
+import getBoundingClientRect from '@/helpers/getBoundingClientRect';
 import produceStyle from '@/helpers/produceStyle';
 import { PanZoom } from '../PanZoom';
 
@@ -31,7 +32,7 @@ const LoadCover: React.FC<PropsWithChildren<WithCoverProps>> = ({
     image.src = cover;
     image.onload = () => {
       const container = childRef.current.parentNode as HTMLElement;
-      const containerSize = container.getBoundingClientRect();
+      const containerSize = getBoundingClientRect(container);
 
       const imageSize = {
         width: image.naturalWidth,

@@ -46,6 +46,8 @@ const useElementAutoMoveAtEdge: UseElementAutoMoveAtEdge = () => {
         addPosition.y = -ELEMENT_AUTO_MOVE_STEP;
       }
 
+      if (!addPosition.x && !addPosition.y) return;
+
       appendToCurrentPosition({
         childRef,
         positionRef,

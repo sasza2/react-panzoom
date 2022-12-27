@@ -4,6 +4,7 @@ import { Position } from 'types';
 import { usePanZoom } from '@/context';
 import { GRABBING_CLASS_NAME } from '@/styles';
 import { onMouseDown, onMouseUp, onMouseMove } from '@/helpers/eventListener';
+import getBoundingClientRect from '@/helpers/getBoundingClientRect';
 import positionFromEvent from '@/helpers/positionFromEvent';
 import produceBounding from '@/helpers/produceBounding';
 import produceStyle from '@/helpers/produceStyle';
@@ -84,14 +85,14 @@ const useMove: UseMove = () => {
 
       panZoomRef.style.transition = null;
 
-      const parentRect = (childRef.current.parentNode as HTMLDivElement).getBoundingClientRect();
+      const parentRect = getBoundingClientRect(childRef.current.parentNode as HTMLDivElement);
       const eventPosition = positionFromEvent(e);
       const nextPosition = produceBounding({
         boundary,
         x: eventPosition.clientX - parentRect.left - moving.x,
         y: eventPosition.clientY - parentRect.top - moving.y,
         parentSize: parentRect,
-        childSize: childRef.current.getBoundingClientRect(),
+        childSize: getBoundingClientRect(childRef.current),
       });
 
       positionRef.current = nextPosition;

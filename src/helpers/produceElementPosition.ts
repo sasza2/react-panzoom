@@ -1,5 +1,7 @@
 import { Position } from 'types';
 
+import getBoundingClientRect from './getBoundingClientRect';
+
 type ProduceElementPositionProps = {
   element: HTMLElement;
   container: HTMLDivElement;
@@ -15,8 +17,8 @@ const produceElementPosition = ({
   y,
   zoom,
 }: ProduceElementPositionProps): Position => {
-  const elementRect = element.getBoundingClientRect();
-  const containerRect = container.getBoundingClientRect();
+  const elementRect = getBoundingClientRect(element);
+  const containerRect = getBoundingClientRect(container);
 
   const maxRight = (containerRect.width - elementRect.width) / zoom;
   const maxBottom = (containerRect.height - elementRect.height) / zoom;

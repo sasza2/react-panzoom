@@ -1,5 +1,6 @@
 import { Position } from 'types';
 import { usePanZoom } from '@/context';
+import getBoundingClientRect from '@/helpers/getBoundingClientRect';
 import positionFromEvent from '@/helpers/positionFromEvent';
 
 const useContainerMouseDownPosition = (): ((
@@ -9,7 +10,7 @@ const useContainerMouseDownPosition = (): ((
 
   return (e: MouseEvent | TouchEvent): Position => {
     const eventPosition = positionFromEvent(e);
-    const rect = (childRef.current.parentNode as HTMLDivElement).getBoundingClientRect();
+    const rect = getBoundingClientRect(childRef.current.parentNode as HTMLDivElement);
 
     return {
       x: eventPosition.clientX - rect.left - (positionRef.current.x || 0),
