@@ -1,9 +1,11 @@
-import { createRef } from 'react';
+import { MutableRefObject, createRef } from 'react';
+import { expect, it } from 'vitest';
 
 import { getPosition, setPosition } from './position';
+import { Position, Zoom } from 'types';
 
-test('api/position/get', () => {
-  const positionRef = createRef();
+it('api/position/get', () => {
+  const positionRef = createRef() as MutableRefObject<Position>;
 
   positionRef.current = { x: 30, y: 40 };
   expect(getPosition({ positionRef })()).toStrictEqual({ x: 30, y: 40 });
@@ -12,14 +14,14 @@ test('api/position/get', () => {
   expect(getPosition({ positionRef })()).toStrictEqual({ x: 60, y: 25 });
 });
 
-test('api/position/set', () => {
-  const childRef = createRef();
-  childRef.current = { style: {} };
+it('api/position/set', () => {
+  const childRef = createRef() as MutableRefObject<HTMLDivElement>;
+  childRef.current = { style: {} } as HTMLDivElement;
 
-  const positionRef = createRef();
+  const positionRef = createRef() as MutableRefObject<Position>;
   positionRef.current = { x: 250, y: 400 };
 
-  const zoomRef = createRef();
+  const zoomRef = createRef() as Zoom;
   zoomRef.current = 1.1;
 
   // To (200, 300)

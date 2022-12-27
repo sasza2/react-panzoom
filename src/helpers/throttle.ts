@@ -1,6 +1,6 @@
-type Callback = (...args: Array<unknown>) => void
+type Callback = (...args: Array<unknown>) => void;
 
-type Throttle = (cb: Callback, limit: number) => Callback & { cancel: () => void }
+type Throttle = (cb: Callback, limit: number) => Callback & { cancel: () => void };
 
 const throttle: Throttle = (cb, limit) => {
   let wait = false;
@@ -10,7 +10,9 @@ const throttle: Throttle = (cb, limit) => {
 
     cb(...args);
     wait = true;
-    timer = setTimeout(() => { wait = false; }, limit);
+    timer = setTimeout(() => {
+      wait = false;
+    }, limit);
   };
 
   func.cancel = () => {

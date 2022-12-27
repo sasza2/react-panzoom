@@ -1,17 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
 
+import { Position } from 'types';
 import PanZoom, { Element } from '..';
 
 export default { title: 'Puzzles' };
 
 export const puzzles = () => {
-  const timeRef = useRef();
+  const timeRef = useRef<ReturnType<typeof setTimeout>>();
   const [connected, setConnected] = useState(false);
   const [puzzleExists, setPuzzleExists] = useState(true);
 
   useEffect(() => () => clearTimeout(timeRef.current), []);
 
-  const onElementsChange = (elements) => {
+  const onElementsChange = (elements: Record<string, Position>) => {
     const { puzzle } = elements;
     if (!puzzle) return;
 
@@ -25,11 +26,7 @@ export const puzzles = () => {
 
   return (
     <div style={{ border: '1px dashed #000', width: 400, height: 400 }}>
-      <PanZoom
-        disabledUserSelect
-        onElementsChange={onElementsChange}
-        boundary
-      >
+      <PanZoom disabledUserSelect onElementsChange={onElementsChange} boundary>
         <Element id="heart" disabled={puzzleExists}>
           <img
             style={{
@@ -45,13 +42,15 @@ export const puzzles = () => {
             alt="heart missing"
           />
         </Element>
-        {
-          puzzleExists && (
-            <Element id="puzzle" x={250} y={250}>
-              <img style={{ width: 68 }} src="https://raw.githubusercontent.com/sasza2/react-panzoom/master/docs/heart/heart_puzzle.png" alt="puzzle" />
-            </Element>
-          )
-        }
+        {puzzleExists && (
+          <Element id="puzzle" x={250} y={250}>
+            <img
+              style={{ width: 68 }}
+              src="https://raw.githubusercontent.com/sasza2/react-panzoom/master/docs/heart/heart_puzzle.png"
+              alt="puzzle"
+            />
+          </Element>
+        )}
       </PanZoom>
     </div>
   );

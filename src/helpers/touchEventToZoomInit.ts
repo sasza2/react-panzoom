@@ -6,7 +6,7 @@ const calculateTouchPointsArea = (touches: TouchList) => {
   return Math.sqrt(x * x + y * y);
 };
 
-type TouchEventToZoomInit = () => [(e: TouchEvent) => ZoomEvent, () => void]
+type TouchEventToZoomInit = () => [(e: TouchEvent) => ZoomEvent, () => void];
 
 const touchEventToZoomInit: TouchEventToZoomInit = () => {
   let lastArea: number | null = null;
@@ -22,8 +22,8 @@ const touchEventToZoomInit: TouchEventToZoomInit = () => {
     e.preventDefault();
     e.stopPropagation();
 
-    let clientX = 0; let
-      clientY = 0;
+    let clientX = 0;
+    let clientY = 0;
     for (let i = 0; i < e.touches.length; i++) {
       clientX += e.touches.item(i).clientX;
       clientY += e.touches.item(i).clientY;

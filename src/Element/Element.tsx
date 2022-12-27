@@ -1,17 +1,26 @@
 import React, {
-  memo, MutableRefObject, useEffect, useLayoutEffect, useMemo, useRef, useState,
+  memo,
+  MutableRefObject,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
 } from 'react';
 
 import { ElementsInMove, ElementProps } from 'types';
-import { usePanZoom } from 'context';
-import { ELEMENT_STYLE, ELEMENT_STYLE_DISABLED } from 'styles';
-import { useElements } from 'ElementsProvider';
-import { onMouseDown, onMouseUp as onMouseUpListener, onMouseMove } from 'helpers/eventListener';
-import positionFromEvent from 'helpers/positionFromEvent';
-import produceStyle from 'helpers/produceStyle';
-import stopEventPropagation from 'helpers/stopEventPropagation';
-import updateFamilyOfElementsPosition from 'helpers/updateFamilyOfElementsPosition';
-import { useElementMouseDownPosition, useElementMouseMovePosition } from 'hooks/useElementEventPosition';
+import { usePanZoom } from '@/context';
+import { ELEMENT_STYLE, ELEMENT_STYLE_DISABLED } from '@/styles';
+import { useElements } from '@/ElementsProvider';
+import { onMouseDown, onMouseUp as onMouseUpListener, onMouseMove } from '@/helpers/eventListener';
+import positionFromEvent from '@/helpers/positionFromEvent';
+import produceStyle from '@/helpers/produceStyle';
+import stopEventPropagation from '@/helpers/stopEventPropagation';
+import updateFamilyOfElementsPosition from '@/helpers/updateFamilyOfElementsPosition';
+import {
+  useElementMouseDownPosition,
+  useElementMouseMovePosition,
+} from '@/hooks/useElementEventPosition';
 
 let lastZIndex = 2;
 
@@ -37,10 +46,7 @@ const Element: React.FC<ElementProps> = ({
   const mouseMovePosition = useElementMouseMovePosition();
 
   const {
-    blockMovingRef,
-    boundary,
-    disabledElements,
-    onElementsChangeRef,
+    blockMovingRef, boundary, disabledElements, onElementsChangeRef,
   } = usePanZoom();
 
   const {
@@ -142,10 +148,11 @@ const Element: React.FC<ElementProps> = ({
       if (e.button) return;
       if (draggableSelector && !(e.target as HTMLElement).closest(draggableSelector)) return;
 
-      const elements = Object.values(elementsRef.current)
-        .filter((element) => element.id === id
+      const elements = Object.values(elementsRef.current).filter(
+        (element) => element.id === id
           || (family && element.family === family)
-          || followers.includes(element.id));
+          || followers.includes(element.id),
+      );
 
       const position = mouseDownPosition(e, elementRef);
       const stop = stopEventPropagation();
@@ -165,10 +172,12 @@ const Element: React.FC<ElementProps> = ({
 
       if (stop.done) return;
 
-      onElementsAction(elements.reduce((curr, element) => {
-        curr[element.id] = mouseDownPosition(e, element.node);
-        return curr;
-      }, {} as ElementsInMove));
+      onElementsAction(
+        elements.reduce((curr, element) => {
+          curr[element.id] = mouseDownPosition(e, element.node);
+          return curr;
+        }, {} as ElementsInMove),
+      );
 
       increaseZIndex();
     };

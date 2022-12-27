@@ -1,11 +1,11 @@
-import { createRef } from 'react';
+import { MutableRefObject, createRef } from 'react';
+import { expect, it } from 'vitest';
 
-import {
-  getZoom, setZoom, zoomIn, zoomOut,
-} from './zoom';
+import { getZoom, setZoom, zoomIn, zoomOut } from './zoom';
+import { Position, Zoom } from 'types';
 
-test('api/zoom/get', () => {
-  const zoomRef = createRef();
+it('api/zoom/get', () => {
+  const zoomRef = createRef() as Zoom;
 
   zoomRef.current = 1.1;
   expect(getZoom({ zoomRef })()).toBe(1.1);
@@ -14,12 +14,12 @@ test('api/zoom/get', () => {
   expect(getZoom({ zoomRef })()).toBe(0.5);
 });
 
-test('api/zoom/set', () => {
-  const childRef = createRef();
-  childRef.current = { style: {} };
+it('api/zoom/set', () => {
+  const childRef = createRef() as MutableRefObject<HTMLDivElement>;
+  childRef.current = { style: {} } as HTMLDivElement;
 
-  const positionRef = createRef();
-  const zoomRef = createRef();
+  const positionRef = createRef() as MutableRefObject<Position>;
+  const zoomRef = createRef() as Zoom;
 
   // Change to 1.5
   positionRef.current = { x: 15, y: 30 };
@@ -37,12 +37,12 @@ test('api/zoom/set', () => {
   expect(zoomRef.current).toBe(2.1);
 });
 
-test('api/zoom/in', () => {
-  const childRef = createRef();
-  childRef.current = { style: {} };
+it('api/zoom/in', () => {
+  const childRef = createRef() as MutableRefObject<HTMLDivElement>;
+  childRef.current = { style: {} } as HTMLDivElement;
 
-  const positionRef = createRef();
-  const zoomRef = createRef();
+  const positionRef = createRef() as MutableRefObject<Position>;
+  const zoomRef = createRef() as Zoom;
   zoomRef.current = 1;
 
   positionRef.current = { x: 20, y: 40 };
@@ -59,12 +59,12 @@ test('api/zoom/in', () => {
   expect(zoomRef.current).toBe(1.5);
 });
 
-test('api/zoom/out', () => {
-  const childRef = createRef();
-  childRef.current = { style: {} };
+it('api/zoom/out', () => {
+  const childRef = createRef() as MutableRefObject<HTMLDivElement>;
+  childRef.current = { style: {} } as HTMLDivElement;
 
-  const positionRef = createRef();
-  const zoomRef = createRef();
+  const positionRef = createRef() as MutableRefObject<Position>;
+  const zoomRef = createRef() as Zoom;
   zoomRef.current = 1.5;
 
   positionRef.current = { x: 20, y: 40 };

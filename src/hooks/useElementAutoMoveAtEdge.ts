@@ -1,15 +1,15 @@
 import { useEffect } from 'react';
 
-import { ELEMENT_AUTO_MOVE_SPEED, ELEMENT_AUTO_MOVE_STEP } from 'consts';
-import { usePanZoom } from 'context';
-import { useElements } from 'ElementsProvider';
-import appendToCurrentPosition from 'helpers/appendToCurrentPosition';
-import isCursorOnEdge from 'helpers/isCursorOnEdge';
-import isEdgeVisible from 'helpers/isEdgeVisible';
-import produceElementPosition from 'helpers/produceElementPosition';
-import updateFamilyOfElementsPosition from 'helpers/updateFamilyOfElementsPosition';
+import { ELEMENT_AUTO_MOVE_SPEED, ELEMENT_AUTO_MOVE_STEP } from '@/consts';
+import { usePanZoom } from '@/context';
+import { useElements } from '@/ElementsProvider';
+import appendToCurrentPosition from '@/helpers/appendToCurrentPosition';
+import isCursorOnEdge from '@/helpers/isCursorOnEdge';
+import isEdgeVisible from '@/helpers/isEdgeVisible';
+import produceElementPosition from '@/helpers/produceElementPosition';
+import updateFamilyOfElementsPosition from '@/helpers/updateFamilyOfElementsPosition';
 
-type UseElementAutoMoveAtEdge = () => void
+type UseElementAutoMoveAtEdge = () => void;
 
 const useElementAutoMoveAtEdge: UseElementAutoMoveAtEdge = () => {
   const {
@@ -20,11 +20,7 @@ const useElementAutoMoveAtEdge: UseElementAutoMoveAtEdge = () => {
     zoomRef,
   } = usePanZoom();
 
-  const {
-    elementsRef,
-    elementsInMove,
-    lastElementMouseMoveEventRef,
-  } = useElements();
+  const { elementsRef, elementsInMove, lastElementMouseMoveEventRef } = useElements();
 
   useEffect(() => {
     if (disabledElements || !elementsInMove) return undefined;
@@ -49,6 +45,8 @@ const useElementAutoMoveAtEdge: UseElementAutoMoveAtEdge = () => {
       } else if (cursorOnEdge.bottom && !isEdgeVisible.bottom(childRef, positionRef)) {
         addPosition.y = -ELEMENT_AUTO_MOVE_STEP;
       }
+
+      if (!addPosition.x && !addPosition.y) return;
 
       appendToCurrentPosition({
         childRef,

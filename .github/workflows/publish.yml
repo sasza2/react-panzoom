@@ -12,11 +12,13 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v2
         with:
-          node-version: '14.9.0'
+          node-version: '17.3.0'
           registry-url: 'https://registry.npmjs.org'
+      - name: Install pnpm
+        run: npm install -g pnpm
       - name: Install dependencies and build
-        run: npm ci && npm run lint && npm run test && npm run build
+        run: pnpm i --frozen-lockfile && pnpm lint && pnpm test run && pnpm build
       - name: Publish package
-        run: npm publish
+        run: pnpm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

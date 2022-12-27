@@ -1,20 +1,18 @@
 import { MutableRefObject } from 'react';
 
 import { Position, Zoom } from 'types';
-import produceStyle from 'helpers/produceStyle';
-import zoomRound from 'helpers/zoomRound';
+import produceStyle from '@/helpers/produceStyle';
+import zoomRound from '@/helpers/zoomRound';
 
-type GetZoom = (props: { zoomRef: Zoom }) => () => number
+type GetZoom = (props: { zoomRef: Zoom }) => () => number;
 
 export const getZoom: GetZoom = ({ zoomRef }) => () => zoomRef.current;
 
-type SetZoom = (
-  props: {
-    childRef: MutableRefObject<HTMLDivElement>,
-    positionRef: MutableRefObject<Position>,
-    zoomRef: Zoom,
-  }
-) => (value: number) => void
+type SetZoom = (props: {
+  childRef: MutableRefObject<HTMLDivElement>;
+  positionRef: MutableRefObject<Position>;
+  zoomRef: Zoom;
+}) => (value: number) => void;
 
 export const setZoom: SetZoom = ({ childRef, positionRef, zoomRef }) => (value) => {
   const ref = childRef;
@@ -26,13 +24,13 @@ export const setZoom: SetZoom = ({ childRef, positionRef, zoomRef }) => (value) 
   });
 };
 
-type ZoomIn = SetZoom
+type ZoomIn = SetZoom;
 
 export const zoomIn: ZoomIn = ({ childRef, positionRef, zoomRef }) => (value) => {
   setZoom({ childRef, positionRef, zoomRef })(getZoom({ zoomRef })() + value);
 };
 
-type ZoomOut = SetZoom
+type ZoomOut = SetZoom;
 
 export const zoomOut: ZoomOut = ({ childRef, positionRef, zoomRef }) => (value) => {
   setZoom({ childRef, positionRef, zoomRef })(getZoom({ zoomRef })() - value);

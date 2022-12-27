@@ -3,16 +3,17 @@ import {
 } from 'react';
 
 import { Position } from 'types';
-import { usePanZoom } from 'context';
-import { onMouseUp, onMouseMove } from 'helpers/eventListener';
-import useContainerMouseDownPosition from 'hooks/useContainerMouseDownPosition';
+import { usePanZoom } from '@/context';
+import { onMouseUp, onMouseMove } from '@/helpers/eventListener';
+import getBoundingClientRect from '@/helpers/getBoundingClientRect';
+import useContainerMouseDownPosition from '@/hooks/useContainerMouseDownPosition';
 import { Boundary } from '../context/SelectContext';
 import { useSelect } from '../context';
 
 type UseBoundary = () => {
-  expanding: Position | null,
-  boundary: Boundary,
-}
+  expanding: Position | null;
+  boundary: Boundary;
+};
 
 const useBoundary: UseBoundary = () => {
   const [expanding, setExpanding] = useState<Position | null>(null);
@@ -24,7 +25,7 @@ const useBoundary: UseBoundary = () => {
   const containerMouseDownPosition = useContainerMouseDownPosition();
 
   const mouseEvent = (e: MouseEvent, positionStart: Position) => {
-    const containerSize = childRef.current.getBoundingClientRect();
+    const containerSize = getBoundingClientRect(childRef.current);
     const position = containerMouseDownPosition(e);
 
     if (position.x < 0) position.x = 0;

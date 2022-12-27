@@ -11,13 +11,10 @@
     "noImplicitAny": true,
     "outDir": "./dist/",
     "paths": {
-      "*": [
-        "node_modules/*",
-        "src/*",
-        "types/*"
-      ]
+      "@/*": ["src/*"],
+      "types": ["types/types"]
     },
-    "rootDirs": [ "src", "types" ],
-    "target": "es5",
-  },
+    "rootDirs": ["src", "types"],
+    "target": "es5"
+  }
 }

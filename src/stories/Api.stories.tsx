@@ -1,28 +1,43 @@
 import React, { useRef } from 'react';
 
+import { API as APIType } from 'types';
 import PanZoom, { Element } from '..';
 
 export default { title: 'API' };
 
+type WriteToTextarea = (
+  ref: React.MutableRefObject<HTMLTextAreaElement>
+) => (value: object) => void;
+
 export const API = () => {
-  const panZoomRef = useRef();
-  const containerChangeRef = useRef();
+  const panZoomRef = useRef<APIType>();
+  const containerChangeRef = useRef<HTMLTextAreaElement>();
   const containerPositionChangeRef = useRef();
   const containerZoomChangeRef = useRef();
   const elementsChangeRef = useRef();
 
-  const writeToTextarea = (ref) => (value) => {
+  const writeToTextarea: WriteToTextarea = (ref) => (value) => {
     const { current } = ref;
     current.value = JSON.stringify(value);
   };
 
   return (
     <div>
-      <button type="button" onClick={() => panZoomRef.current.zoomIn(0.2)}>+</button>
-      <button type="button" onClick={() => panZoomRef.current.zoomOut(0.2)}>-</button>
-      <button type="button" onClick={() => panZoomRef.current.reset()}>reset</button>
-      <button type="button" onClick={() => panZoomRef.current.move(-20, 0)}>&lt;-</button>
-      <button type="button" onClick={() => panZoomRef.current.move(20, 0)}>-&gt;</button>
+      <button type="button" onClick={() => panZoomRef.current.zoomIn(0.2)}>
+        +
+      </button>
+      <button type="button" onClick={() => panZoomRef.current.zoomOut(0.2)}>
+        -
+      </button>
+      <button type="button" onClick={() => panZoomRef.current.reset()}>
+        reset
+      </button>
+      <button type="button" onClick={() => panZoomRef.current.move(-20, 0)}>
+        &lt;-
+      </button>
+      <button type="button" onClick={() => panZoomRef.current.move(20, 0)}>
+        -&gt;
+      </button>
       <div style={{ height: 200 }}>
         <PanZoom
           ref={panZoomRef}
@@ -32,7 +47,9 @@ export const API = () => {
           onElementsChange={writeToTextarea(elementsChangeRef)}
         >
           <span>abc</span>
-          <Element id="test" x={50} y={50}>moveable</Element>
+          <Element id="test" x={50} y={50}>
+            moveable
+          </Element>
         </PanZoom>
       </div>
       <div>

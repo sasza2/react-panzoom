@@ -4,15 +4,16 @@ import {
   ZOOM_DESKTOP_THROTTLE_DURATION,
   ZOOM_NON_DESKTOP_THROTTLE_DURATION,
   ZOOM_NON_DESKTOP_MOVING_BLOCK_DELAY,
-} from 'consts';
+} from '@/consts';
 import { Zoom, ZoomEvent } from 'types';
-import { usePanZoom } from 'context';
-import isEventMobileZoom from 'helpers/isEventMobileZoom';
-import produceStyle from 'helpers/produceStyle';
-import produceBounding from 'helpers/produceBounding';
-import produceNextZoom from 'helpers/produceNextZoom';
-import touchEventToZoomInit from 'helpers/touchEventToZoomInit';
-import throttle from 'helpers/throttle';
+import { usePanZoom } from '@/context';
+import getBoundingClientRect from '@/helpers/getBoundingClientRect';
+import isEventMobileZoom from '@/helpers/isEventMobileZoom';
+import produceStyle from '@/helpers/produceStyle';
+import produceBounding from '@/helpers/produceBounding';
+import produceNextZoom from '@/helpers/produceNextZoom';
+import touchEventToZoomInit from '@/helpers/touchEventToZoomInit';
+import throttle from '@/helpers/throttle';
 
 const useZoom = (): Zoom => {
   const {
@@ -49,14 +50,14 @@ const useZoom = (): Zoom => {
   useEffect(() => {
     if (loading || disabled || disabledZoom) return undefined;
 
-    const isMobile = ('ontouchstart' in window);
+    const isMobile = 'ontouchstart' in window;
 
     const [touchEventToZoom, resetTouchEvent] = touchEventToZoomInit();
     let blockTimer: ReturnType<typeof setTimeout> = null;
 
     const wheelFunc = (e: ZoomEvent) => {
-      const parentRect = (panZoomRef.parentNode as HTMLDivElement).getBoundingClientRect();
-      const childRect = panZoomRef.getBoundingClientRect();
+      const parentRect = getBoundingClientRect(panZoomRef.parentNode as HTMLDivElement);
+      const childRect = getBoundingClientRect(panZoomRef);
 
       if (isMobile) {
         clearTimeout(blockTimer);
