@@ -12,8 +12,10 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v2
         with:
-          node-version: '16.19.0'
+          node-version: '17.3.0'
           registry-url: 'https://registry.npmjs.org'
+      - name: Install pnpm
+        run: npm install -g pnpm
       - name: Install dependencies and build
         run: pnpm i --frozen-lockfile && pnpm lint && pnpm test run && pnpm build
       - name: Publish package
