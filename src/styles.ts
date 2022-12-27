@@ -32,11 +32,6 @@ export const ELEMENT_STYLE = {
   position: 'absolute',
   left: 0,
   top: 0,
-  pointerEvents: 'all',
-};
-
-export const ELEMENT_STYLE_DISABLED = {
-  pointerEvents: 'none',
 };
 
 export const SELECT_STYLE: CSSProperties = {
