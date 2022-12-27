@@ -7,10 +7,10 @@ import loopParentNodes from './loopParentNodes';
 
 const hasScroll = (node: HTMLDivElement) => node.clientHeight < node.scrollHeight;
 
-const inNodeWindow = (node: HTMLElement | Window) => ('scrollX' in node && 'scrollY' in node);
+const isNodeWindow = (node: HTMLElement | Window) => ('scrollX' in node && 'scrollY' in node);
 
 const getScroll = (node: HTMLElement | Window): Position => {
-  if (inNodeWindow(node)) {
+  if (isNodeWindow(node)) {
     const windowNode = node as Window;
     return {
       x: windowNode.scrollX || 0,
@@ -25,7 +25,7 @@ const getScroll = (node: HTMLElement | Window): Position => {
 };
 
 const addScroll = (node: HTMLElement | Window, next: Position): Position => {
-  if (inNodeWindow(node)) {
+  if (isNodeWindow(node)) {
     node.scrollBy(next.x, next.y);
   } else {
     const elementNode = node as HTMLElement;

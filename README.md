@@ -97,7 +97,7 @@ import PanZoom, { Element } from '@sasza/react-panzoom'
 | family | string | undefined | Name of element's family, all of elements are connected during moving |
 | followers | Array\<string/id\> | [] | Similar to family, but for specified ids of elements |
 | onClick | func | null | Event on element's click |
-| omMouseUp | func | null | Event on element's mouse up |
+| onMouseUp | func | null | Event on element's mouse up |
 | x | number  | 0 | x position of element |
 | y | number  | 0 | y position of element |
 
