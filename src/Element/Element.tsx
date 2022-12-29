@@ -195,13 +195,8 @@ const Element: React.FC<ElementProps> = ({
     return classes.join(' ');
   }, [className, disabled, id]);
 
-  const elementStyle: React.CSSProperties = useMemo(() => {
-    let style = { ...ELEMENT_STYLE };
-    return style as React.CSSProperties;
-  }, [disabled]);
-
   return (
-    <div ref={elementRef} className={classNameWrapper} style={elementStyle}>
+    <div ref={elementRef} className={classNameWrapper} style={ELEMENT_STYLE}>
       {children}
     </div>
   );

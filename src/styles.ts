@@ -27,7 +27,7 @@ export const CHILD_DISABLED_STYLE = {
   userSelect: 'none',
 };
 
-export const ELEMENT_STYLE = {
+export const ELEMENT_STYLE: CSSProperties = {
   display: 'inline-block',
   position: 'absolute',
   left: 0,
