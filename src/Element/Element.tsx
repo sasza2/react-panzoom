@@ -10,7 +10,7 @@ import React, {
 
 import { ElementsInMove, ElementProps } from 'types';
 import { usePanZoom } from '@/context';
-import { ELEMENT_STYLE, ELEMENT_STYLE_DISABLED } from '@/styles';
+import { ELEMENT_STYLE } from '@/styles';
 import { useElements } from '@/ElementsProvider';
 import { onMouseDown, onMouseUp as onMouseUpListener, onMouseMove } from '@/helpers/eventListener';
 import positionFromEvent from '@/helpers/positionFromEvent';
@@ -195,14 +195,8 @@ const Element: React.FC<ElementProps> = ({
     return classes.join(' ');
   }, [className, disabled, id]);
 
-  const elementStyle: React.CSSProperties = useMemo(() => {
-    let style = { ...ELEMENT_STYLE };
-    if (disabled) style = { ...style, ...ELEMENT_STYLE_DISABLED };
-    return style as React.CSSProperties;
-  }, [disabled]);
-
   return (
-    <div ref={elementRef} className={classNameWrapper} style={elementStyle}>
+    <div ref={elementRef} className={classNameWrapper} style={ELEMENT_STYLE}>
       {children}
     </div>
   );
