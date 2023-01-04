@@ -3,7 +3,7 @@ import React, {
 } from 'react';
 import initPanZoom, { getAllowedProps } from 'panzoom-core';
 
-import { PanZoomApi, PanZoomProps } from 'types';
+import { PanZoomApi, PanZoomProps, PanZoomPropsRef } from 'types';
 import usePanZoom from './usePanZoom';
 
 const panZoomAllowedProps = getAllowedProps();
@@ -34,9 +34,10 @@ const PanZoom: React.FC<PanZoomProps & { apiRef?: MutableRefObject<PanZoomApi> }
   return render;
 };
 
-// eslint-disable-next-line react/display-name
 const PanZoomRef = forwardRef((props: PanZoomProps, ref: MutableRefObject<PanZoomApi>) => (
   <PanZoom {...props} apiRef={ref} />
-)) as React.FC<PanZoomProps & { ref?: MutableRefObject<PanZoomApi> }>;
+)) as React.FC<PanZoomPropsRef>;
+
+PanZoomRef.displayName = 'PanZoom';
 
 export default PanZoomRef;

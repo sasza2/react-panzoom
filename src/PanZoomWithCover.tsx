@@ -3,7 +3,9 @@ import React, {
 } from 'react';
 import initPanZoom, { getAllowedProps } from 'panzoom-core';
 
-import { PanZoomApi, PanZoomWithCoverProps, PanZoomWithCoverOmit } from 'types';
+import {
+  PanZoomApi, PanZoomWithCoverProps, PanZoomWithCoverOmit, PanZoomWithCoverPropsRef,
+} from 'types';
 import usePanZoom from './usePanZoom';
 
 const omitFields = ['boundary'];
@@ -77,11 +79,12 @@ const PanZoomWithCover: React.FC<
   return render;
 };
 
-// eslint-disable-next-line react/display-name
 const PanZoomWithCoverRef = forwardRef(
   (props: PanZoomWithCoverProps, ref: MutableRefObject<PanZoomApi>) => (
     <PanZoomWithCover {...props} apiRef={ref} />
   ),
-) as React.FC<PanZoomWithCoverProps & { ref?: MutableRefObject<PanZoomApi> }>;
+) as React.FC<PanZoomWithCoverPropsRef>;
+
+PanZoomWithCoverRef.displayName = 'PanZoomWithCover';
 
 export default PanZoomWithCoverRef;
