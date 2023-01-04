@@ -1,5 +1,6 @@
 # @sasza/react-panzoom
-React component for pan and zoom with possibility to moving and selecting elements inside.
+React component for pan and zoom with possibility to moving and selecting elements inside
+based on <a href="https://www.npmjs.com/panzoom-core">panzoom-core</a>.
 
 !["Preview"](docs/preview.gif "Example preview")
 
@@ -61,7 +62,7 @@ panZoomRef.current contains methods like:
 | setZoom(zoom:**number**) | Sets zoom |
 | zoomIn(zoom:**number**) | Add to current zoom, could be also negative number (it will work like zoomOut) |
 | zoomOut(zoom:**number**) | Sub from current zoom |
-| ref() | Returns node element |
+| childNode | Returns node element |
 | reset() | Reset to (0, 0, 0) |
 
 # Elements

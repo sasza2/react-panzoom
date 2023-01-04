@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 
-import { API as APIType } from 'types';
+import { PanZoomApi } from 'types';
 import PanZoom, { Element } from '..';
 
 export default { title: 'API' };
@@ -10,7 +10,7 @@ type WriteToTextarea = (
 ) => (value: object) => void;
 
 export const API = () => {
-  const panZoomRef = useRef<APIType>();
+  const panZoomRef = useRef<PanZoomApi>();
   const containerChangeRef = useRef<HTMLTextAreaElement>();
   const containerPositionChangeRef = useRef();
   const containerZoomChangeRef = useRef();

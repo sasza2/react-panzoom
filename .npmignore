@@ -1,8 +1,8 @@
 /build
-/dist/main.js
 /docs
 /src
 .eslintrc
+.github
 pnpm-lock.yaml
 test.setup.js
 tsconfig.eslint.json
