@@ -3,9 +3,11 @@ import { render, fireEvent } from '@testing-library/react';
 import { expect, it } from 'vitest';
 
 import PanZoom from './PanZoom';
-import { API } from 'types';
+import { PanZoomApi } from 'types';
 
-it('PanZoom move', () => {
+const wait = () => new Promise((resolve) => { setTimeout(resolve, 0) })
+
+it('PanZoom move', async () => {
   const { container } = render(
     <PanZoom>
       <div>abc</div>
@@ -13,8 +15,11 @@ it('PanZoom move', () => {
   );
 
   fireEvent.mouseDown(container.firstChild, { clientX: 5, clientY: 10 });
+  await wait()
   fireEvent.mouseMove(container.firstChild, { clientX: 150, clientY: 260 });
+  await wait()
   fireEvent.mouseUp(container.firstChild);
+  await wait()
 
   expect((container.firstChild.firstChild as HTMLElement).style.transform).toBe(
     'translate(145px, 250px) scale(1)'
@@ -37,7 +42,7 @@ it('PanZoom zoom', () => {
 
 it('PanZoom double zoom', () =>
   new Promise<void>((done) => {
-    const panZoomRef = createRef<API>();
+    const panZoomRef = createRef<PanZoomApi>();
     const { container } = render(
       <PanZoom ref={panZoomRef}>
         <div>abc</div>
@@ -52,8 +57,8 @@ it('PanZoom double zoom', () =>
     }, 200);
   }));
 
-it('PanZoom move on extra zoom', () => {
-  const panZoomRef = createRef<API>();
+it('PanZoom move on extra zoom', async () => {
+  const panZoomRef = createRef<PanZoomApi>();
   const { container } = render(
     <PanZoom ref={panZoomRef}>
       <div>abc</div>
@@ -63,7 +68,9 @@ it('PanZoom move on extra zoom', () => {
   panZoomRef.current.setZoom(3);
 
   fireEvent.mouseDown(container.firstChild, { clientX: 5, clientY: 10 });
+  await wait()
   fireEvent.mouseMove(container.firstChild, { clientX: 150, clientY: 260 });
+  await wait()
   fireEvent.mouseUp(container.firstChild);
 
   expect((container.firstChild.firstChild as HTMLElement).style.transform).toBe(
@@ -71,7 +78,7 @@ it('PanZoom move on extra zoom', () => {
   );
 });
 
-it('PanZoom move loop', () => {
+it('PanZoom move loop', async () => {
   const { container } = render(
     <PanZoom>
       <div style={{ width: 200, height: 300 }}>abc</div>
@@ -79,11 +86,13 @@ it('PanZoom move loop', () => {
   );
 
   fireEvent.mouseDown(container.firstChild, { clientX: 5, clientY: 10 });
+  await wait()
   for (let i = 0; i < 30; i += 1) {
     fireEvent.mouseMove(container.firstChild, {
       clientX: i * 20,
       clientY: i * 30,
     });
+    await wait()
   }
   fireEvent.mouseUp(container.firstChild);
 
@@ -92,7 +101,7 @@ it('PanZoom move loop', () => {
   );
 });
 
-it('PanZoom boundary', () => {
+it('PanZoom boundary', async () => {
   const { container } = render(
     <PanZoom
       boundary={{
@@ -107,23 +116,28 @@ it('PanZoom boundary', () => {
   );
 
   fireEvent.mouseDown(container.firstChild, { clientX: 5, clientY: 10 });
+  await wait()
   // Left
   fireEvent.mouseMove(container.firstChild, { clientX: -200, clientY: 100 });
+  await wait()
   expect((container.firstChild.firstChild as HTMLElement).style.transform).toBe(
     'translate(-100px, 90px) scale(1)'
   );
   // Right
   fireEvent.mouseMove(container.firstChild, { clientX: 400, clientY: 100 });
+  await wait()
   expect((container.firstChild.firstChild as HTMLElement).style.transform).toBe(
     'translate(300px, 90px) scale(1)'
   );
   // Top
   fireEvent.mouseMove(container.firstChild, { clientX: 400, clientY: -300 });
+  await wait()
   expect((container.firstChild.firstChild as HTMLElement).style.transform).toBe(
     'translate(300px, -200px) scale(1)'
   );
   // Bottom
   fireEvent.mouseMove(container.firstChild, { clientX: 400, clientY: 600 });
+  await wait()
   expect((container.firstChild.firstChild as HTMLElement).style.transform).toBe(
     'translate(300px, 400px) scale(1)'
   );

@@ -1,7 +1,7 @@
 import React, { useCallback, useLayoutEffect, useState } from 'react';
 import type { Story } from '@ladle/react';
 
-import { API } from 'types';
+import { PanZoomApi } from 'types';
 import PanZoom, { Element } from '..';
 
 export default {
@@ -157,7 +157,7 @@ export const imageSVG = () => (
 );
 
 export const imageSVGAnimation = () => {
-  const ref = React.createRef<API>();
+  const ref = React.createRef<PanZoomApi>();
   useLayoutEffect(() => {
     const timer = setInterval(() => {
       ref.current.setPosition(120, Math.floor(Math.random() * 240 - 120));
