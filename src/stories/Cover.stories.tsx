@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import { API, OnElementsChange, Position } from 'types';
-import getBoundingClientRect from '@/helpers/getBoundingClientRect';
+import { PanZoomApi, OnElementsChange, Position } from 'types';
 import { PanZoomWithCover, Element } from '..';
 
 import styles from './Cover.module.css';
@@ -32,7 +31,7 @@ const Pin = () => (
 export const cover = () => {
   const [distance, setDistance] = useState<number>(null);
   const distanceThrottleRef = useRef<ReturnType<typeof setTimeout>>(null);
-  const panZoomRef = useRef<API>();
+  const panZoomRef = useRef<PanZoomApi>();
   const svgLineRef = useRef<SVGSVGElement>(null);
   const pathRef = useRef<SVGPathElement>(null);
   const elementsRef = useRef(PINS_INITIAL);
@@ -56,7 +55,7 @@ export const cover = () => {
   };
 
   const updateViewBox = () => {
-    const { width, height } = getBoundingClientRect(panZoomRef.current.ref().current);
+    const { width, height } = panZoomRef.current.childNode.getBoundingClientRect();
     svgLineRef.current.setAttribute('viewBox', `0 0 ${width} ${height}`);
   };
 
@@ -97,10 +96,10 @@ export const cover = () => {
       </div>
       <div style={{ width: 400, height: 500 }}>
         <PanZoomWithCover
-          apiRef={panZoomRef}
           cover="https://raw.githubusercontent.com/sasza2/react-panzoom/master/docs/openstreetmap.jpg"
           onCoverLoad={onCoverLoad}
           onElementsChange={onElementsChange}
+          ref={panZoomRef}
         >
           <Element id="authors">
             map authors ©

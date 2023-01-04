@@ -1,6 +1,4 @@
-import { ReactNode, RefObject, MutableRefObject } from 'react';
-
-type Edge = string | number;
+import React from 'react';
 
 export type Boundary = {
   top?: Edge;
@@ -11,75 +9,35 @@ export type Boundary = {
 
 export type BoundaryProp = Boundary | boolean;
 
+type Edge = string | number;
+
 export type Position = {
   x: number;
   y: number;
 };
-
-export type ElementId = string | number;
-
-export type Element = {
-  family?: string;
-  id: ElementId;
-  node: RefObject<HTMLDivElement>;
-  position: Position;
-};
-
-export type Elements = MutableRefObject<Record<ElementId, Element>>;
-
-export type Zoom = MutableRefObject<number>;
-
-export type ZoomEvent = {
-  deltaY: number;
-  clientX: number;
-  clientY: number;
-};
-
-export type ElementsInMove = Record<ElementId, Position>;
-
-export type ClientPosition = {
-  clientX: number;
-  clientY: number;
-};
-
-export type OnElementsChange = (elements: Record<string, Position>) => unknown;
-
-type OnContainerChange = ({ position, zoom }: { position: Position; zoom: number }) => unknown;
-
-type PanZoomCommon = {
-  apiRef?: MutableRefObject<API>;
-  boundary?: BoundaryProp;
-  className?: string;
-  disabled?: boolean;
-  disabledElements?: boolean;
-  disabledMove?: boolean;
-  disabledUserSelect?: boolean;
-  disabledZoom?: boolean;
-  onElementsChange?: OnElementsChange;
-  onContainerChange?: OnContainerChange;
-  onContainerClick?: (
-    click: {
-      e: MouseEvent;
-      stop: () => unknown;
-    } & Position
-  ) => unknown;
-  onContainerPositionChange?: OnContainerChange;
-  onContainerZoomChange?: OnContainerChange;
-  selecting?: boolean;
-  zoomInitial?: number;
-  zoomMax?: number;
-  zoomMin?: number;
-  zoomSpeed?: number;
-};
-
-export type PanZoomProps = PanZoomCommon & Size;
 
 export type Size = {
   height?: string | number;
   width?: string | number;
 };
 
+export type Ref <T> = { current: T | undefined }
+
+export type OnElementsChange = (elements: Record<string, Position>) => unknown;
+
+type OnContainerChange = ({ position, zoom }: { position: Position; zoom: number }) => unknown;
+
+type OnContainerClick = (
+  click: {
+    e: MouseEvent;
+    stop: () => unknown;
+  } & Position
+) => unknown;
+
+export type Zoom = Ref<number>;
+
 export type API = {
+  childNode: HTMLDivElement,
   move: (x: number, y: number) => void;
   getElements: () => Elements['current'];
   updateElementPosition: (id: string | number, position: Position) => void;
@@ -89,8 +47,53 @@ export type API = {
   setZoom: (zoom: number) => void;
   zoomIn: (zoom: number) => void;
   zoomOut: (zoom: number) => void;
-  ref: () => MutableRefObject<HTMLDivElement>;
   reset: () => void;
+};
+
+export type PanZoomOptions = {
+  boundary?: BoundaryProp;
+  className?: string;
+  disabled?: boolean;
+  disabledElements?: boolean;
+  disabledMove?: boolean;
+  disabledUserSelect?: boolean;
+  disabledZoom?: boolean;
+  onElementsChange?: OnElementsChange;
+  onContainerChange?: OnContainerChange;
+  onContainerClick?: OnContainerClick,
+  onContainerPositionChange?: OnContainerChange;
+  onContainerZoomChange?: OnContainerChange;
+  selecting?: boolean;
+  zoomInitial?: number;
+  zoomMax?: number;
+  zoomMin?: number;
+  zoomSpeed?: number;
+} & Size
+
+export type PanZoomProps = React.PropsWithChildren<PanZoomOptions>
+
+export type PanZoomWithCoverOmit = Omit<PanZoomOptions, 'boundary'>
+
+export type PanZoomWithCoverProps = React.PropsWithChildren<{
+  cover: string,
+  onCoverLoad?: () => void,
+} & PanZoomWithCoverOmit>
+
+export type PanZoomApi = {
+  addElement: (node: HTMLDivElement, elementOptions: ElementOptions) => ElementApi,
+  destroy: () => void,
+  setOptions: (options: PanZoomOptions) => void,
+} & API
+
+export type ElementId = string | number;
+
+export type Elements = Ref<Record<ElementId, Element>>;
+
+export type Element = {
+  family?: string;
+  id: ElementId;
+  node: Ref<HTMLDivElement>;
+  position: Position;
 };
 
 type ElementOnClick = (
@@ -110,8 +113,7 @@ type ElementOnMouseUp = (
   } & Position
 ) => unknown;
 
-export type ElementProps = {
-  children: ReactNode;
+export type ElementOptions = {
   className?: string;
   disabled?: boolean;
   draggableSelector?: string;
@@ -124,13 +126,9 @@ export type ElementProps = {
   y?: number;
 };
 
-export type PanZoomDefaultProps = {
-  children: ReactNode;
-} & PanZoomProps;
+export type ElementProps = React.PropsWithChildren<ElementOptions>
 
-export type PanZoomWithCoverProps = {
-  children: ReactNode;
-  className?: string;
-  onCoverLoad?: () => void;
-  cover: string;
-} & PanZoomCommon;
+export type ElementApi = {
+  destroy: () => void,
+  setOptions: (options: ElementOptions) => void,
+}
