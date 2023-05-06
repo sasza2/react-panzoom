@@ -1,4 +1,7 @@
 import React from 'react';
+import { API } from 'panzoom-core';
+
+export { API } from 'panzoom-core';
 
 export type Boundary = {
   top?: Edge;
@@ -35,20 +38,6 @@ type OnContainerClick = (
 ) => unknown;
 
 export type Zoom = Ref<number>;
-
-export type API = {
-  childNode: HTMLDivElement,
-  move: (x: number, y: number) => void;
-  getElements: () => Elements['current'];
-  updateElementPosition: (id: string | number, position: Position) => void;
-  getPosition: () => Position;
-  setPosition: (x: number, y: number) => void;
-  getZoom: () => number;
-  setZoom: (zoom: number) => void;
-  zoomIn: (zoom: number) => void;
-  zoomOut: (zoom: number) => void;
-  reset: () => void;
-};
 
 export type PanZoomOptions = {
   boundary?: BoundaryProp;
@@ -131,6 +120,7 @@ export type ElementOptions = {
   draggableSelector?: string;
   family?: string;
   followers?: Array<ElementId>;
+  height?: number;
   id: ElementId;
   onAfterResize?: ElementOnAfterResize;
   onClick?: ElementOnClick;
@@ -139,6 +129,7 @@ export type ElementOptions = {
   resizedMaxWidth?: number;
   resizedMinWidth?: number;
   resizerWidth?: number;
+  width?: number;
   x?: number;
   y?: number;
 };

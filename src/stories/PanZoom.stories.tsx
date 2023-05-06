@@ -234,7 +234,7 @@ export const resizableElements = () => (
       width={800}
       height={400}
     >
-      <Element id="orange" resizable resizedMaxWidth={400}>
+      <Element id="orange" resizable resizedMaxWidth={400} width={100}>
         <div
           style={{
             aspectRatio: '1 / 1',
