@@ -11,7 +11,7 @@ export default {
 export const rectangles: Story<{
   width: number;
   height: number;
-  containerWidth: number;
+  containerWidth: string | number;
   marginTop: number;
   marginBottom: number;
   marginLeft: number;
@@ -204,6 +204,60 @@ export const boxBounding = () => (
             alignItems: 'center',
             justifyContent: 'center',
             width: 60,
+            height: 60,
+            backgroundColor: 'red',
+            fontSize: 14,
+          }}
+        >
+          <span>or me</span>
+        </div>
+      </Element>
+    </PanZoom>
+  </div>
+);
+
+export const resizableElements = () => (
+  <div style={{ border: '1px dashed #000', height: 400 }}>
+    <style
+      // eslint-disable-next-line react/no-danger
+      dangerouslySetInnerHTML={{
+        __html: `
+          .react-panzoom__in {
+            background-color: #ddd;
+          }
+        `,
+      }}
+    />
+    <PanZoom
+      disabledUserSelect
+      boundary
+      width={800}
+      height={400}
+    >
+      <Element id="orange" resizable resizedMaxWidth={400}>
+        <div
+          style={{
+            aspectRatio: '1 / 1',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderRadius: '50%',
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'orange',
+            fontSize: 14,
+          }}
+        >
+          <span>resize me</span>
+        </div>
+      </Element>
+      <Element id="red" x={100} y={150} resizable>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '100%',
             height: 60,
             backgroundColor: 'red',
             fontSize: 14,
