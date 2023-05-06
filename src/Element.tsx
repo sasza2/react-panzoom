@@ -11,6 +11,7 @@ const Element: React.FC<ElementProps> = ({
   draggableSelector,
   family,
   followers,
+  height,
   id,
   onAfterResize,
   onClick,
@@ -19,6 +20,7 @@ const Element: React.FC<ElementProps> = ({
   resizedMaxWidth,
   resizedMinWidth,
   resizerWidth,
+  width,
   x,
   y,
 }) => {
@@ -33,6 +35,7 @@ const Element: React.FC<ElementProps> = ({
     draggableSelector,
     family,
     followers,
+    height,
     onAfterResize,
     onClick,
     onMouseUp,
@@ -40,6 +43,7 @@ const Element: React.FC<ElementProps> = ({
     resizedMaxWidth,
     resizedMinWidth,
     resizerWidth,
+    width,
     x,
     y,
   };
@@ -58,6 +62,7 @@ const Element: React.FC<ElementProps> = ({
     draggableSelector,
     family,
     JSON.stringify(followers),
+    height,
     id,
     onAfterResize,
     onClick,
@@ -66,6 +71,7 @@ const Element: React.FC<ElementProps> = ({
     resizedMaxWidth,
     resizedMinWidth,
     resizerWidth,
+    width,
     x,
     y,
   ]);
