@@ -102,6 +102,12 @@ export type Element = {
   position: Position;
 };
 
+type ElementOnAfterResize = (
+  props: {
+    id: ElementId;
+  }
+) => unknown;
+
 type ElementOnClick = (
   props: {
     id: ElementId;
@@ -126,8 +132,13 @@ export type ElementOptions = {
   family?: string;
   followers?: Array<ElementId>;
   id: ElementId;
+  onAfterResize?: ElementOnAfterResize;
   onClick?: ElementOnClick;
   onMouseUp?: ElementOnMouseUp;
+  resizable?: boolean;
+  resizedMaxWidth?: number;
+  resizedMinWidth?: number;
+  resizerWidth?: number;
   x?: number;
   y?: number;
 };

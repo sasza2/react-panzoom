@@ -1,5 +1,5 @@
 # @sasza/react-panzoom
-React component for pan and zoom with possibility to moving and selecting elements inside
+React component for pan and zoom with possibility to moving, resizing and selecting elements inside
 based on <a href="https://www.npmjs.com/panzoom-core">panzoom-core</a>.
 
 !["Preview"](docs/preview.gif "Example preview")
@@ -97,8 +97,13 @@ import PanZoom, { Element } from '@sasza/react-panzoom'
 | draggableSelector | string | undefined | Selector for dragging element |
 | family | string | undefined | Name of element's family, all of elements are connected during moving |
 | followers | Array\<string/id\> | [] | Similar to family, but for specified ids of elements |
-| onClick | func | null | Event on element's click |
-| onMouseUp | func | null | Event on element's mouse up |
+| onAfterResize | func | null | Event after resizing element |
+| onClick | func | null | Event on clicking at element |
+| onMouseUp | func | null | Event on mouse up after clicking at element |
+| resizable | bool | false | Is element resizable |
+| resizedMaxWidth | number | undefined | Maximum width of resized element |
+| resizedMinWidth | number | 15 | Minimum width of resized element |
+| resizerWidth | number  | 15 | Width of resizer element |
 | x | number  | 0 | x position of element |
 | y | number  | 0 | y position of element |
 
