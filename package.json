@@ -56,8 +56,8 @@
     "eslint-plugin-jsx-a11y": "6.7.1",
     "eslint-plugin-react": "7.32.2",
     "jsdom": "22.0.0",
-    "react": "16.14.0",
-    "react-dom": "16.14.0",
+    "react": "18.0.0",
+    "react-dom": "18.0.0",
     "typescript": "5.0.4",
     "vite": "4.3.5",
     "vitest": "0.31.0"
