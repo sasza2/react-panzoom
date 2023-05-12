@@ -1,6 +1,6 @@
 {
   "name": "@sasza/react-panzoom",
-  "version": "1.8.3",
+  "version": "1.8.4",
   "description": "React component for pan and zoom with possibility to moving, resizing and selecting elements inside",
   "main": "dist/main.umd.cjs",
   "module": "./dist/main.js",
@@ -66,6 +66,6 @@
     "react": ">=16.14.0"
   },
   "dependencies": {
-    "panzoom-core": "1.1.2"
+    "panzoom-core": "1.1.3"
   }
 }
