@@ -1,7 +1,18 @@
 import React from 'react';
-import { API } from 'panzoom-core';
 
-export { API } from 'panzoom-core';
+export type API = {
+  childNode: HTMLDivElement,
+  move: (x: number, y: number) => void;
+  getElements: () => Elements['current'];
+  updateElementPosition: (id: string | number, position: Position) => void;
+  getPosition: () => Position;
+  setPosition: (x: number, y: number) => void;
+  getZoom: () => number;
+  setZoom: (zoom: number) => void;
+  zoomIn: (zoom: number) => void;
+  zoomOut: (zoom: number) => void;
+  reset: () => void;
+};
 
 export type Boundary = {
   top?: Edge;
