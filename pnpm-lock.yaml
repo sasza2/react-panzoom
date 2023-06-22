@@ -2,8 +2,8 @@ lockfileVersion: '6.0'
 
 dependencies:
   panzoom-core:
-    specifier: 1.1.7
-    version: 1.1.7
+    specifier: 1.1.8
+    version: 1.1.8
 
 devDependencies:
   '@ladle/react':
@@ -29,7 +29,7 @@ devDependencies:
     version: 8.40.0
   eslint-config-airbnb:
     specifier: 19.0.4
-    version: 19.0.4(eslint-plugin-import@2.27.5)(eslint-plugin-jsx-a11y@6.7.1)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.32.2)(eslint@8.40.0)
+    version: 19.0.4(eslint-plugin-import@2.27.5)(eslint-plugin-jsx-a11y@6.7.1)(eslint-plugin-react-hooks@4.3.0)(eslint-plugin-react@7.32.2)(eslint@8.40.0)
   eslint-import-resolver-alias:
     specifier: 1.1.2
     version: 1.1.2(eslint-plugin-import@2.27.5)
@@ -42,6 +42,9 @@ devDependencies:
   eslint-plugin-react:
     specifier: 7.32.2
     version: 7.32.2(eslint@8.40.0)
+  eslint-plugin-react-hooks:
+    specifier: 4.3.0
+    version: 4.3.0(eslint@8.40.0)
   jsdom:
     specifier: 22.0.0
     version: 22.0.0
@@ -56,7 +59,7 @@ devDependencies:
     version: 5.0.4
   vite:
     specifier: 4.3.9
-    version: 4.3.9(@types/node@20.3.1)
+    version: 4.3.9
   vitest:
     specifier: 0.31.0
     version: 0.31.0(jsdom@22.0.0)
@@ -2154,7 +2157,7 @@ packages:
       semver: 6.3.0
     dev: true
 
-  /eslint-config-airbnb@19.0.4(eslint-plugin-import@2.27.5)(eslint-plugin-jsx-a11y@6.7.1)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.32.2)(eslint@8.40.0):
+  /eslint-config-airbnb@19.0.4(eslint-plugin-import@2.27.5)(eslint-plugin-jsx-a11y@6.7.1)(eslint-plugin-react-hooks@4.3.0)(eslint-plugin-react@7.32.2)(eslint@8.40.0):
     resolution: {integrity: sha512-T75QYQVQX57jiNgpF9r1KegMICE94VYwoFQyMGhrvc+lB8YF2E/M/PYDaQe1AJcWaEgqLE+ErXV1Og/+6Vyzew==}
     engines: {node: ^10.12.0 || ^12.22.0 || ^14.17.0 || >=16.0.0}
     peerDependencies:
@@ -2169,7 +2172,7 @@ packages:
       eslint-plugin-import: 2.27.5(@typescript-eslint/parser@5.59.2)(eslint@8.40.0)
       eslint-plugin-jsx-a11y: 6.7.1(eslint@8.40.0)
       eslint-plugin-react: 7.32.2(eslint@8.40.0)
-      eslint-plugin-react-hooks: 4.6.0(eslint@8.40.0)
+      eslint-plugin-react-hooks: 4.3.0(eslint@8.40.0)
       object.assign: 4.1.4
       object.entries: 1.1.6
     dev: true
@@ -2280,8 +2283,8 @@ packages:
       semver: 6.3.0
     dev: true
 
-  /eslint-plugin-react-hooks@4.6.0(eslint@8.40.0):
-    resolution: {integrity: sha512-oFc7Itz9Qxh2x4gNHStv3BqJq54ExXmfC+a1NjAta66IAN87Wu0R/QArgIS9qKzX3dXKPI9H5crl9QchNMY9+g==}
+  /eslint-plugin-react-hooks@4.3.0(eslint@8.40.0):
+    resolution: {integrity: sha512-XslZy0LnMn+84NEG9jSGR6eGqaZB3133L8xewQo3fQagbQuGt7a63gf+P1NGKZavEYEC3UXaWEAA/AqDkuN6xA==}
     engines: {node: '>=10'}
     peerDependencies:
       eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0
@@ -4368,8 +4371,8 @@ packages:
       p-limit: 3.1.0
     dev: true
 
-  /panzoom-core@1.1.7:
-    resolution: {integrity: sha512-cgRTo2cqUieaDDj5ZIutmlA9gSczNia8Jlhaje/H8RJm7K8RXEJF220HXkhMnIj0oPOuTh1/SdihKvVmHbgwgw==}
+  /panzoom-core@1.1.8:
+    resolution: {integrity: sha512-y0rC1BlWQrMPiHGCqWynXYhrPBbckHe/2CE75eO32jObTpg+Vz9YMUG6XM7Bj5b0seMLrMmQ52A4E4GpDPBh0w==}
     dev: false
 
   /parent-module@1.0.1:
@@ -5424,6 +5427,38 @@ packages:
       esbuild: 0.17.19
       postcss: 8.4.24
       resolve: 1.22.2
+      rollup: 3.25.1
+    optionalDependencies:
+      fsevents: 2.3.2
+    dev: true
+
+  /vite@4.3.9:
+    resolution: {integrity: sha512-qsTNZjO9NoJNW7KnOrgYwczm0WctJ8m/yqYAMAK9Lxt4SoySUfS5S8ia9K7JHpa3KEeMfyF8LoJ3c5NeBJy6pg==}
+    engines: {node: ^14.18.0 || >=16.0.0}
+    hasBin: true
+    peerDependencies:
+      '@types/node': '>= 14'
+      less: '*'
+      sass: '*'
+      stylus: '*'
+      sugarss: '*'
+      terser: ^5.4.0
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+      less:
+        optional: true
+      sass:
+        optional: true
+      stylus:
+        optional: true
+      sugarss:
+        optional: true
+      terser:
+        optional: true
+    dependencies:
+      esbuild: 0.17.19
+      postcss: 8.4.24
       rollup: 3.25.1
     optionalDependencies:
       fsevents: 2.3.2
