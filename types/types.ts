@@ -6,6 +6,7 @@ export type API = {
   getElements: () => Elements['current'];
   getElementsInMove: () => ElementsInMove,
   updateElementPosition: (id: string | number, position: Position) => void;
+  updateElementPositionSilent: (id: string | number, position: Position) => void;
   getPosition: () => Position;
   setPosition: (x: number, y: number) => void;
   getZoom: () => number;
