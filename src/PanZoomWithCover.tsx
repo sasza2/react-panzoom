@@ -68,7 +68,7 @@ const PanZoomWithCover: React.FC<
       if (apiRef && 'current' in apiRef) apiRef.current = panZoomRef.current;
 
       setInitialized(true);
-      onCoverLoad();
+      if (onCoverLoad) onCoverLoad();
     };
 
     return () => {
