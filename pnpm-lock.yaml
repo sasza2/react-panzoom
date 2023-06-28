@@ -2,8 +2,8 @@ lockfileVersion: '6.0'
 
 dependencies:
   panzoom-core:
-    specifier: 1.1.9
-    version: 1.1.9
+    specifier: 1.1.10
+    version: 1.1.10
 
 devDependencies:
   '@ladle/react':
@@ -4371,8 +4371,8 @@ packages:
       p-limit: 3.1.0
     dev: true
 
-  /panzoom-core@1.1.9:
-    resolution: {integrity: sha512-X8ns4UpcDIQo1EdR9dNAdjgPKt8HJyfYsMW0ZRK3ofgrau1J2cC2Qo0Q9fIFCLakVIMJy5IpkjnNRGQ16+p3Uw==}
+  /panzoom-core@1.1.10:
+    resolution: {integrity: sha512-1PVh9jxVJ7sVlhTu7kdEXUkh60bedgP7TKdCo+84IcF/xS7SKhH22HnO+qtAaZ5SmjTUuXVwdcLU14Z23dfa/g==}
     dev: false
 
   /parent-module@1.0.1:
