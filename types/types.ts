@@ -58,6 +58,8 @@ export type PanZoomOptions = {
   disabled?: boolean;
   disabledElements?: boolean;
   disabledMove?: boolean;
+  disabledScrollHorizontal?: boolean;
+  disabledScrollVertical?: boolean;
   disabledUserSelect?: boolean;
   disabledZoom?: boolean;
   elementsAutoMoveAtEdge?: boolean;
@@ -67,6 +69,7 @@ export type PanZoomOptions = {
   onContainerPositionChange?: OnContainerChange;
   onContainerZoomChange?: OnContainerChange;
   selecting?: boolean;
+  scrollSpeed?: number,
   zoomInitial?: number;
   zoomMax?: number;
   zoomMin?: number;
