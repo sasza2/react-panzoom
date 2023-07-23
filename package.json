@@ -1,6 +1,6 @@
 {
   "name": "@sasza/react-panzoom",
-  "version": "1.9.0",
+  "version": "1.9.1",
   "description": "React component for pan and zoom with possibility to moving, resizing and selecting elements inside",
   "main": "dist/main.umd.cjs",
   "module": "./dist/main.js",
@@ -43,30 +43,30 @@
     "[module-name]": false
   },
   "devDependencies": {
-    "@ladle/react": "2.12.3",
-    "@testing-library/jest-dom": "5.16.5",
+    "@ladle/react": "2.16.1",
+    "@testing-library/jest-dom": "5.17.0",
     "@testing-library/react": "14.0.0",
     "@types/react": "^18.0.26",
-    "@typescript-eslint/eslint-plugin": "5.59.2",
-    "@typescript-eslint/parser": "5.59.2",
-    "eslint": "8.40.0",
+    "@typescript-eslint/eslint-plugin": "6.1.0",
+    "@typescript-eslint/parser": "6.1.0",
+    "eslint": "8.45.0",
     "eslint-config-airbnb": "19.0.4",
     "eslint-import-resolver-alias": "1.1.2",
     "eslint-plugin-import": "2.27.5",
     "eslint-plugin-jsx-a11y": "6.7.1",
-    "eslint-plugin-react": "7.32.2",
-    "eslint-plugin-react-hooks": "4.3.0",
-    "jsdom": "22.0.0",
+    "eslint-plugin-react": "7.33.0",
+    "eslint-plugin-react-hooks": "4.6.0",
+    "jsdom": "22.1.0",
     "react": "18.0.0",
     "react-dom": "18.0.0",
-    "typescript": "5.0.4",
-    "vite": "4.3.9",
-    "vitest": "0.31.0"
+    "typescript": "5.1.6",
+    "vite": "4.4.6",
+    "vitest": "0.33.0"
   },
   "peerDependencies": {
     "react": ">=16.14.0"
   },
   "dependencies": {
-    "panzoom-core": "1.2.2"
+    "panzoom-core": "1.2.4"
   }
 }
