@@ -1,6 +1,6 @@
 import { ElementProps, PanZoomPropsRef, PanZoomWithCoverPropsRef } from './types';
 
-export { API } from './types';
+export { API, PanZoomOptions } from './types';
 
 export default function PanZoom(props: PanZoomPropsRef): JSX.Element;
 
