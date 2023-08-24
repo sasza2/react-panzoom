@@ -56,11 +56,13 @@ const Element: React.FC<ElementProps> = ({
   }, [initialized]);
 
   useDidUpdateEffect(() => {
+    if (!initialized || !elementRef.current) return
     elementRef.current.setOptions(options);
   }, [
     disabled,
     draggableSelector,
     family,
+    initialized,
     JSON.stringify(followers),
     height,
     id,
