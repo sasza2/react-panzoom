@@ -15,6 +15,7 @@ const Element: React.FC<ElementProps> = ({
   id,
   onAfterResize,
   onClick,
+  onContextMenu,
   onMouseUp,
   resizable,
   resizedMaxWidth,
@@ -38,6 +39,7 @@ const Element: React.FC<ElementProps> = ({
     height,
     onAfterResize,
     onClick,
+    onContextMenu,
     onMouseUp,
     resizable,
     resizedMaxWidth,
@@ -56,7 +58,7 @@ const Element: React.FC<ElementProps> = ({
   }, [initialized]);
 
   useDidUpdateEffect(() => {
-    if (!initialized || !elementRef.current) return
+    if (!initialized || !elementRef.current) return;
     elementRef.current.setOptions(options);
   }, [
     disabled,
@@ -68,6 +70,7 @@ const Element: React.FC<ElementProps> = ({
     id,
     onAfterResize,
     onClick,
+    onContextMenu,
     onMouseUp,
     resizable,
     resizedMaxWidth,
