@@ -51,6 +51,12 @@ type OnContainerClick = (
   } & Position
 ) => unknown;
 
+type OnContextMenu = (
+  click: {
+    e: MouseEvent;
+  } & Position
+) => unknown;
+
 export type Zoom = Ref<number>;
 
 export type PanZoomOptions = {
@@ -64,6 +70,7 @@ export type PanZoomOptions = {
   disabledUserSelect?: boolean;
   disabledZoom?: boolean;
   elementsAutoMoveAtEdge?: boolean;
+  onContextMenu?: OnContextMenu;
   onElementsChange?: OnElementsChange;
   onContainerChange?: OnContainerChange;
   onContainerClick?: OnContainerClick,
@@ -134,6 +141,14 @@ type ElementOnMouseUp = (
   } & Position
 ) => unknown;
 
+type ElementOnContextMenu = (
+  props: {
+    id: ElementId;
+    family?: string;
+    e: MouseEvent;
+  } & Position
+) => unknown;
+
 export type ElementOptions = {
   className?: string;
   disabled?: boolean;
@@ -144,6 +159,7 @@ export type ElementOptions = {
   id: ElementId;
   onAfterResize?: ElementOnAfterResize;
   onClick?: ElementOnClick;
+  onContextMenu?: ElementOnContextMenu;
   onMouseUp?: ElementOnMouseUp;
   resizable?: boolean;
   resizedMaxWidth?: number;
