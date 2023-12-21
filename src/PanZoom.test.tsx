@@ -16,7 +16,7 @@ it('PanZoom move', async () => {
 
   fireEvent.mouseDown(container.firstChild, { clientX: 5, clientY: 10 });
   await wait()
-  fireEvent.mouseMove(container.firstChild, { clientX: 150, clientY: 260 });
+  fireEvent.mouseMove(container.firstChild, { clientX: 150, clientY: 260, buttons: 1 });
   await wait()
   fireEvent.mouseUp(container.firstChild);
   await wait()
@@ -69,7 +69,7 @@ it('PanZoom move on extra zoom', async () => {
 
   fireEvent.mouseDown(container.firstChild, { clientX: 5, clientY: 10 });
   await wait()
-  fireEvent.mouseMove(container.firstChild, { clientX: 150, clientY: 260 });
+  fireEvent.mouseMove(container.firstChild, { clientX: 150, clientY: 260, buttons: 1 });
   await wait()
   fireEvent.mouseUp(container.firstChild);
 
@@ -91,6 +91,7 @@ it('PanZoom move loop', async () => {
     fireEvent.mouseMove(container.firstChild, {
       clientX: i * 20,
       clientY: i * 30,
+      buttons: 1,
     });
     await wait()
   }
@@ -118,25 +119,25 @@ it('PanZoom boundary', async () => {
   fireEvent.mouseDown(container.firstChild, { clientX: 5, clientY: 10 });
   await wait()
   // Left
-  fireEvent.mouseMove(container.firstChild, { clientX: -200, clientY: 100 });
+  fireEvent.mouseMove(container.firstChild, { clientX: -200, clientY: 100, buttons: 1 });
   await wait()
   expect((container.firstChild.firstChild as HTMLElement).style.transform).toBe(
     'translate(-100px, 90px) scale(1)'
   );
   // Right
-  fireEvent.mouseMove(container.firstChild, { clientX: 400, clientY: 100 });
+  fireEvent.mouseMove(container.firstChild, { clientX: 400, clientY: 100, buttons: 1 });
   await wait()
   expect((container.firstChild.firstChild as HTMLElement).style.transform).toBe(
     'translate(300px, 90px) scale(1)'
   );
   // Top
-  fireEvent.mouseMove(container.firstChild, { clientX: 400, clientY: -300 });
+  fireEvent.mouseMove(container.firstChild, { clientX: 400, clientY: -300, buttons: 1 });
   await wait()
   expect((container.firstChild.firstChild as HTMLElement).style.transform).toBe(
     'translate(300px, -200px) scale(1)'
   );
   // Bottom
-  fireEvent.mouseMove(container.firstChild, { clientX: 400, clientY: 600 });
+  fireEvent.mouseMove(container.firstChild, { clientX: 400, clientY: 600, buttons: 1 });
   await wait()
   expect((container.firstChild.firstChild as HTMLElement).style.transform).toBe(
     'translate(300px, 400px) scale(1)'
