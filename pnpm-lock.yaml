@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   panzoom-core:
-    specifier: 1.4.2
-    version: 1.4.2
+    specifier: 1.4.3
+    version: 1.4.3
 
 devDependencies:
   '@ladle/react':
@@ -4332,8 +4332,8 @@ packages:
       p-limit: 3.1.0
     dev: true
 
-  /panzoom-core@1.4.2:
-    resolution: {integrity: sha512-2j+g3aw7YH1FzosB2gkmmbzU4ylf66GVrZPxtnfDR3bAOZ7ZGrSvX2PRQ6BzRp3L7nxajqXHkarXgSTiP1yXaQ==}
+  /panzoom-core@1.4.3:
+    resolution: {integrity: sha512-SSGJlmkISuw8t1LZMlwsZKVhlg3auqpQQCb1a/v+vIqCJJs5yEKuCWb7od/FRdnj3znN/uZrg/ur0pbxiAnKAQ==}
     dev: false
 
   /parent-module@1.0.1:
