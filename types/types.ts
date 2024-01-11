@@ -118,6 +118,12 @@ export type Element = {
   position: Position;
 };
 
+type ElementOnStartResizing = (
+  props: {
+    id: ElementId;
+  }
+) => unknown;
+
 type ElementOnAfterResize = (
   props: {
     id: ElementId;
@@ -161,6 +167,7 @@ export type ElementOptions = {
   onClick?: ElementOnClick;
   onContextMenu?: ElementOnContextMenu;
   onMouseUp?: ElementOnMouseUp;
+  onStartResizing?: ElementOnStartResizing;
   resizable?: boolean;
   resizedMaxWidth?: number;
   resizedMinWidth?: number;
