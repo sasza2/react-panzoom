@@ -59,6 +59,11 @@ type OnContextMenu = (
 
 export type Zoom = Ref<number>;
 
+export type ZoomPosition = {
+  x?: number | 'center',
+  y?: number | 'center',
+}
+
 export type PanZoomOptions = {
   boundary?: BoundaryProp;
   className?: string;
@@ -81,6 +86,7 @@ export type PanZoomOptions = {
   zoomInitial?: number;
   zoomMax?: number;
   zoomMin?: number;
+  zoomPosition?: ZoomPosition;
   zoomSpeed?: number;
 } & Size
 
