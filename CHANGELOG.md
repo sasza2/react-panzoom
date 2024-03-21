@@ -1,5 +1,11 @@
 # @sasza/react-panzoom
 
+## 1.14.0
+
+### Minor Changes
+
+- b647212: zoom position feature
+
 ## 1.13.0
 
 ### Minor Changes
