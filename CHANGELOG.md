@@ -1,5 +1,11 @@
 # @sasza/react-panzoom
 
+## 1.15.0
+
+### Minor Changes
+
+- cbe8e1a: element disabledMove prop
+
 ## 1.14.0
 
 ### Minor Changes
