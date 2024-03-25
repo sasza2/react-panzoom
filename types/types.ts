@@ -86,7 +86,7 @@ export type PanZoomOptions = {
   zoomInitial?: number;
   zoomMax?: number;
   zoomMin?: number;
-  zoomPosition?: ZoomPosition;
+  zoomPosition?: ZoomPosition | null;
   zoomSpeed?: number;
 } & Size
 
@@ -164,6 +164,7 @@ type ElementOnContextMenu = (
 export type ElementOptions = {
   className?: string;
   disabled?: boolean;
+  disabledMove?: boolean;
   draggableSelector?: string;
   family?: string;
   followers?: Array<ElementId>;

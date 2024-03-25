@@ -8,6 +8,7 @@ const Element: React.FC<ElementProps> = ({
   children,
   className,
   disabled,
+  disabledMove,
   draggableSelector,
   family,
   followers,
@@ -34,6 +35,7 @@ const Element: React.FC<ElementProps> = ({
     className: className || 'react-panzoom-element',
     id,
     disabled,
+    disabledMove,
     draggableSelector,
     family,
     followers,
@@ -64,6 +66,7 @@ const Element: React.FC<ElementProps> = ({
     elementRef.current.setOptions(options);
   }, [
     disabled,
+    disabledMove,
     draggableSelector,
     family,
     initialized,
