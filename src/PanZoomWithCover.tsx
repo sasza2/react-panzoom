@@ -35,7 +35,7 @@ const PanZoomWithCover: React.FC<
 
     const image = new Image();
     image.src = cover;
-    image.onload = () => {
+    const imageDimensionsKnownHandler = () => {
       const containerNode = parentRef.current.parentNode as HTMLElement;
       const containerSize = containerNode.getBoundingClientRect();
 
@@ -70,6 +70,15 @@ const PanZoomWithCover: React.FC<
       setInitialized(true);
       if (onCoverLoad) onCoverLoad();
     };
+
+    const intervalId = setInterval(() => {
+      if (image.naturalWidth > 0 && image.naturalHeight > 0) {
+        // naturalWidth and naturalHeight are all we need for scale calculations, so we can start
+        // progressively rendering the image
+        imageDimensionsKnownHandler();
+        clearInterval(intervalId);
+      }
+    }, 100);
 
     return () => {
       if (!panZoomRef.current) return;
