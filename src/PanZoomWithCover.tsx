@@ -35,7 +35,12 @@ const PanZoomWithCover: React.FC<
 
     const image = new Image();
     image.src = cover;
-    image.onload = () => {
+    let imageAttached = false;
+    const attachImageToDom = () => {
+      // attachImageToDom may get called multiple times, but we want to attach only once
+      if (imageAttached) return;
+      imageAttached = true;
+
       const containerNode = parentRef.current.parentNode as HTMLElement;
       const containerSize = containerNode.getBoundingClientRect();
 
@@ -71,7 +76,27 @@ const PanZoomWithCover: React.FC<
       if (onCoverLoad) onCoverLoad();
     };
 
+    const imageLoadIntervalId = setInterval(() => {
+      if (image.naturalWidth > 0 && image.naturalHeight > 0) {
+        // naturalWidth and naturalHeight are all we need for scale calculations, so we can start
+        // progressively rendering the image
+        attachImageToDom();
+        clearInterval(imageLoadIntervalId);
+      }
+    }, 100);
+
+    // In case if image gets loaded sooner (for e.g. from cache)
+    const onImageLoad = () => {
+      attachImageToDom();
+      clearInterval(imageLoadIntervalId);
+    };
+
+    image.addEventListener('load', onImageLoad);
+
     return () => {
+      clearInterval(imageLoadIntervalId);
+      image.removeEventListener('load', onImageLoad);
+
       if (!panZoomRef.current) return;
       panZoomRef.current.destroy();
       panZoomRef.current = null;
