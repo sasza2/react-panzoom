@@ -1,5 +1,11 @@
 # @sasza/react-panzoom
 
+## 1.16.0
+
+### Minor Changes
+
+- 8f4d412: Support progressive rendering in PanZoomWithCover
+
 ## 1.15.0
 
 ### Minor Changes
