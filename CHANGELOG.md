@@ -1,5 +1,11 @@
 # @sasza/react-panzoom
 
+## 1.17.0
+
+### Minor Changes
+
+- 62c2dda: export types and ref changes
+
 ## 1.16.0
 
 ### Minor Changes
