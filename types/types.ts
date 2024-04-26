@@ -92,7 +92,7 @@ export type PanZoomOptions = {
 
 export type PanZoomProps = React.PropsWithChildren<PanZoomOptions>
 
-export type PanZoomPropsRef = PanZoomProps & { ref?: React.MutableRefObject<API> }
+export type PanZoomPropsRef = PanZoomProps & { ref?: React.Ref<API> }
 
 export type PanZoomWithCoverOmit = Omit<PanZoomOptions, 'boundary'>
 
@@ -102,7 +102,7 @@ export type PanZoomWithCoverProps = React.PropsWithChildren<{
 } & PanZoomWithCoverOmit>
 
 export type PanZoomWithCoverPropsRef = PanZoomWithCoverProps & {
-  ref?: React.MutableRefObject<API>
+  ref?: React.Ref<API>
 }
 
 export type PanZoomApi = {

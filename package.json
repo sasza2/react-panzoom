@@ -7,7 +7,8 @@
   "exports": {
     ".": {
       "import": "./dist/main.js",
-      "require": "./dist/main.umd.cjs"
+      "require": "./dist/main.umd.cjs",
+      "types": "./types/index.d.ts"
     }
   },
   "keywords": [

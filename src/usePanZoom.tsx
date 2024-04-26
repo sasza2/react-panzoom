@@ -21,7 +21,7 @@ const usePanZoom = <T extends keyof PanZoomOptions, >({
   props,
 }: React.PropsWithChildren<{
   allowedProps: Array<T>,
-  apiRef: React.MutableRefObject<PanZoomApi>,
+  apiRef: React.Ref<PanZoomApi>,
   props: PanZoomOptions,
 }>): PanZoomReturn => {
   const childRef = useRef<HTMLDivElement>();
@@ -36,8 +36,9 @@ const usePanZoom = <T extends keyof PanZoomOptions, >({
   }, deps);
 
   useImperativeHandle(
-    apiRef,
+    initialized ? apiRef : undefined,
     () => panZoomRef.current,
+    [initialized],
   );
 
   const value = useMemo(() => ({

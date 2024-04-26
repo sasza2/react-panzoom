@@ -1,5 +1,5 @@
 import React, {
-  forwardRef, MutableRefObject, useLayoutEffect,
+  forwardRef, Ref, useLayoutEffect,
 } from 'react';
 import initPanZoom, { getAllowedProps } from 'panzoom-core';
 
@@ -8,7 +8,7 @@ import usePanZoom from './usePanZoom';
 
 const panZoomAllowedProps = getAllowedProps();
 
-const PanZoom: React.FC<PanZoomProps & { apiRef?: MutableRefObject<PanZoomApi> }> = ({
+const PanZoom: React.FC<PanZoomProps & { apiRef?: Ref<PanZoomApi> }> = ({
   apiRef,
   children,
   ...props
@@ -27,6 +27,7 @@ const PanZoom: React.FC<PanZoomProps & { apiRef?: MutableRefObject<PanZoomApi> }
       ...props,
       className: props.className || 'react-panzoom',
     });
+    panZoomRef.current.setOptions(props)
     setInitialized(true);
     return panZoomRef.current.destroy;
   }, []);
@@ -34,7 +35,7 @@ const PanZoom: React.FC<PanZoomProps & { apiRef?: MutableRefObject<PanZoomApi> }
   return render;
 };
 
-const PanZoomRef = forwardRef((props: PanZoomProps, ref: MutableRefObject<PanZoomApi>) => (
+const PanZoomRef = forwardRef((props: PanZoomProps, ref: Ref<PanZoomApi>) => (
   <PanZoom {...props} apiRef={ref} />
 )) as React.FC<PanZoomPropsRef>;
 
