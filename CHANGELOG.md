@@ -1,5 +1,11 @@
 # @sasza/react-panzoom
 
+## 1.18.0
+
+### Minor Changes
+
+- 50b9f78: api new method - goBackToBoundary() - move component to containers boundary (for e.g. when container size has changed)
+
 ## 1.17.0
 
 ### Minor Changes
