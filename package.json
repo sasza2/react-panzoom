@@ -76,6 +76,6 @@
     "react": ">=16.14.0"
   },
   "dependencies": {
-    "panzoom-core": "1.7.0"
+    "panzoom-core": "1.8.0"
   }
 }
