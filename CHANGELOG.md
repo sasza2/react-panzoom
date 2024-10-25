@@ -1,5 +1,11 @@
 # @sasza/react-panzoom
 
+## 1.18.1
+
+### Patch Changes
+
+- e04c8ab: fix setting property in panzoom-core api
+
 ## 1.18.0
 
 ### Minor Changes
