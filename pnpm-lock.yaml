@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   panzoom-core:
-    specifier: 1.8.0
-    version: 1.8.0
+    specifier: 1.8.1
+    version: 1.8.1
 
 devDependencies:
   '@changesets/cli':
@@ -4940,8 +4940,8 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
-  /panzoom-core@1.8.0:
-    resolution: {integrity: sha512-SWXhHIJGJdHliVzUDEkch9bdXx9K1yvMNyVuUd9u7fFEP3+RKFr2gHD2Blx0nVWPr+0RHvU8yJtw6x5As7doqw==}
+  /panzoom-core@1.8.1:
+    resolution: {integrity: sha512-FDYESx00khqwi+vkRJ8D9lgIZ2Wo3UoXQCYdgyrqUwezeqk5M6+PDRM/FVw/YurpN4peVvhTwaP6aN6CYfpM8Q==}
     dev: false
 
   /parent-module@1.0.1:
