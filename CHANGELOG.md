@@ -1,5 +1,11 @@
 # @sasza/react-panzoom
 
+## 1.18.2
+
+### Patch Changes
+
+- d5d34b7: fix: update panzoom-core (fix ipad problem with scroll)
+
 ## 1.18.1
 
 ### Patch Changes
