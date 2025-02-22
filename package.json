@@ -11,6 +11,9 @@
       "types": "./types/index.d.ts"
     }
   },
+  "engines": {
+    "pnpm": "8.15.5"
+  },
   "keywords": [
     "react",
     "pan",
@@ -76,6 +79,6 @@
     "react": ">=16.14.0"
   },
   "dependencies": {
-    "panzoom-core": "1.8.1"
+    "panzoom-core": "1.8.2"
   }
 }
