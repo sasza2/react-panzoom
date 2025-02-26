@@ -26,6 +26,7 @@ const Element: React.FC<ElementProps> = ({
   width,
   x,
   y,
+  zIndex,
 }) => {
   const nodeRef = useRef<HTMLDivElement>();
   const elementRef = useRef<ElementApi>();
@@ -52,6 +53,7 @@ const Element: React.FC<ElementProps> = ({
     width,
     x,
     y,
+    zIndex,
   };
 
   useLayoutEffect(() => {
@@ -85,6 +87,7 @@ const Element: React.FC<ElementProps> = ({
     width,
     x,
     y,
+    zIndex,
   ]);
 
   return (

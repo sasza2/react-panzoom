@@ -106,6 +106,7 @@ import PanZoom, { Element } from '@sasza/react-panzoom'
 | resizerWidth | number  | 15 | Width of resizer element |
 | x | number  | 0 | x position of element |
 | y | number  | 0 | y position of element |
+| zIndex | number | undefined | z-index of element |
 
 # Selecting
 
