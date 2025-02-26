@@ -1,5 +1,11 @@
 # @sasza/react-panzoom
 
+## 1.19.0
+
+### Minor Changes
+
+- 2a95398: feat: z-index property option on element
+
 ## 1.18.2
 
 ### Patch Changes
