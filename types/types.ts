@@ -183,6 +183,7 @@ export type ElementOptions = {
   width?: number;
   x?: number;
   y?: number;
+  zIndex?: number;
 };
 
 export type ElementProps = React.PropsWithChildren<ElementOptions>

@@ -27,7 +27,7 @@ const PanZoom: React.FC<PanZoomProps & { apiRef?: Ref<PanZoomApi> }> = ({
       ...props,
       className: props.className || 'react-panzoom',
     });
-    panZoomRef.current.setOptions(props)
+    panZoomRef.current.setOptions(props);
     setInitialized(true);
     return panZoomRef.current.destroy;
   }, []);
