@@ -20,8 +20,12 @@ const Element: React.FC<ElementProps> = ({
   onMouseUp,
   onStartResizing,
   resizable,
+  resizableVertical,
+  resizedMaxHeight,
   resizedMaxWidth,
+  resizedMinHeight,
   resizedMinWidth,
+  resizerHeight,
   resizerWidth,
   width,
   x,
@@ -47,8 +51,12 @@ const Element: React.FC<ElementProps> = ({
     onMouseUp,
     onStartResizing,
     resizable,
+    resizableVertical,
+    resizedMaxHeight,
     resizedMaxWidth,
+    resizedMinHeight,
     resizedMinWidth,
+    resizerHeight,
     resizerWidth,
     width,
     x,
@@ -64,6 +72,7 @@ const Element: React.FC<ElementProps> = ({
   }, [initialized]);
 
   useDidUpdateEffect(() => {
+    /* v8 ignore next */
     if (!initialized || !elementRef.current) return;
     elementRef.current.setOptions(options);
   }, [
@@ -81,8 +90,12 @@ const Element: React.FC<ElementProps> = ({
     onMouseUp,
     onStartResizing,
     resizable,
+    resizableVertical,
+    resizedMaxHeight,
     resizedMaxWidth,
+    resizedMinHeight,
     resizedMinWidth,
+    resizerHeight,
     resizerWidth,
     width,
     x,

@@ -145,3 +145,22 @@ it('PanZoom boundary', async () => {
 
   fireEvent.mouseUp(container.firstChild);
 });
+
+it('PanZoom setOptions when props change after mount', async () => {
+  const panZoomRef = createRef<PanZoomApi>();
+  const { rerender } = render(
+    <PanZoom ref={panZoomRef} zoomMin={0.3}>
+      <div>abc</div>
+    </PanZoom>
+  );
+  await wait();
+
+  rerender(
+    <PanZoom ref={panZoomRef} zoomMin={0.1}>
+      <div>abc</div>
+    </PanZoom>
+  );
+  await wait();
+
+  expect(panZoomRef.current.getZoom()).toBeDefined();
+});
