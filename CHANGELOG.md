@@ -1,5 +1,11 @@
 # @sasza/react-panzoom
 
+## 1.19.2
+
+### Patch Changes
+
+- ee8af3a: fix: expose disabledMoveHorizontal/disabledMoveVertical on Element
+
 ## 1.19.1
 
 ### Patch Changes
