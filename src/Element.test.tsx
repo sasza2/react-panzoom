@@ -93,6 +93,18 @@ it('Element disabled and disabledMove props are accepted', () => {
   expect(elementNode.style.zIndex).toBe('5');
 });
 
+it('Element disabledMoveHorizontal and disabledMoveVertical props are accepted', () => {
+  const { container } = render(
+    <PanZoom>
+      <Element id="a" disabledMoveHorizontal disabledMoveVertical className="custom">
+        <span>content</span>
+      </Element>
+    </PanZoom>
+  );
+
+  expect(container.querySelector('.custom')).toBeTruthy();
+});
+
 it('Element draggableSelector blocks drag from non-matching targets', () => {
   const onClick = vi.fn();
 
