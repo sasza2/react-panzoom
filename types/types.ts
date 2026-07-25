@@ -177,8 +177,12 @@ export type ElementOptions = {
   onMouseUp?: ElementOnMouseUp;
   onStartResizing?: ElementOnStartResizing;
   resizable?: boolean;
+  resizableVertical?: boolean;
+  resizedMaxHeight?: number;
   resizedMaxWidth?: number;
+  resizedMinHeight?: number;
   resizedMinWidth?: number;
+  resizerHeight?: number;
   resizerWidth?: number;
   width?: number;
   x?: number;
