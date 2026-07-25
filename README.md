@@ -16,6 +16,7 @@ Built on top of [`panzoom-core`](https://www.npmjs.com/package/panzoom-core), a 
 - 🖐️ **Pan** with mouse drag or touch
 - 🔍 **Zoom** with the wheel or pinch gestures
 - 🧲 **Movable elements** with families & followers for grouped dragging
+- ↔️ **Axis locking** — restrict element movement to horizontal or vertical only
 - 📐 **Resizable elements** (horizontal and/or vertical)
 - 🎯 **Selecting mode** for marquee-selecting multiple elements
 - 🧱 **Boundaries** with support for dynamic expressions
@@ -183,6 +184,8 @@ import PanZoom, { Element } from '@sasza/react-panzoom'
 | `className` | `string` | `undefined` | Class name for element. |
 | `disabled` | `bool` | `false` | Disabling element. |
 | `disabledMove` | `bool` | `false` | Disabling move of this element. |
+| `disabledMoveHorizontal` | `bool` | `false` | Lock movement on the X axis (only vertical dragging allowed). |
+| `disabledMoveVertical` | `bool` | `false` | Lock movement on the Y axis (only horizontal dragging allowed). |
 | `draggableSelector` | `string` | `undefined` | Selector for dragging element. |
 | `family` | `string` | `undefined` | Name of element's family, all of elements are connected during moving. |
 | `followers` | `Array<string/id>` | `[]` | Similar to family, but for specified ids of elements. |
@@ -211,6 +214,18 @@ import PanZoom, { Element } from '@sasza/react-panzoom'
 | `onAfterResize` | `func` | `null` | Fired when resizing ends. Receives `{ id }`. |
 
 __*__ required
+
+### Locking movement to a single axis
+
+Use `disabledMoveHorizontal` / `disabledMoveVertical` to constrain how an element can be dragged — handy for sliders, timelines or lanes.
+
+```jsx
+// Element can only move up and down
+<Element id="vertical-slider" disabledMoveHorizontal><Circle /></Element>
+
+// Element can only move left and right
+<Element id="horizontal-slider" disabledMoveVertical><Circle /></Element>
+```
 
 ### Family vs followers
 

@@ -166,6 +166,8 @@ export type ElementOptions = {
   className?: string;
   disabled?: boolean;
   disabledMove?: boolean;
+  disabledMoveHorizontal?: boolean;
+  disabledMoveVertical?: boolean;
   draggableSelector?: string;
   family?: string;
   followers?: Array<ElementId>;
