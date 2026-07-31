@@ -1,5 +1,11 @@
 # @sasza/react-panzoom
 
+## 1.20.0
+
+### Minor Changes
+
+- 5bcaae7: feat: update panzoom-core to 1.10.0, add onContainerPressStart/onContainerPressEnd events
+
 ## 1.19.2
 
 ### Patch Changes
