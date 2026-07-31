@@ -81,6 +81,6 @@
     "react": ">=16.14.0"
   },
   "dependencies": {
-    "panzoom-core": "1.9.1"
+    "panzoom-core": "1.10.0"
   }
 }

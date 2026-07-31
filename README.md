@@ -75,7 +75,9 @@ Pass these as props to `<PanZoom>`.
 | `elementsAutoMoveAtEdge` | `bool` | `false` | Auto-pan the viewport when dragging an element near the edge. |
 | `height` | `string`/`number` | `100%` | Height of the child container. |
 | `onContainerChange` | `func` | `null` | Fired on move **or** zoom. Receives `{ position, zoom }`. |
-| `onContainerClick` | `func` | `null` | Fired on mousedown/touchstart. Receives `{ e, stop, x, y }`. |
+| `onContainerClick` | `func` | `null` | Fired on mousedown/touchstart. Receives `{ e, stop, x, y }`. Same trigger as `onContainerPressStart`. |
+| `onContainerPressStart` | `func` | `null` | Fired on mousedown/touchstart. Receives `{ e, stop, x, y }`. |
+| `onContainerPressEnd` | `func` | `null` | Fired on mouseup/touchend/touchcancel. Receives `{ e, x, y }`. |
 | `onContainerPositionChange` | `func` | `null` | Fired on position change. Receives `{ position, zoom }`. |
 | `onContainerZoomChange` | `func` | `null` | Fired on zoom change. Receives `{ position, zoom }`. |
 | `onContextMenu` | `func` | `null` | Fired on right click. Receives `{ e, x, y }`. |
